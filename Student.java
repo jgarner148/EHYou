@@ -1,68 +1,60 @@
 
 public class Student extends Person {
-	private Module[] modulestaking;
-	private int startyear;
-	private int finishyear;
-	private int studentnumber;
+	private Module[] ModulesTaking;
+	private int StartYr;
+	private int EndYr;
+	private int StudentNum;
 	
 	
 	//Constructor
-	public Student(String fname, String lname, String dob, Module[] modulestaking, int startyear, int finishyear,
-			int studentnumber) {
+	public Student(String fname, String lname, String dob, Module[] ModulesTaking, int startYr, int endYr, int studentNum) {
 		super(fname, lname, dob);
-		this.modulestaking = modulestaking;
-		this.startyear = startyear;
-		this.finishyear = finishyear;
-		this.studentnumber = studentnumber;
+		this.ModulesTaking = ModulesTaking;
+		this.StartYr = startYr;
+		this.EndYr = endYr;
+		this.StudentNum = studentNum;
 	}
 
-
 	public Module[] getModulestaking() {
-		return modulestaking;
+		return ModulesTaking;
 	}
 
 
 	public void setModulestaking(Module newmodule) {
-		int length = this.modulestaking.length; //Gets the length of the original array
+		int length = this.ModulesTaking.length; //Gets the length of the original array
 		Module[] newmodulearray = new Module[length+1]; //Makes a new array that is one item bigger
 		
 		for(int i = 0; i < length; i++) { //sets all the old array items into the new array
-			newmodulearray[i] = this.modulestaking[i];
+			newmodulearray[i] = this.ModulesTaking[i];
 		}
 		
 		newmodulearray[length+1] = newmodule; //sets the new module to its place in the new array
 		
-		this.modulestaking = newmodulearray; //overwrites the old array with the new one
+		this.ModulesTaking = newmodulearray; //overwrites the old array with the new one
 	}
 
 
-	public int getStartyear() {
-		return startyear;
+	public int getStartYr() {
+		return StartYr;
 	}
 
-
-	public void setStartyear(int startyear) {
-		this.startyear = startyear;
+	public void setStartYr(int startYr) {
+		StartYr = startYr;
 	}
 
-
-	public int getFinishyear() {
-		return finishyear;
+	public int getEndYr() {
+		return EndYr;
 	}
 
-
-	public void setFinishyear(int finishyear) {
-		this.finishyear = finishyear;
+	public void setEndYr(int endYr) {
+		EndYr = endYr;
 	}
 
-
-	public int getStudentnumber() {
-		return studentnumber;
+	public int getStudentNum() {
+		return StudentNum;
 	}
 
-
-	public void setStudentnumber(int studentnumber) {
-		this.studentnumber = studentnumber;
+	public void setStudentNum(int studentNum) {
+		StudentNum = studentNum;
 	}
-
 }

@@ -1,9 +1,10 @@
+import java.time.LocalDate;
 
 public class Person {
 	private String fname;
 	private String lname;
 	private String dob;
-	
+
 	//Constructor
 	public Person(String fname, String lname, String dob) {
 		super();
@@ -32,9 +33,4 @@ public class Person {
 		return dob;
 	}
 
-	public void setDob(String dob) {
-		this.dob = dob;
-	}
-	
-	
 }
