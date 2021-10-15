@@ -1,40 +1,50 @@
 
-public class Module {
-	private String name;
-	private String code;
-	private Tutor leader;
+public class  Module {
+	private String modName;
+	private String modCode;
+	private Student[] studentsTaking;
+	private Tutor teacher;
 	private Tutor moderator;
-	
-	//constructor
-	public Module(String name, String code, Tutor leader, Tutor moderator) {
-		this.name = name;
-		this.code = code;
-		this.leader = leader;
+
+	//Constructor
+	public Module(String modName, String modCode, Student[] studentsTaking, Tutor teacher, Tutor moderator) {
+		this.modName = modName;
+		this.modCode = modCode;
+		this.studentsTaking = studentsTaking;
+		this.teacher = teacher;
 		this.moderator = moderator;
 	}
 
-	public String getName() {
-		return name;
+	public String getModName() {
+		return modName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setModName(String modName) {
+		this.modName = modName;
 	}
 
-	public String getCode() {
-		return code;
+	public String getModCode() {
+		return modCode;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public void setModCode(String modCode) {
+		this.modCode = modCode;
 	}
 
-	public Tutor getLeader() {
-		return leader;
+	public Student[] getStudentsTaking() {
+		return studentsTaking;
 	}
 
-	public void setLeader(Tutor leader) {
-		this.leader = leader;
+	public void addToStudentsTaking(Student studentsTaking) {
+		this.studentsTaking = AddToArray.student(this.studentsTaking, studentsTaking);
+	}
+
+	public Tutor getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Tutor teacher) {
+		this.teacher = teacher;
 	}
 
 	public Tutor getModerator() {
@@ -44,8 +54,4 @@ public class Module {
 	public void setModerator(Tutor moderator) {
 		this.moderator = moderator;
 	}
-	
-	
-	
-	
 }

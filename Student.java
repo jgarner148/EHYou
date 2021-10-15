@@ -1,36 +1,29 @@
 
 public class Student extends Person {
 	private Module[] ModulesTaking;
+	private Result[] AllResults;
 	private int StartYr;
 	private int EndYr;
 	private int StudentNum;
 	
 	
 	//Constructor
-	public Student(String fname, String lname, String dob, Module[] ModulesTaking, int startYr, int endYr, int studentNum) {
+	public Student(String fname, String lname, String dob, Module[] modulesTaking, Result[] allResults, int startYr, int endYr, int studentNum) {
 		super(fname, lname, dob);
-		this.ModulesTaking = ModulesTaking;
+		this.ModulesTaking = modulesTaking;
+		this.AllResults = allResults;
 		this.StartYr = startYr;
 		this.EndYr = endYr;
 		this.StudentNum = studentNum;
 	}
 
-	public Module[] getModulestaking() {
+	public Module[] getModulesTaking() {
 		return ModulesTaking;
 	}
 
 
-	public void setModulestaking(Module newmodule) {
-		int length = this.ModulesTaking.length; //Gets the length of the original array
-		Module[] newmodulearray = new Module[length+1]; //Makes a new array that is one item bigger
-		
-		for(int i = 0; i < length; i++) { //sets all the old array items into the new array
-			newmodulearray[i] = this.ModulesTaking[i];
-		}
-		
-		newmodulearray[length+1] = newmodule; //sets the new module to its place in the new array
-		
-		this.ModulesTaking = newmodulearray; //overwrites the old array with the new one
+	public void addToModulesTaking(Module newmodule) {
+		this.ModulesTaking = AddToArray.module(this.ModulesTaking, newmodule);
 	}
 
 
@@ -56,5 +49,13 @@ public class Student extends Person {
 
 	public void setStudentNum(int studentNum) {
 		StudentNum = studentNum;
+	}
+
+	public Result[] getAllResults() {
+		return AllResults;
+	}
+
+	public void addToAllResults(Result newresult) {
+		this.AllResults = AddToArray.result(this.AllResults, newresult);
 	}
 }

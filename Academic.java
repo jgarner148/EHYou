@@ -1,23 +1,17 @@
 
-public class Academic extends Person{
-	private int academicnumber;
-	
-	//Constructor
-	public Academic(String fname, String lname, String dob, int academicnumber) {
-		super(fname, lname, dob);
-		this.academicnumber = academicnumber;
+public class Academic extends Tutor{
+	private Research[] CurrentResearch;
+
+	public Academic(String fname, String lname, String dob, int staffNum, String office, Research[] currentResearch) {
+		super(fname, lname, dob, staffNum, office);
+		this.CurrentResearch = currentResearch;
 	}
 
-	public int getAcademicnumber() {
-		return academicnumber;
+	public Research[] getCurrentResearch() {
+		return CurrentResearch;
 	}
 
-	public void setAcademicnumber(int academicnumber) {
-		this.academicnumber = academicnumber;
+	public void addToCurrentResearch(Research currentResearch) {
+		this.CurrentResearch = AddToArray.research(this.CurrentResearch, currentResearch);
 	}
-	
-	
-
-
-	
 }
