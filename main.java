@@ -2,16 +2,18 @@
 public class main {
 
 	public static void main(String[] args) {
-		Research[] testerarray = {};
-		Academic[] testerarray2 = {};
-		Academic Phil = new Academic("Phil", "Smith", "20/05/2002", 245, "THG01", testerarray);
-		Research AI = new Research("AI", testerarray2);
-		Research Health = new Research("Health", testerarray2);
-		Research Robot = new Research("Robot", testerarray2);
-		Phil.addToCurrentResearch(AI);
-		Phil.addToCurrentResearch(Health);
-		Phil.addToCurrentResearch(Robot);
-		Research[] philsresearch= Phil.getCurrentResearch();
+		//This code was for testing purposes only to check that the add to array functions worked
+		Research[] testerarray = {}; //Creating a blank Research object array
+		Academic[] testerarray2 = {}; //Creating a blank Academic object array
+		Academic Phil = new Academic("Phil", "Smith", "20/05/2002", 245, "THG01", testerarray); //Creating a new Academic object named Phil
+		Research AI = new Research("AI", testerarray2); //Creating a new Research object named AI
+		Research Health = new Research("Health", testerarray2); //Creating a new Research object named Health
+		Research Robot = new Research("Robot", testerarray2); //Creating a new Research object named Robot
+		Phil.addToCurrentResearch(AI); //Adding the AI research object to the Phil Academic's current research array
+		Phil.addToCurrentResearch(Health); //Adding the Health research object to the Phil Academic's current research array
+		Phil.addToCurrentResearch(Robot); //Adding the Robot research object to the Phil Academic's current research array
+		Research[] philsresearch= Phil.getCurrentResearch(); //Making a new research object array that stored the rsearch object array from the Phil Academic object 
+		//For loop that gets every item from teh philsresearch array and prints it out
 		for(int i = 0; i<philsresearch.length;i++){
 			Research firstresearch = philsresearch[i];
 			String firstname = firstresearch.getResearchTitle();
