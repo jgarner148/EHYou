@@ -3,9 +3,9 @@ public class main {
 
 	public static void main(String[] args) {
 		//This code was for testing purposes only to check that the add to array functions worked
-		Research[] testerarray = {}; //Creating a blank Research object array
+		Research[] testarray1 = {}; //Creating a blank Research object array
 		Academic[] testerarray2 = {}; //Creating a blank Academic object array
-		Academic Phil = new Academic("Phil", "Smith", "20/05/2002", 245, "THG01", testerarray); //Creating a new Academic object named Phil
+		Academic Phil = new Academic("Phil", "Smith", "20/05/2002", 245, "THG01", testarray1); //Creating a new Academic object named Phil
 		Research AI = new Research("AI", testerarray2); //Creating a new Research object named AI
 		Research Health = new Research("Health", testerarray2); //Creating a new Research object named Health
 		Research Robot = new Research("Robot", testerarray2); //Creating a new Research object named Robot
