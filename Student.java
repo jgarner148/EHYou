@@ -1,3 +1,9 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.time.YearMonth;
+import java.util.Scanner;
+
 
 public class Student extends Person {
 	private Module[] ModulesTaking;
@@ -8,13 +14,38 @@ public class Student extends Person {
 	
 	
 	//Constructor
-	public Student(String fname, String lname, String dob, Module[] modulesTaking, Result[] allResults, int startYr, int endYr, int studentNum) {
+	public Student(String fname, String lname, String dob, Module[] modulesTaking, Result[] allResults, int startYr, int endYr) throws FileNotFoundException {
 		super(fname, lname, dob);
 		this.ModulesTaking = modulesTaking;
 		this.AllResults = allResults;
 		this.StartYr = startYr;
 		this.EndYr = endYr;
-		this.StudentNum = studentNum;
+		//Section for generating a user number
+		Boolean looping = true;
+		int generatedStudentNum = 0; //defines the int that will be assigned the random number
+		while(looping==true) {
+			int currentyear = YearMonth.now().getYear(); //Gets the current year
+			int randomnumber = quickMethods.randnum(1000, 9999); //Generates a random number using my class randnum and its class method generate
+			String yearAsString = String.valueOf(currentyear);
+			String numAsString = String.valueOf(randomnumber);
+			String allAsString = yearAsString + numAsString;
+
+			generatedStudentNum = quickMethods.stringToNum(allAsString);  //Converts String into an int
+
+
+			Scanner csvScan = new Scanner(new File("studentNumbers.csv"));
+			csvScan.useDelimiter(",");
+			while (csvScan.hasNext()){
+				int currentNumber = quickMethods.stringToNum(csvScan.next());
+				  if(currentNumber != generatedStudentNum){
+				  	looping = false;
+				  }
+			}
+			}
+		PrintWriter writer = new PrintWriter("studentNumbers.csv");
+		String newCSVItem = String.valueOf(generatedStudentNum);
+		writer.write(newCSVItem + ",");
+		this.StudentNum = generatedStudentNum;
 	}
 
 	public Module[] getModulesTaking() {
