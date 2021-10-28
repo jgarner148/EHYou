@@ -33,7 +33,7 @@ public class Student extends Person {
 
 			generatedStudentNum = quickMethods.stringToNum(allAsString);  //Converts String into an int
 
-
+//////////////////////////////////////////////////////NEEDS TO BE FIXED!!!!!!////////////////////////////////////////////
 			Scanner csvScan = new Scanner(new File("studentNumbers.csv"));
 			csvScan.useDelimiter(",");
 			while (csvScan.hasNext()){
@@ -49,6 +49,7 @@ public class Student extends Person {
 		String newCSVItem = String.valueOf(generatedStudentNum);
 		writer.write(newCSVItem + ",");
 		this.StudentNum = generatedStudentNum;
+//////////////////////////////////////////////////////!!!!!!!!!!!!!!!!!////////////////////////////////////////////
 	}
 
 	public Module[] getModulesTaking() {
@@ -86,25 +87,29 @@ public class Student extends Person {
 	}
 
 	public Result[] getAllResults() {
-		return AllResults;
+		return this.AllResults;
 	}
 
 	public void addToAllResults(Result newresult) {
 		this.AllResults = AddToArray.result(this.AllResults, newresult);
 	}
 
-	public int averageGradeForModule(){
-		Result[] allResults = getAllResults();
-		int i;
-		int currentGrade;
+	public int averageGradeForModule(Module targetModule){
+		int moduleCode = targetModule.getModCode();
+		Result[] allResults = getAllResults(); //Gets the Results array from the class
 		int allgrades;
-		for(i=0; i < allresults.length; i++){
+		int resultsAmount;
+		for(int i=0; i < allresults.length; i++){  //Iterates through the results array and gets the grade from each object and adds it to a running total
 			Result currentResult = allResults[i];
-			currentGrade = currentResult.getGrade();
-			allgrades = allgrades + currentGrade;
+			Module currentResultModule = currentResult.getAssModule();
+			int currentResultModCode = currentResultModule.getModCode()
+			if(moduleCode == currentResultModCode){
+				int currentGrade = currentResult.getGrade();
+				allgrades = allgrades + currentGrade;
+				resultsAmount++;
+			}
 		}
-
-		int average = allgrades / allResults.length;
+		int average = allgrades / resultsAmount;
 		return average;
 	}
 
