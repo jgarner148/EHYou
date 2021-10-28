@@ -92,4 +92,20 @@ public class Student extends Person {
 	public void addToAllResults(Result newresult) {
 		this.AllResults = AddToArray.result(this.AllResults, newresult);
 	}
+
+	public int averageGradeForModule(){
+		Result[] allResults = getAllResults();
+		int i;
+		int currentGrade;
+		int allgrades;
+		for(i=0; i < allresults.length; i++){
+			Result currentResult = allResults[i];
+			currentGrade = currentResult.getGrade();
+			allgrades = allgrades + currentGrade;
+		}
+
+		int average = allgrades / allResults.length;
+		return average;
+	}
+
 }
