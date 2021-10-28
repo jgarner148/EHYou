@@ -95,14 +95,14 @@ public class Student extends Person {
 	}
 
 	public int averageGradeForModule(Module targetModule){
-		int moduleCode = targetModule.getModCode();
+		String moduleCode = targetModule.getModCode();
 		Result[] allResults = getAllResults(); //Gets the Results array from the class
-		int allgrades;
+		int allgrades = 0;
 		int resultsAmount = 0;
-		for(int i=0; i < allresults.length; i++){  //Iterates through the results array and gets the grade from each object and adds it to a running total
+		for(int i=0; i < allResults.length; i++){  //Iterates through the results array and gets the grade from each object and adds it to a running total
 			Result currentResult = allResults[i];
 			Module currentResultModule = currentResult.getAssModule();
-			int currentResultModCode = currentResultModule.getModCode();
+			String currentResultModCode = currentResultModule.getModCode();
 			if(moduleCode == currentResultModCode){
 				int currentGrade = currentResult.getGrade();
 				allgrades = allgrades + currentGrade;
