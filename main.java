@@ -2,7 +2,7 @@ import java.io.FileNotFoundException;
 
 public class main {
 
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args){
 		/**
 		//This code was for testing purposes only to check that the add to array functions worked
 		Research[] testarray1 = {}; //Creating a blank Research object array
