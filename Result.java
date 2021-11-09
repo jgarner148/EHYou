@@ -11,6 +11,7 @@ public class Result {
         WeekAss = weekAss;
         Grade = grade;
         Feedback = feedback;
+        assModule.addToTotalMarks(grade);
     }
 
     //Getters and Setters

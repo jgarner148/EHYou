@@ -107,4 +107,22 @@ public class AddToArray {
         return newarray;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Int
+    /**
+     * Method to add a new int to a preexisting Int Array
+     *
+     *
+     */
+    public static int[] integer(int[] orignalarray, int newitem){
+        int length = orignalarray.length; //Gets the length of the original array
+        int[] newarray = new int[length + 1]; //Makes a new array that is one item bigger
+
+        for (int i = 0; i < length; i++) { //sets all the old array items into the new array
+            newarray[i] = orignalarray[i];
+        }
+
+        newarray[length] = newitem; //sets the new item to its place in the new array
+
+        return newarray;
+    }
 }

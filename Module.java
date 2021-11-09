@@ -1,16 +1,19 @@
 
-public class  Module {
+public class
+Module {
 	private String modName;
 	private String modCode;
 	private Student[] studentsTaking;
+	private int[] totalMarks;
 	private Tutor teacher;
 	private Tutor moderator;
 
 	//Constructor
-	public Module(String modName, String modCode, Student[] studentsTaking, Tutor teacher, Tutor moderator) {
+	public Module(String modName, String modCode, Student[] studentsTaking, int[] totalMarks, Tutor teacher, Tutor moderator) {
 		this.modName = modName;
 		this.modCode = modCode;
 		this.studentsTaking = studentsTaking;
+		this.totalMarks = totalMarks;
 		this.teacher = teacher;
 		this.moderator = moderator;
 	}
@@ -37,6 +40,12 @@ public class  Module {
 
 	public void addToStudentsTaking(Student studentsTaking) {
 		this.studentsTaking = AddToArray.student(this.studentsTaking, studentsTaking);
+	}
+
+	public int[] getTotalMarks(){return this.totalMarks;}
+
+	public void addToTotalMarks(int newmark){
+		this.totalMarks = AddToArray.integer(this.totalMarks, newmark);
 	}
 
 	public Tutor getTeacher() {
