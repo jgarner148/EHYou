@@ -111,7 +111,9 @@ public class AddToArray {
     /**
      * Method to add a new int to a preexisting Int Array
      *
-     *
+     * @param orignalarray The array that you wan to add the new in to
+     * @param newitem       The int you want to add to the array
+     * @return The new array with the newly added int
      */
     public static int[] integer(int[] orignalarray, int newitem){
         int length = orignalarray.length; //Gets the length of the original array

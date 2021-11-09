@@ -63,4 +63,39 @@ Module {
 	public void setModerator(Tutor moderator) {
 		this.moderator = moderator;
 	}
+
+	public int getAverageMark(){
+		int allmarks = 0;
+		for (int i = 0; i>this.totalMarks.length; i++){
+			allmarks = allmarks + this.totalMarks[i];
+		}
+		int totalAverage = allmarks/this.totalMarks.length;
+		return totalAverage;
+	}
+
+	public int getMinMark(){
+		int minmark = 101;
+		for (int i = 0 ; i>this.totalMarks.length; i++){
+			int currentmark =  this.totalMarks[i];
+			if (currentmark<minmark){
+				minmark =currentmark;
+			}
+		}
+		return minmark;
+	}
+
+	public int getMaxMark(){
+		int maxmark = 0;
+		for (int i = 0 ; i>this.totalMarks.length; i++){
+			int currentmark =  this.totalMarks[i];
+			if (currentmark>maxmark){
+				maxmark =currentmark;
+			}
+		}
+		return maxmark;
+	}
+
+
+
+
 }
