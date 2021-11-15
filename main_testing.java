@@ -1,8 +1,9 @@
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class main_testing {
 
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws IOException {
 		/**
 		//This code was for testing purposes only to check that the add to array functions worked
 		Research[] testarray1 = {}; //Creating a blank Research object array
@@ -25,7 +26,7 @@ public class main_testing {
 		Module[] testarray3 = {};
 		Result[] testarray4 = {};
 		Student student1 = new Student("Dave", "Smith", "10/09/2001", testarray3, testarray4, 2020, 2021);
+		System.out.println(student1.getStudentNum());
 
-
-	}
+}
 }

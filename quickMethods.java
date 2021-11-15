@@ -1,3 +1,9 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
 public class quickMethods{
 
     public static int randnum(int min, int max){
@@ -18,4 +24,37 @@ public class quickMethods{
         }
         return stringAsNum;
     }
+
+
+    public static boolean checkIfInFile(String filePath, String itemChecking) throws FileNotFoundException {
+        Scanner checker = new Scanner(new File(filePath));
+        checker.useDelimiter(",");
+        int exists = 0;
+        boolean reutrnValue = true;
+        while (checker.hasNext()) {
+            if (checker.next().equals(itemChecking)) {
+                exists++;
+            }
+        }
+        if (exists == 0) {reutrnValue = false;}
+        checker.close();
+        return reutrnValue;
+    }
+
+    public static void addStringToCSV(String filepath, String itemAdding) throws IOException {
+        FileWriter csvWriter = new FileWriter(filepath, true);
+        csvWriter.append(itemAdding);
+        csvWriter.append(",");
+        csvWriter.flush();
+        csvWriter.close();
+    }
+
+
+
+
+
+
+
+
+
 }

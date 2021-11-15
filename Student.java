@@ -1,8 +1,5 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.time.YearMonth;
-import java.util.Scanner;
 
 
 public class Student extends Person {
@@ -10,49 +7,36 @@ public class Student extends Person {
 	private Result[] AllResults;
 	private int StartYr;
 	private int EndYr;
-	private int StudentNum;
+	private String StudentNum;
 	
 	
 	//Constructor
-	public Student(String fname, String lname, String dob, Module[] modulesTaking, Result[] allResults, int startYr, int endYr) throws FileNotFoundException {
+	public Student(String fname, String lname, String dob, Module[] modulesTaking, Result[] allResults, int startYr, int endYr) throws IOException {
 		super(fname, lname, dob);
 		this.ModulesTaking = modulesTaking;
 		this.AllResults = allResults;
 		this.StartYr = startYr;
 		this.EndYr = endYr;
 		//Section for generating a user number
-		Boolean looping = true;
-		int generatedStudentNum = 0; //defines the int that will be assigned the random number
-		while(looping==true) {
-			System.out.println("looped");
+		boolean looping = true;
+		String filepath = "studentNumbers.csv";
+		String genNumber = "";
+		while (looping == true) {
 			int currentyear = YearMonth.now().getYear(); //Gets the current year
 			int randomnumber = quickMethods.randnum(1000, 9999); //Generates a random number using my class randnum and its class method generate
-			String yearAsString = String.valueOf(currentyear);
-			String numAsString = String.valueOf(randomnumber);
-			String allAsString = yearAsString + numAsString;
-
-			generatedStudentNum = quickMethods.stringToNum(allAsString);  //Converts String into an int
-
-//////////////////////////////////////////////////////NEEDS TO BE FIXED!!!!!!////////////////////////////////////////////
-			Scanner csvScan = new Scanner(new File("studentNumbers.csv"));
-			csvScan.useDelimiter(",");
-			while (csvScan.hasNext()){
-				String currentNumberString = csvScan.next();
-				System.out.println(currentNumberString);
-				int currentNumber = quickMethods.stringToNum(currentNumberString);
-				  if(currentNumber != generatedStudentNum){
-				  	looping = false;
-				  }
+			String yearAsString = String.valueOf(currentyear); //Turns currentyear into String
+			String numAsString = String.valueOf(randomnumber); //Turns randumnumber into string
+			genNumber = yearAsString + numAsString; //combines to two
+			boolean doesExist = quickMethods.checkIfInFile(filepath, genNumber);
+			if (doesExist == false) {
+				looping = false;
 			}
-			}
-		PrintWriter writer = new PrintWriter("studentNumbers.csv");
-		String newCSVItem = String.valueOf(generatedStudentNum);
-		writer.write(newCSVItem + ",");
-		this.StudentNum = generatedStudentNum;
-//////////////////////////////////////////////////////!!!!!!!!!!!!!!!!!////////////////////////////////////////////
+		}
+		quickMethods.addStringToCSV(filepath, genNumber);
+		this.StudentNum = genNumber;
 	}
 
-	public Module[] getModulesTaking() {
+	public Module[] getModulesTaking(){
 		return ModulesTaking;
 	}
 
@@ -78,11 +62,11 @@ public class Student extends Person {
 		EndYr = endYr;
 	}
 
-	public int getStudentNum() {
+	public String getStudentNum() {
 		return StudentNum;
 	}
 
-	public void setStudentNum(int studentNum) {
+	public void setStudentNum(String studentNum) {
 		StudentNum = studentNum;
 	}
 
