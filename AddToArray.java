@@ -88,7 +88,7 @@ public class AddToArray {
     //Result
 
     /**
-     * Method to add a new Module object to a preexisting Module Array
+     * Method to add a new Result object to a preexisting result Array
      *
      * @param orignalarray The array that you want to add the new object to
      * @param newitem      The object you want to add to the array
@@ -118,6 +118,20 @@ public class AddToArray {
     public static int[] integer(int[] orignalarray, int newitem){
         int length = orignalarray.length; //Gets the length of the original array
         int[] newarray = new int[length + 1]; //Makes a new array that is one item bigger
+
+        for (int i = 0; i < length; i++) { //sets all the old array items into the new array
+            newarray[i] = orignalarray[i];
+        }
+
+        newarray[length] = newitem; //sets the new item to its place in the new array
+
+        return newarray;
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //String
+    public static String[] string(String[] orignalarray, String newitem){
+        int length = orignalarray.length; //Gets the length of the original array
+        String[] newarray = new String[length + 1]; //Makes a new array that is one item bigger
 
         for (int i = 0; i < length; i++) { //sets all the old array items into the new array
             newarray[i] = orignalarray[i];

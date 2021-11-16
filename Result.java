@@ -1,26 +1,29 @@
+import java.io.IOException;
+
 public class Result {
-    private Module AssModule;
+    private String AssModule;
     private String WeekAss;
     private int Grade;
     private String Feedback;
 
     //Constructor
 
-    public Result(Module assModule, String weekAss, int grade, String feedback) {
+    public Result(String assModule, String weekAss, int grade, String feedback) throws IOException, ClassNotFoundException {
         AssModule = assModule;
         WeekAss = weekAss;
         Grade = grade;
         Feedback = feedback;
-        assModule.addToTotalMarks(grade);
+        Module resultModule = getobject.module(this.AssModule);
+        resultModule.addToTotalMarks(this.Grade);
     }
 
     //Getters and Setters
 
-    public Module getAssModule() {
+    public String getAssModule() {
         return AssModule;
     }
 
-    public void setAssModule(Module assModule) {
+    public void setAssModule(String assModule) {
         AssModule = assModule;
     }
 

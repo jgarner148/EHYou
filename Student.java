@@ -3,15 +3,15 @@ import java.time.YearMonth;
 
 
 public class Student extends Person implements Serializable {
-	private Module[] ModulesTaking;
-	private Result[] AllResults;
+	private String[] ModulesTaking;
+	private String[] AllResults;
 	private int StartYr;
 	private int EndYr;
 	private String StudentNum;
 	
 	
 	//Constructor
-	public Student(String fname, String lname, String dob, Module[] modulesTaking, Result[] allResults, int startYr, int endYr) throws IOException {
+	public Student(String fname, String lname, String dob, String[] modulesTaking, String[] allResults, int startYr, int endYr) throws IOException {
 		super(fname, lname, dob);
 		this.ModulesTaking = modulesTaking;
 		this.AllResults = allResults;
@@ -35,15 +35,23 @@ public class Student extends Person implements Serializable {
 		quickMethods.addStringToCSV(filepath, genNumber);
 		this.StudentNum = genNumber;
 
+		//section to generate class file
+		String filename = "Students/" +this.getStudentNum() + ".txt";
+		FileOutputStream f = new FileOutputStream(filename);
+		ObjectOutputStream o = new ObjectOutputStream(f);
+		o.writeObject(this);
+		o.close();
+		f.close();
+
 	}
 
-	public Module[] getModulesTaking(){
+	public String[] getModulesTaking(){
 		return ModulesTaking;
 	}
 
 
-	public void addToModulesTaking(Module newmodule) {
-		this.ModulesTaking = AddToArray.module(this.ModulesTaking, newmodule);
+	public void addToModulesTaking(String newmodule) {
+		this.ModulesTaking = AddToArray.string(this.ModulesTaking, newmodule);
 	}
 
 
@@ -71,17 +79,31 @@ public class Student extends Person implements Serializable {
 		StudentNum = studentNum;
 	}
 
-	public Result[] getAllResults() {
+	public String[] getAllResults() {
 		return this.AllResults;
 	}
 
-	public void addToAllResults(Result newresult) {
-		this.AllResults = AddToArray.result(this.AllResults, newresult);
+	public void addToAllResults(String newresult) {
+		this.AllResults = AddToArray.string(this.AllResults, newresult);
 	}
 
-	public int averageGradeForModule(Module targetModule){
+	/**
+	public int averageGradeForModule(String targetModuleCode) throws IOException, ClassNotFoundException {
+		String[] allResults = this.getAllResults();
+		int allgrades = 0;
+		int resultsAmount = 0;
+		for(int i=0; i < allResults.length; i++) {
+			String currentResultCode = allResults[i];
+			Result currentResult = getobject.result(currentResultCode);
+			//String currentResultModule = currentResult.getAssModule();
+		}
+
+
+
+
+
 		String moduleCode = targetModule.getModCode();
-		Result[] allResults = getAllResults(); //Gets the Results array from the class
+		String[] allResults = getAllResults(); //Gets the Results array from the class
 		int allgrades = 0;
 		int resultsAmount = 0;
 		for(int i=0; i < allResults.length; i++){  //Iterates through the results array and gets the grade from each object and adds it to a running total
@@ -95,6 +117,8 @@ public class Student extends Person implements Serializable {
 			}
 		}
 		return allgrades / resultsAmount;
+
 	}
+	 **/
 
 }

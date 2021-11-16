@@ -1,8 +1,8 @@
 public class Research {
     private String ResearchTitle;
-    private Academic[] AcademicsResearching;
+    private String[] AcademicsResearching;
 
-    public Research(String researchTitle, Academic[] academicsResearching) {
+    public Research(String researchTitle, String[] academicsResearching) {
         this.ResearchTitle = researchTitle;
         this.AcademicsResearching = academicsResearching;
     }
@@ -15,11 +15,11 @@ public class Research {
         ResearchTitle = researchTitle;
     }
 
-    public Academic[] getAcademicsResearching() {
+    public String[] getAcademicsResearching() {
         return AcademicsResearching;
     }
 
-    public void addToAcademicsResearching(Academic academicsResearching) {
-        this.AcademicsResearching = AddToArray.academic(this.AcademicsResearching, academicsResearching);
+    public void addToAcademicsResearching(String academicsResearching) {
+        this.AcademicsResearching = AddToArray.string(this.AcademicsResearching, academicsResearching);
     }
 }

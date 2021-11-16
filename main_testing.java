@@ -23,12 +23,21 @@ public class main_testing {
 		}
 		 */
 
-		/**
-		Module[] testarray3 = {};
-		Result[] testarray4 = {};
-		Student student1 = new Student("Dave", "Smith", "10/09/2001", testarray3, testarray4, 2020, 2021);
 
-		FileOutputStream f = new FileOutputStream(new File("ideas.txt"));
+		//String[] testarray3 = {};
+		//String[] testarray4 = {};
+		//Student student1 = new Student("Dave", "Smith", "10/09/2001", testarray3, testarray4, 2020, 2021);
+
+		Student student2 = getobject.student("20217225");
+		System.out.println(student2.getFname());
+
+
+		/**
+		String filename = student1.getStudentNum() + ".txt";
+		System.out.println(filename);
+
+
+		FileOutputStream f = new FileOutputStream(new File(filename));
 		ObjectOutputStream o = new ObjectOutputStream(f);
 		o.writeObject(student1);
 		o.close();
@@ -36,7 +45,7 @@ public class main_testing {
 
 
 
-        FileInputStream fi = new FileInputStream(new File("ideas.txt"));
+        FileInputStream fi = new FileInputStream(new File(filename));
         ObjectInputStream oi = new ObjectInputStream(fi);
 
         // Read objects
@@ -50,17 +59,16 @@ public class main_testing {
 
         System.out.println(number + "this had printed");
 		System.out.println("printed");
-		 **/
 
 		//String[] modules = {};
 		//Student_Test tester1 = new Student_Test("dave", "smith", "10/09/2021", modules);
 		//System.out.println(tester1.getFname());
 
-		String modcode= "24571041";
-		String sufx = ".csv";
+		//String modcode= "24571041";
+		//String sufx = ".csv";
 
-		String filename = modcode + sufx;
-
+		//String filename = modcode + sufx;
+		**/
 
 
 	}
