@@ -2,7 +2,7 @@ import java.io.*;
 import java.time.YearMonth;
 
 
-public class Student extends Person {
+public class Student extends Person implements Serializable {
 	private Module[] ModulesTaking;
 	private Result[] AllResults;
 	private int StartYr;
@@ -21,19 +21,20 @@ public class Student extends Person {
 		boolean looping = true;
 		String filepath = "studentNumbers.csv";
 		String genNumber = "";
-		while (looping == true) {
+		while (looping) {
 			int currentyear = YearMonth.now().getYear(); //Gets the current year
 			int randomnumber = quickMethods.randnum(1000, 9999); //Generates a random number using my class randnum and its class method generate
 			String yearAsString = String.valueOf(currentyear); //Turns currentyear into String
 			String numAsString = String.valueOf(randomnumber); //Turns randumnumber into string
-			genNumber = yearAsString + numAsString; //combines to two
+			genNumber = yearAsString + numAsString; //Combines to two
 			boolean doesExist = quickMethods.checkIfInFile(filepath, genNumber);
-			if (doesExist == false) {
+			if (!doesExist) {
 				looping = false;
 			}
 		}
 		quickMethods.addStringToCSV(filepath, genNumber);
 		this.StudentNum = genNumber;
+
 	}
 
 	public Module[] getModulesTaking(){
@@ -93,8 +94,7 @@ public class Student extends Person {
 				resultsAmount++;
 			}
 		}
-		int average = allgrades / resultsAmount;
-		return average;
+		return allgrades / resultsAmount;
 	}
 
 }
