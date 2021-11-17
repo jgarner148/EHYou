@@ -22,9 +22,9 @@ public class Student extends Person{
 		String filepath = "codes/studentNumbers.csv";
 		String genNumber = "";
 		while (looping) {
-			int currentyear = YearMonth.now().getYear(); //Gets the current year
+			int yearstarted = this.StartYr;
 			int randomnumber = quickMethods.randnum(1000, 9999); //Generates a random number using my class randnum and its class method generate
-			String yearAsString = String.valueOf(currentyear); //Turns currentyear into String
+			String yearAsString = String.valueOf(yearstarted); //Turns yearstarted into String
 			String numAsString = String.valueOf(randomnumber); //Turns randumnumber into string
 			genNumber = yearAsString + numAsString; //Combines to two
 			boolean doesExist = quickMethods.checkIfInFile(filepath, genNumber);

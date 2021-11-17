@@ -8,6 +8,8 @@ public class AddToArray {
      * @param newitem      The object you want to add to the array
      * @return The new array with the newly added object
      */
+
+    /**
     public static Academic[] academic(Academic[] orignalarray, Academic newitem) {
         int length = orignalarray.length; //Gets the length of the original array
         Academic[] newarray = new Academic[length + 1]; //Makes a new array that is one item bigger
@@ -20,6 +22,7 @@ public class AddToArray {
 
         return newarray;
     }
+     **/
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Student
     /**

@@ -1,5 +1,0 @@
-Student created
-Saves fname, lname, DOB and unique mdoule array ID to CSV file
-Creates a csv file with unqiue module array ID as its name that contains all of the module codes
-Creates a module codes array with that information
-When it wants to get the modules codes information it looks for a csv file with that module code as its title

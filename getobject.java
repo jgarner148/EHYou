@@ -30,8 +30,8 @@ public class getobject {
         return foundStudent;
     }
 
-    public static Tutor tutor(String tutorID) throws IOException, ClassNotFoundException {
-        String filename = "Tutors/"+tutorID+".txt";
+    public static Tutor tutor(String staffID) throws IOException, ClassNotFoundException {
+        String filename = "Tutors/"+staffID+".txt";
         FileInputStream fi = new FileInputStream(new File(filename));
         ObjectInputStream oi = new ObjectInputStream(fi);
 
@@ -42,12 +42,37 @@ public class getobject {
         return foundTutor;
     }
 
+    public static Academic academic(String staffID) throws IOException, ClassNotFoundException {
+        String filename = "Tutors/"+staffID+".txt";
+        FileInputStream fi = new FileInputStream(new File(filename));
+        ObjectInputStream oi = new ObjectInputStream(fi);
+
+        Academic foundAcademic = (Academic) oi.readObject();
+
+        oi.close();
+        fi.close();
+        return foundAcademic;
+    }
+
+
     public static Result result(String resultID) throws IOException, ClassNotFoundException {
         String filename = "Results/"+resultID+".txt";
         FileInputStream fi = new FileInputStream(new File(filename));
         ObjectInputStream oi = new ObjectInputStream(fi);
 
         Result foundResult = (Result) oi.readObject();
+
+        oi.close();
+        fi.close();
+        return foundResult;
+    }
+
+    public static Research research(String researchIO) throws IOException, ClassNotFoundException {
+        String filename = "Researches/"+researchIO+".txt";
+        FileInputStream fi = new FileInputStream(new File(filename));
+        ObjectInputStream oi = new ObjectInputStream(fi);
+
+        Research foundResult = (Research) oi.readObject();
 
         oi.close();
         fi.close();

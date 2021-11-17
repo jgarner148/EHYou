@@ -5,11 +5,11 @@ Module {
 	private String modCode;
 	private String[] studentsTaking;
 	private int[] totalMarks;
-	private Tutor teacher;
-	private Tutor moderator;
+	private String teacher;
+	private String moderator;
 
 	//Constructor
-	public Module(String modName, String modCode, String[] studentsTaking, int[] totalMarks, Tutor teacher, Tutor moderator) {
+	public Module(String modName, String modCode, String[] studentsTaking, int[] totalMarks, String teacher, String moderator) {
 		this.modName = modName;
 		this.modCode = modCode;
 		this.studentsTaking = studentsTaking;
@@ -48,19 +48,19 @@ Module {
 		this.totalMarks = AddToArray.integer(this.totalMarks, newmark);
 	}
 
-	public Tutor getTeacher() {
+	public String getTeacher() {
 		return teacher;
 	}
 
-	public void setTeacher(Tutor teacher) {
+	public void setTeacher(String teacher) {
 		this.teacher = teacher;
 	}
 
-	public Tutor getModerator() {
+	public String getModerator() {
 		return moderator;
 	}
 
-	public void setModerator(Tutor moderator) {
+	public void setModerator(String moderator) {
 		this.moderator = moderator;
 	}
 

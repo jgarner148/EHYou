@@ -1,7 +1,10 @@
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.YearMonth;
 
-public class Result {
+public class Result implements Serializable {
     private String resultCode;
     private String AssModule;
     private String WeekAss;
@@ -9,12 +12,11 @@ public class Result {
     private String Feedback;
 
     //Constructor
-
     public Result(String assModule, String weekAss, int grade, String feedback) throws IOException, ClassNotFoundException {
-        AssModule = assModule;
-        WeekAss = weekAss;
-        Grade = grade;
-        Feedback = feedback;
+        this.AssModule = assModule;
+        this.WeekAss = weekAss;
+        this.Grade = grade;
+        this.Feedback = feedback;
         Module resultModule = getobject.module(this.AssModule);
         resultModule.addToTotalMarks(this.Grade);
 
@@ -37,7 +39,16 @@ public class Result {
 				looping = false;
 			}
         }
+
+        quickMethods.addStringToCSV(filepath, genCode);
         this.resultCode = genCode;
+
+        String filename = "Results/" +this.getResultCode() + ".txt";
+        FileOutputStream f = new FileOutputStream(filename);
+        ObjectOutputStream o = new ObjectOutputStream(f);
+        o.writeObject(this);
+        o.close();
+        f.close();
     }
 
     //Getters and Setters
@@ -72,5 +83,13 @@ public class Result {
 
     public void setFeedback(String feedback) {
         Feedback = feedback;
+    }
+
+    public String getResultCode() {
+        return resultCode;
+    }
+
+    public void setResultCode(String resultCode) {
+        this.resultCode = resultCode;
     }
 }

@@ -24,13 +24,23 @@ public class main_testing {
 		 */
 
 
-		//String[] testarray3 = {};
+		String[] testarray3 = {};
 		//String[] testarray4 = {};
-		//Student student1 = new Student("Dave", "Smith", "10/09/2001", testarray3, testarray4, 2020, 2021);
+		//Student student1 = new Student("Dave", "Smith", "10/09/2001", testarray3, testarray4, 2016, 2021);
 
-		//Student student2 = getobject.student("20217225");
+		//Student student2 = getobject.student("20161391");
 		//System.out.println(student2.getFname());
 
+		//Result result1 = new Result("2015621", "week 4", 5, "this was good");
+
+		//Research study1 = new Research("Study 1", testarray3);
+		String code = "mmmz5332021";
+		String codetype = search.code(code);
+
+		if(codetype.equals("Researches")){
+			Research study1 = getobject.research(code);
+			System.out.println(study1.getResearchTitle());
+		}
 
 
 	}
