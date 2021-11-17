@@ -28,47 +28,9 @@ public class main_testing {
 		//String[] testarray4 = {};
 		//Student student1 = new Student("Dave", "Smith", "10/09/2001", testarray3, testarray4, 2020, 2021);
 
-		Student student2 = getobject.student("20217225");
-		System.out.println(student2.getFname());
+		//Student student2 = getobject.student("20217225");
+		//System.out.println(student2.getFname());
 
-
-		/**
-		String filename = student1.getStudentNum() + ".txt";
-		System.out.println(filename);
-
-
-		FileOutputStream f = new FileOutputStream(new File(filename));
-		ObjectOutputStream o = new ObjectOutputStream(f);
-		o.writeObject(student1);
-		o.close();
-		f.close();
-
-
-
-        FileInputStream fi = new FileInputStream(new File(filename));
-        ObjectInputStream oi = new ObjectInputStream(fi);
-
-        // Read objects
-		Student pr1 = (Student) oi.readObject();
-
-		oi.close();
-		fi.close();
-
-
-        String number = pr1.getStudentNum();
-
-        System.out.println(number + "this had printed");
-		System.out.println("printed");
-
-		//String[] modules = {};
-		//Student_Test tester1 = new Student_Test("dave", "smith", "10/09/2021", modules);
-		//System.out.println(tester1.getFname());
-
-		//String modcode= "24571041";
-		//String sufx = ".csv";
-
-		//String filename = modcode + sufx;
-		**/
 
 
 	}

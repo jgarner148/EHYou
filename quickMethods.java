@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.Random;
 
 public class quickMethods{
 
@@ -47,6 +48,14 @@ public class quickMethods{
         csvWriter.append(",");
         csvWriter.flush();
         csvWriter.close();
+    }
+
+    public static char randchar(){
+        Random random = new Random();
+
+        char randomchar = (char) (random.nextInt(26) + 'a');
+
+        return randomchar;
     }
 
 

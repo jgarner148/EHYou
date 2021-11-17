@@ -2,7 +2,7 @@ import java.io.*;
 import java.time.YearMonth;
 
 
-public class Student extends Person implements Serializable {
+public class Student extends Person{
 	private String[] ModulesTaking;
 	private String[] AllResults;
 	private int StartYr;
@@ -19,7 +19,7 @@ public class Student extends Person implements Serializable {
 		this.EndYr = endYr;
 		//Section for generating a user number
 		boolean looping = true;
-		String filepath = "studentNumbers.csv";
+		String filepath = "codes/studentNumbers.csv";
 		String genNumber = "";
 		while (looping) {
 			int currentyear = YearMonth.now().getYear(); //Gets the current year
@@ -35,7 +35,7 @@ public class Student extends Person implements Serializable {
 		quickMethods.addStringToCSV(filepath, genNumber);
 		this.StudentNum = genNumber;
 
-		//section to generate class file
+		
 		String filename = "Students/" +this.getStudentNum() + ".txt";
 		FileOutputStream f = new FileOutputStream(filename);
 		ObjectOutputStream o = new ObjectOutputStream(f);
@@ -87,7 +87,7 @@ public class Student extends Person implements Serializable {
 		this.AllResults = AddToArray.string(this.AllResults, newresult);
 	}
 
-	/**
+	
 	public int averageGradeForModule(String targetModuleCode) throws IOException, ClassNotFoundException {
 		String[] allResults = this.getAllResults();
 		int allgrades = 0;
@@ -95,30 +95,19 @@ public class Student extends Person implements Serializable {
 		for(int i=0; i < allResults.length; i++) {
 			String currentResultCode = allResults[i];
 			Result currentResult = getobject.result(currentResultCode);
-			//String currentResultModule = currentResult.getAssModule();
-		}
-
-
-
-
-
-		String moduleCode = targetModule.getModCode();
-		String[] allResults = getAllResults(); //Gets the Results array from the class
-		int allgrades = 0;
-		int resultsAmount = 0;
-		for(int i=0; i < allResults.length; i++){  //Iterates through the results array and gets the grade from each object and adds it to a running total
-			Result currentResult = allResults[i];
-			Module currentResultModule = currentResult.getAssModule();
-			String currentResultModCode = currentResultModule.getModCode();
-			if(moduleCode == currentResultModCode){
+			String currentResultModule = currentResult.getAssModule();
+			Module currentModule = getobject.module(currentResultModule);
+			String modcode = currentModule.getModCode();
+			if(modcode.equals(targetModuleCode)){
 				int currentGrade = currentResult.getGrade();
-				allgrades = allgrades + currentGrade;
+				allgrades = allgrades+currentGrade;
 				resultsAmount++;
 			}
 		}
-		return allgrades / resultsAmount;
+		return allgrades/resultsAmount;
+
 
 	}
-	 **/
+	 
 
 }
