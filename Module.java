@@ -1,3 +1,4 @@
+import java.io.IOException;
 
 public class
 Module {
@@ -5,17 +6,45 @@ Module {
 	private String modCode;
 	private String[] studentsTaking;
 	private int[] totalMarks;
-	private String teacher;
+	private String[] teachers;
 	private String moderator;
 
 	//Constructor
-	public Module(String modName, String modCode, String[] studentsTaking, int[] totalMarks, String teacher, String moderator) {
+	public Module(String modName, String modCode, String[] studentsTaking, int[] totalMarks, String[] teachers, String moderator) throws IOException, ClassNotFoundException {
 		this.modName = modName;
 		this.modCode = modCode;
 		this.studentsTaking = studentsTaking;
 		this.totalMarks = totalMarks;
-		this.teacher = teacher;
+		this.teachers = teachers;
 		this.moderator = moderator;
+
+		for(int i=0; i<this.teachers.length; i++){
+			Tutor addingTo = getobject.tutor(this.teachers[i]);
+			String[] fetchedModules = addingTo.getModulesTeaching();
+			boolean doesexist = false;
+			for(int l=0; l<fetchedModules.length;l++){
+				if(fetchedModules[l].equals(this.modCode)){
+					doesexist=true;
+				}
+			}
+			if(!doesexist) {
+				addingTo.addToModulesTeaching(this.modCode);
+			}
+		}
+
+		Tutor addingTo = getobject.tutor(this.moderator);
+		String[] featchedModules = addingTo.getModulesModerating();
+		boolean doesexist = false;
+		for(int l=0; l<featchedModules.length;l++){
+			if(featchedModules[l].equals(this.modCode)){
+				doesexist=true;
+			}
+		}
+		if(!doesexist) {
+			addingTo.addToModulesModerating(this.modCode);
+		}
+
+
 	}
 
 	public String getModName() {
@@ -48,12 +77,12 @@ Module {
 		this.totalMarks = AddToArray.integer(this.totalMarks, newmark);
 	}
 
-	public String getTeacher() {
-		return teacher;
+	public String[] getTeachers() {
+		return teachers;
 	}
 
-	public void setTeacher(String teacher) {
-		this.teacher = teacher;
+	public void addToTeachers(String newteacher) {
+		this.teachers = AddToArray.string(this.teachers, newteacher);
 	}
 
 	public String getModerator() {

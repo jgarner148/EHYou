@@ -8,7 +8,7 @@ public class Tutor extends Staff{
     private String[] modulesTeaching;
     private String[] modulesModerating;
 
-    public Tutor(String fname, String lname, String dob, int startyr, int salary, String office, String degree, String[] modulesTeaching, String[] modulesModerating) throws IOException {
+    public Tutor(String fname, String lname, String dob, int startyr, int salary, String office, String degree, String[] modulesTeaching, String[] modulesModerating) throws IOException, ClassNotFoundException {
         super(fname, lname, dob, startyr, salary);
         this.office = office;
         this.degree = degree;
@@ -22,7 +22,31 @@ public class Tutor extends Staff{
         o.close();
         f.close();
 
+        for(int i=0;i<this.modulesTeaching.length;i++){
+            Module addingTo = getobject.module(this.modulesTeaching[i]);
+            String[] fetchedTeachers = addingTo.getTeachers();
+            boolean doesexist = false;
+            for(int l=0; l<fetchedTeachers.length;l++){
+                if(fetchedTeachers[l].equals(this.getStaffID())){
+                    doesexist=true;
+                }
+            }
+            if(!doesexist) {
+                addingTo.addToTeachers(this.getStaffID());
+            }
+        }
 
+        for(int i=0;i<this.modulesModerating.length;i++){
+            Module addingTo = getobject.module(this.modulesModerating[i]);
+            String fetchedTeacher = addingTo.getModerator();
+            boolean doesexist = false;
+            if(fetchedTeacher.equals(this.getStaffID())){
+                    doesexist=true;
+            }
+            if(!doesexist) {
+                addingTo.setModerator(this.getStaffID());
+            }
+        }
 
 
 

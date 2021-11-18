@@ -10,13 +10,15 @@ public class Result implements Serializable {
     private String WeekAss;
     private int Grade;
     private String Feedback;
+    private String assStudent;
 
     //Constructor
-    public Result(String assModule, String weekAss, int grade, String feedback) throws IOException, ClassNotFoundException {
+    public Result(String assModule, String weekAss, int grade, String feedback, String assStudent) throws IOException, ClassNotFoundException {
         this.AssModule = assModule;
         this.WeekAss = weekAss;
         this.Grade = grade;
         this.Feedback = feedback;
+        this.assStudent = assStudent;
         Module resultModule = getobject.module(this.AssModule);
         resultModule.addToTotalMarks(this.Grade);
 
@@ -49,6 +51,18 @@ public class Result implements Serializable {
         o.writeObject(this);
         o.close();
         f.close();
+
+        Student Addingto = getobject.student(this.assStudent);
+        String[] fetchedResults = Addingto.getAllResults();
+        boolean doesexist = false;
+        for(int l=0; l<fetchedResults.length;l++){
+            if(fetchedResults[l].equals(this.resultCode)){
+                doesexist=true;
+            }
+        }
+        if(!doesexist) {
+            Addingto.addToAllResults(this.resultCode);
+        }
     }
 
     //Getters and Setters

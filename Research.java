@@ -48,7 +48,7 @@ public class Research implements Serializable {
             String[] fetchedResearch = addingTo.getCurrentResearch();
             boolean doesexist = false;
             for(int l=0; l<fetchedResearch.length;l++){
-                if(fetchedResearch[i].equals(this.ResearchCode)){
+                if(fetchedResearch[l].equals(this.ResearchCode)){
                     doesexist=true;
                 }
             }

@@ -33,14 +33,11 @@ public class main_testing {
 
 		//Result result1 = new Result("2015621", "week 4", 5, "this was good");
 
-		//Research study1 = new Research("Study 1", testarray3);
-		String code = "mmmz5332021";
-		String codetype = search.code(code);
+		Result result2 = getobject.result("sttbil152422021");
 
-		if(codetype.equals("Researches")){
-			Research study1 = getobject.research(code);
-			System.out.println(study1.getResearchTitle());
-		}
+		System.out.println(result2.getFeedback());
+
+		//Research study1 = new Research("Study 1", testarray3);
 
 
 	}
