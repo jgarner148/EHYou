@@ -1,23 +1,54 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GUIWelcomePage implements ActionListener {
-    private JFrame mainFrame = new JFrame();
-    private JPanel welcomePanel = new JPanel();
+    private JFrame mainFrame;
+    private JLabel logoText = new JLabel("EHYou");
+    private JButton goToCreate = factory.makeFlatButton("Create");
+    private JButton goToSearch = factory.makeFlatButton("Search");
 
-    public GUIWelcomePage(JFrame mainFrame) {
-        this.mainFrame = mainFrame;
+    public GUIWelcomePage(JFrame importedFrame) {
+        //Setting up the Main Frame
+        this.mainFrame = importedFrame;
+        mainFrame.setTitle("EHYou - Home");
 
-//https://www.youtube.com/watch?v=Hiv3gwJC5kw&t=1420s
+        //Setting up the Logo JLabel
+        logoText.setBounds(494, 150,303,110);
+        logoText.setFont(new Font("Georgia", Font.PLAIN,95));
 
+        //Setting up the Create Button
+        goToCreate.setBounds(408,350,200,75);
+        goToCreate.addActionListener(this);
 
+        //Setting up the Search Button
+        goToSearch.setBounds(658, 350,200,75);
+        goToSearch.addActionListener(this);
 
+        //Adding all elements to the frame
+        this.mainFrame.add(logoText);
+        this.mainFrame.add(goToCreate);
+        this.mainFrame.add(goToSearch);
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        mainFrame.getContentPane().removeAll();
+        mainFrame.repaint();
+        //When the goToCreate button is clicked
+        if(e.getSource()==goToCreate){
+            GUICreateHome createhomepage = new GUICreateHome(this.mainFrame);
+        }
+
+        //When the goToSearch button is pressed
+        if(e.getSource()==goToSearch){
+            //mainFrame.getContentPane().removeAll();
+            //mainFrame.repaint();
+            GUISearchHome searchhomepage = new GUISearchHome(this.mainFrame);
+
+        }
 
     }
 }
