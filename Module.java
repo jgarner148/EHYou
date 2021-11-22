@@ -13,6 +13,7 @@ Module {
 	public Module(String modName, String modCode, String[] studentsTaking, int[] totalMarks, String[] teachers, String moderator) throws IOException, ClassNotFoundException {
 		this.modName = modName;
 		this.modCode = modCode;
+		quickMethods.addStringToCSV("codes/modulecodes.csv", modCode);
 		this.studentsTaking = studentsTaking;
 		this.totalMarks = totalMarks;
 		this.teachers = teachers;

@@ -25,7 +25,8 @@ public class main_testing {
 
 
 		String[] testarray3 = {};
-		//String[] testarray4 = {};
+		int[] testintarray ={};
+		String[] testarray4 = {};
 		//Student student1 = new Student("Dave", "Smith", "10/09/2001", testarray3, testarray4, 2016, 2021);
 
 		//Student student2 = getobject.student("20161391");
@@ -33,10 +34,9 @@ public class main_testing {
 
 		//Result result1 = new Result("2015621", "week 4", 5, "this was good");
 
-		Result result2 = getobject.result("sttbil152422021");
+		//Result result2 = getobject.result("sttbil152422021");
 
-		System.out.println(result2.getFeedback());
-
+		Module module1 = new Module("Testing", "CIS007", testarray3, testintarray, testarray4, "Dave");
 		//Research study1 = new Research("Study 1", testarray3);
 
 
