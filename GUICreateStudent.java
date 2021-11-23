@@ -337,10 +337,6 @@ public class GUICreateStudent implements ActionListener {
                     anyInvalid = true;
                 }
             }
-            if(anyInvalid){
-                JOptionPane.showMessageDialog(null, "An error occured Error Code: 9999", "Oops", JOptionPane.ERROR_MESSAGE);
-                anyInvalid = true;
-            }
 
         }
     }
