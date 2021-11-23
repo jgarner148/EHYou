@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 public class search {
    public static String code(String targetcode) throws IOException{
     String objectType = "none";
-    String[] objectTypesArray = {"Persons","Students","Modules", "Results","Researches"};
+    String[] objectTypesArray = {"Students","Modules", "Results","Researches", "Tutors", "Academics"};
     for(int i=0; i < objectTypesArray.length; i++){
         String currentObjectType = objectTypesArray[i];
         if(objectType.equals("none")){

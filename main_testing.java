@@ -36,7 +36,7 @@ public class main_testing {
 
 		//Result result2 = getobject.result("sttbil152422021");
 
-		Module module1 = new Module("Testing", "CIS007", testarray3, testintarray, testarray4, "Dave");
+		//Module module1 = new Module("Testing", "CIS007", testarray3, testintarray, testarray4, "Dave");
 		//Research study1 = new Research("Study 1", testarray3);
 
 

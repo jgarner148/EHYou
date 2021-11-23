@@ -1,7 +1,10 @@
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 public class
-Module {
+Module implements Serializable {
 	private String modName;
 	private String modCode;
 	private String[] studentsTaking;
@@ -10,12 +13,12 @@ Module {
 	private String moderator;
 
 	//Constructor
-	public Module(String modName, String modCode, String[] studentsTaking, int[] totalMarks, String[] teachers, String moderator) throws IOException, ClassNotFoundException {
+	public Module(String modName, String modCode, String[] studentsTaking, /**int[] totalMarks,**/ String[] teachers, String moderator) throws IOException, ClassNotFoundException {
 		this.modName = modName;
 		this.modCode = modCode;
 		quickMethods.addStringToCSV("codes/modulecodes.csv", modCode);
 		this.studentsTaking = studentsTaking;
-		this.totalMarks = totalMarks;
+		//this.totalMarks = totalMarks;
 		this.teachers = teachers;
 		this.moderator = moderator;
 
@@ -33,6 +36,7 @@ Module {
 			}
 		}
 
+		/**
 		Tutor addingTo = getobject.tutor(this.moderator);
 		String[] featchedModules = addingTo.getModulesModerating();
 		boolean doesexist = false;
@@ -44,7 +48,13 @@ Module {
 		if(!doesexist) {
 			addingTo.addToModulesModerating(this.modCode);
 		}
-
+**/
+		String filename = "Modules/" +this.getModCode() + ".txt";
+		FileOutputStream f = new FileOutputStream(filename);
+		ObjectOutputStream o = new ObjectOutputStream(f);
+		o.writeObject(this);
+		o.close();
+		f.close();
 
 	}
 
