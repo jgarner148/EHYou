@@ -15,7 +15,7 @@ public class GUIWelcomePage implements ActionListener {
         mainFrame.setTitle("EHYou - Home");
 
         //Setting up the Logo JLabel
-        logoText.setBounds(494, 150,303,110);
+        logoText.setBounds(494, 150,305,110);
         logoText.setFont(new Font("Georgia", Font.PLAIN,95));
 
         //Setting up the Create Button
