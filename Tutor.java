@@ -22,29 +22,43 @@ public class Tutor extends Staff{
         o.close();
         f.close();
 
-        for(int i=0;i<this.modulesTeaching.length;i++){
-            Module addingTo = getobject.module(this.modulesTeaching[i]);
-            String[] fetchedTeachers = addingTo.getTeachers();
-            boolean doesexist = false;
-            for(int l=0; l<fetchedTeachers.length;l++){
-                if(fetchedTeachers[l].equals(this.getStaffID())){
-                    doesexist=true;
+        boolean isTeachingEmpty = false;
+        if(this.modulesTeaching.length == 0){
+            isTeachingEmpty = true;
+        }
+
+        if(!isTeachingEmpty) {
+            for (int i = 0; i < this.modulesTeaching.length; i++) {
+                Module addingTo = getobject.module(this.modulesTeaching[i]);
+                String[] fetchedTeachers = addingTo.getTeachers();
+                boolean doesexist = false;
+                for (int l = 0; l < fetchedTeachers.length; l++) {
+                    if (fetchedTeachers[l].equals(this.getStaffID())) {
+                        doesexist = true;
+                    }
                 }
-            }
-            if(!doesexist) {
-                addingTo.addToTeachers(this.getStaffID());
+                if (!doesexist) {
+                    addingTo.addToTeachers(this.getStaffID());
+                }
             }
         }
 
-        for(int i=0;i<this.modulesModerating.length;i++){
-            Module addingTo = getobject.module(this.modulesModerating[i]);
-            String fetchedTeacher = addingTo.getModerator();
-            boolean doesexist = false;
-            if(fetchedTeacher.equals(this.getStaffID())){
-                    doesexist=true;
-            }
-            if(!doesexist) {
-                addingTo.setModerator(this.getStaffID());
+        boolean isModeratingEmpty = false;
+        if(this.modulesModerating.length==0){
+            isModeratingEmpty = true;
+        }
+
+        if(!isModeratingEmpty) {
+            for (int i = 0; i < this.modulesModerating.length; i++) {
+                Module addingTo = getobject.module(this.modulesModerating[i]);
+                String fetchedTeacher = addingTo.getModerator();
+                boolean doesexist = false;
+                if (fetchedTeacher.equals(this.getStaffID())) {
+                    doesexist = true;
+                }
+                if (!doesexist) {
+                    addingTo.setModerator(this.getStaffID());
+                }
             }
         }
 

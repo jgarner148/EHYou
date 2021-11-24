@@ -32,7 +32,7 @@ public class Student extends Person{
 				looping = false;
 			}
 		}
-		quickMethods.addStringToCSV(filepath, genNumber);
+
 		this.StudentNum = genNumber;
 
 		
@@ -42,6 +42,8 @@ public class Student extends Person{
 		o.writeObject(this);
 		o.close();
 		f.close();
+
+		quickMethods.addStringToCSV(filepath, genNumber);
 
 	}
 

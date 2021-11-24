@@ -32,7 +32,7 @@ public class Research implements Serializable {
                 looping = false;
             }
         }
-        quickMethods.addStringToCSV(filepath, genCode);
+
         this.ResearchCode = genCode;
 
         String filename = "Researches/" +this.getResearchCode() + ".txt";
@@ -42,18 +42,26 @@ public class Research implements Serializable {
         o.close();
         f.close();
 
+        quickMethods.addStringToCSV(filepath, genCode);
 
-        for(int i=0; i<this.getAcademicsResearching().length; i++){
-            Academic addingTo = getobject.academic(this.AcademicsResearching[i]);
-            String[] fetchedResearch = addingTo.getCurrentResearch();
-            boolean doesexist = false;
-            for(int l=0; l<fetchedResearch.length;l++){
-                if(fetchedResearch[l].equals(this.ResearchCode)){
-                    doesexist=true;
+        boolean isAcademicEmpty = false;
+        if(this.AcademicsResearching.length==0){
+            isAcademicEmpty = true;
+        }
+
+        if(!isAcademicEmpty) {
+            for (int i = 0; i < this.getAcademicsResearching().length; i++) {
+                Academic addingTo = getobject.academic(this.AcademicsResearching[i]);
+                String[] fetchedResearch = addingTo.getCurrentResearch();
+                boolean doesexist = false;
+                for (int l = 0; l < fetchedResearch.length; l++) {
+                    if (fetchedResearch[l].equals(this.ResearchCode)) {
+                        doesexist = true;
+                    }
                 }
-            }
-            if(!doesexist) {
-                addingTo.addToCurrentResearch(this.ResearchCode);
+                if (!doesexist) {
+                    addingTo.addToCurrentResearch(this.ResearchCode);
+                }
             }
         }
     }

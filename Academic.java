@@ -20,17 +20,24 @@ public class Academic extends Staff{
         o.close();
         f.close();
 
-        for(int i=0; i<this.currentResearch.length; i++){
-            Research addingTo = getobject.research(this.currentResearch[i]);
-            String[] featchedAcademics = addingTo.getAcademicsResearching();
-            boolean doesexist = false;
-            for(int l=0; l<featchedAcademics.length;l++){
-                if(featchedAcademics[l].equals(this.getStaffID())){
-                    doesexist=true;
+        boolean isResearchEmpty = false;
+        if(this.currentResearch.length==0){
+            isResearchEmpty = true;
+        }
+
+        if(!isResearchEmpty) {
+            for (int i = 0; i < this.currentResearch.length; i++) {
+                Research addingTo = getobject.research(this.currentResearch[i]);
+                String[] featchedAcademics = addingTo.getAcademicsResearching();
+                boolean doesexist = false;
+                for (int l = 0; l < featchedAcademics.length; l++) {
+                    if (featchedAcademics[l].equals(this.getStaffID())) {
+                        doesexist = true;
+                    }
                 }
-            }
-            if(!doesexist) {
-                addingTo.addToAcademicsResearching(this.getStaffID());
+                if (!doesexist) {
+                    addingTo.addToAcademicsResearching(this.getStaffID());
+                }
             }
         }
     }

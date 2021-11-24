@@ -8,7 +8,7 @@ Module implements Serializable {
 	private String modName;
 	private String modCode;
 	private String[] studentsTaking;
-	private int[] totalMarks;
+	private int[] totalMarks = new int[0];
 	private String[] teachers;
 	private String moderator;
 
@@ -16,7 +16,6 @@ Module implements Serializable {
 	public Module(String modName, String modCode, String[] studentsTaking, /**int[] totalMarks,**/ String[] teachers, String moderator) throws IOException, ClassNotFoundException {
 		this.modName = modName;
 		this.modCode = modCode;
-		quickMethods.addStringToCSV("codes/modulecodes.csv", modCode);
 		this.studentsTaking = studentsTaking;
 		//this.totalMarks = totalMarks;
 		this.teachers = teachers;
@@ -36,25 +35,32 @@ Module implements Serializable {
 			}
 		}
 
-		/**
-		Tutor addingTo = getobject.tutor(this.moderator);
-		String[] featchedModules = addingTo.getModulesModerating();
-		boolean doesexist = false;
-		for(int l=0; l<featchedModules.length;l++){
-			if(featchedModules[l].equals(this.modCode)){
-				doesexist=true;
+		boolean isModZero = false;
+		if(this.moderator.length()==0){
+			isModZero = true;
+		}
+		if(!isModZero) {
+			Tutor addingTo = getobject.tutor(this.moderator);
+			String[] featchedModules = addingTo.getModulesModerating();
+			boolean doesexist = false;
+			for (int l = 0; l < featchedModules.length; l++) {
+				if (featchedModules[l].equals(this.modCode)) {
+					doesexist = true;
+				}
+			}
+			if (!doesexist) {
+				addingTo.addToModulesModerating(this.modCode);
 			}
 		}
-		if(!doesexist) {
-			addingTo.addToModulesModerating(this.modCode);
-		}
-**/
+
 		String filename = "Modules/" +this.getModCode() + ".txt";
 		FileOutputStream f = new FileOutputStream(filename);
 		ObjectOutputStream o = new ObjectOutputStream(f);
 		o.writeObject(this);
 		o.close();
 		f.close();
+
+		quickMethods.addStringToCSV("codes/modulecodes.csv", modCode);
 
 	}
 

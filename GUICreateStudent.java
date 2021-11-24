@@ -47,7 +47,7 @@ public class GUICreateStudent implements ActionListener {
 
     public GUICreateStudent(JFrame mainFrame) {
         this.mainFrame = mainFrame;
-        mainFrame.setTitle("EHYou - Create Student");
+        this.mainFrame.setTitle("EHYou - Create Student");
 
         //Setting up the back Button
         goBack.setBounds(0, 0,100,50);
@@ -254,7 +254,6 @@ public class GUICreateStudent implements ActionListener {
             catch (NumberFormatException ex){
                 JOptionPane.showMessageDialog(null, "Date of birth not valid, please use the format DD/MM/YYYY. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
                 anyInvalid = true;
-                System.out.println("caught");
             }
 
             //checking module code exists
@@ -324,10 +323,11 @@ public class GUICreateStudent implements ActionListener {
                 }
             }
 
+            //creating the object
             if(!anyInvalid){
                 try {
                     Student newStudent = new Student(this.fname, this.lname, this.dob, this.ModulesTaking, this.Allresults, this.StartYr, this.EndYr);
-                    JOptionPane.showMessageDialog(null, "Student with created successfully! New student number: " + newStudent.getStudentNum(), "Success!", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Student was created successfully! New student number: " + newStudent.getStudentNum(), "Success!", JOptionPane.INFORMATION_MESSAGE);
                     mainFrame.getContentPane().removeAll();
                     mainFrame.repaint();
                     GUICreateHome createhomepage = new GUICreateHome(this.mainFrame);

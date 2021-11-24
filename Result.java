@@ -42,7 +42,6 @@ public class Result implements Serializable {
 			}
         }
 
-        quickMethods.addStringToCSV(filepath, genCode);
         this.resultCode = genCode;
 
         String filename = "Results/" +this.getResultCode() + ".txt";
@@ -52,16 +51,25 @@ public class Result implements Serializable {
         o.close();
         f.close();
 
-        Student Addingto = getobject.student(this.assStudent);
-        String[] fetchedResults = Addingto.getAllResults();
-        boolean doesexist = false;
-        for(int l=0; l<fetchedResults.length;l++){
-            if(fetchedResults[l].equals(this.resultCode)){
-                doesexist=true;
-            }
+        quickMethods.addStringToCSV(filepath, genCode);
+
+        boolean isStudentzero = false;
+        if(this.assStudent.length()==0){
+            isStudentzero = true;
         }
-        if(!doesexist) {
-            Addingto.addToAllResults(this.resultCode);
+
+        if(!isStudentzero) {
+            Student Addingto = getobject.student(this.assStudent);
+            String[] fetchedResults = Addingto.getAllResults();
+            boolean doesexist = false;
+            for (int l = 0; l < fetchedResults.length; l++) {
+                if (fetchedResults[l].equals(this.resultCode)) {
+                    doesexist = true;
+                }
+            }
+            if (!doesexist) {
+                Addingto.addToAllResults(this.resultCode);
+            }
         }
     }
 
