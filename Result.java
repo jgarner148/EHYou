@@ -1,7 +1,4 @@
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.time.YearMonth;
 
 public class Result implements Serializable {
@@ -69,6 +66,7 @@ public class Result implements Serializable {
             }
             if (!doesexist) {
                 Addingto.addToAllResults(this.resultCode);
+                Addingto.updateClassFile();
             }
         }
     }
@@ -79,39 +77,51 @@ public class Result implements Serializable {
         return AssModule;
     }
 
-    public void setAssModule(String assModule) {
+    public void setAssModule(String assModule) throws IOException {
         AssModule = assModule;
+        this.updateClassFile();
     }
 
     public String getWeekAss() {
         return WeekAss;
     }
 
-    public void setWeekAss(String weekAss) {
+    public void setWeekAss(String weekAss) throws IOException {
         WeekAss = weekAss;
+        this.updateClassFile();
     }
 
     public int getGrade() {
         return Grade;
     }
 
-    public void setGrade(int grade) {
-        Grade = grade;
+    public void setGrade(int grade) throws IOException {
+        this.Grade = grade;
+        this.updateClassFile();
     }
 
     public String getFeedback() {
         return Feedback;
     }
 
-    public void setFeedback(String feedback) {
-        Feedback = feedback;
+    public void setFeedback(String feedback) throws IOException {
+        this.Feedback = feedback;
+        this.updateClassFile();
     }
 
     public String getResultCode() {
         return resultCode;
     }
 
-    public void setResultCode(String resultCode) {
-        this.resultCode = resultCode;
+    public void updateClassFile() throws IOException {
+        String filename = "Results/" +this.getResultCode() + ".txt";
+        File oldFile = new File(filename);
+        oldFile.delete();
+
+        FileOutputStream f = new FileOutputStream(filename);
+        ObjectOutputStream o = new ObjectOutputStream(f);
+        o.writeObject(this);
+        o.close();
+        f.close();
     }
 }

@@ -165,10 +165,10 @@ public class GUICreateResult implements ActionListener {
                     mainFrame.getContentPane().removeAll();
                     mainFrame.repaint();
                     GUICreateHome createhomepage = new GUICreateHome(this.mainFrame);
-                } catch (IOException | ClassNotFoundException ioException) {
-                    JOptionPane.showMessageDialog(null, "An error occured. Error Code: 4000X30", "Oops", JOptionPane.ERROR_MESSAGE);
-                    anyInvalid = true;
-                }
+                }catch (IOException | ClassNotFoundException ex) {
+                ex.printStackTrace();
+            }
+                //J
             }
         }
     }

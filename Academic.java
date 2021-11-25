@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -37,6 +38,7 @@ public class Academic extends Staff{
                 }
                 if (!doesexist) {
                     addingTo.addToAcademicsResearching(this.getStaffID());
+                    addingTo.updateClassFile();
                 }
             }
         }
@@ -46,23 +48,38 @@ public class Academic extends Staff{
         return office;
     }
 
-    public void setOffice(String office) {
+    public void setOffice(String office) throws IOException {
         this.office = office;
+        this.updateClassFile();
     }
 
     public String getDegree() {
         return degree;
     }
 
-    public void setDegree(String degree) {
+    public void setDegree(String degree) throws IOException {
         this.degree = degree;
+        this.updateClassFile();
     }
 
     public String[] getCurrentResearch() {
         return currentResearch;
     }
 
-    public void addToCurrentResearch(String newresearch) {
+    public void addToCurrentResearch(String newresearch) throws IOException {
         this.currentResearch = AddToArray.string(this.currentResearch, newresearch);
+        this.updateClassFile();
+    }
+
+    public void updateClassFile() throws IOException {
+        String filename = "Academics/" +this.getStaffID() + ".txt";
+        File oldFile = new File(filename);
+        oldFile.delete();
+
+        FileOutputStream f = new FileOutputStream(filename);
+        ObjectOutputStream o = new ObjectOutputStream(f);
+        o.writeObject(this);
+        o.close();
+        f.close();
     }
 }

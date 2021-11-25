@@ -24,10 +24,12 @@ public class main_testing {
 		 */
 
 
-		String[] testarray3 = {};
-		int[] testintarray ={};
-		String[] testarray4 = {};
+		//String[] testarray3 = {};
+		//int[] testintarray ={};
+		//String[] testarray4 = {};
 		//Student student1 = new Student("Dave", "Smith", "10/09/2001", testarray3, testarray4, 2016, 2021);
+		//String student1num = student1.getStudentNum(); //20166898
+
 
 		//Student student2 = getobject.student("20161391");
 		//System.out.println(student2.getFname());

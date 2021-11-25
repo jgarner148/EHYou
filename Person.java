@@ -1,9 +1,9 @@
 import java.io.Serializable;
 
 public class Person implements Serializable {
-	private String fname;
-	private String lname;
-	private String dob;
+	protected String fname;
+	protected String lname;
+	protected String dob;
 
 	//Constructor
 	public Person(String fname, String lname, String dob) {
@@ -13,24 +13,5 @@ public class Person implements Serializable {
 		this.dob = dob;
 	}
 
-	public String getFname() {
-		return fname;
-	}
-
-	public void setFname(String fname) {
-		this.fname = fname;
-	}
-
-	public String getLname() {
-		return lname;
-	}
-
-	public void setLname(String lname) {
-		this.lname = lname;
-	}
-
-	public String getDob() {
-		return dob;
-	}
 
 }

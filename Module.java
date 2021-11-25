@@ -1,7 +1,4 @@
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 
 public class
 Module implements Serializable {
@@ -32,8 +29,27 @@ Module implements Serializable {
 			}
 			if(!doesexist) {
 				addingTo.addToModulesTeaching(this.modCode);
+				addingTo.updateClassFile();
 			}
 		}
+
+		for(int i=0; i<this.studentsTaking.length; i++){
+			Student addingTo = getobject.student(this.studentsTaking[i]);
+			String[] fetchedModules = addingTo.getModulesTaking();
+			boolean doesexist = false;
+			for(int l=0; l<fetchedModules.length;l++){
+				if(fetchedModules[l].equals(this.modCode)){
+					doesexist=true;
+				}
+			}
+			if(!doesexist) {
+				addingTo.addToModulesTaking(this.modCode);
+				addingTo.updateClassFile();
+			}
+		}
+
+
+
 
 		boolean isModZero = false;
 		if(this.moderator.length()==0){
@@ -50,6 +66,7 @@ Module implements Serializable {
 			}
 			if (!doesexist) {
 				addingTo.addToModulesModerating(this.modCode);
+				addingTo.updateClassFile();
 			}
 		}
 
@@ -68,46 +85,52 @@ Module implements Serializable {
 		return modName;
 	}
 
-	public void setModName(String modName) {
+	public void setModName(String modName) throws IOException {
 		this.modName = modName;
+		this.updateClassFile();
 	}
 
 	public String getModCode() {
 		return modCode;
 	}
 
-	public void setModCode(String modCode) {
+	public void setModCode(String modCode) throws IOException {
 		this.modCode = modCode;
+		this.updateClassFile();
 	}
 
 	public String[] getStudentsTaking() {
 		return studentsTaking;
 	}
 
-	public void addToStudentsTaking(String studentsTaking) {
+	public void addToStudentsTaking(String studentsTaking) throws IOException {
 		this.studentsTaking = AddToArray.string(this.studentsTaking, studentsTaking);
+		this.updateClassFile();
 	}
 
 	public int[] getTotalMarks(){return this.totalMarks;}
 
-	public void addToTotalMarks(int newmark){
+	public void addToTotalMarks(int newmark) throws IOException {
 		this.totalMarks = AddToArray.integer(this.totalMarks, newmark);
+		this.updateClassFile();
 	}
 
 	public String[] getTeachers() {
 		return teachers;
 	}
 
-	public void addToTeachers(String newteacher) {
+	public void addToTeachers(String newteacher) throws IOException {
 		this.teachers = AddToArray.string(this.teachers, newteacher);
+		this.updateClassFile();
 	}
 
 	public String getModerator() {
 		return moderator;
 	}
 
-	public void setModerator(String moderator) {
+	public void setModerator(String moderator) throws IOException {
 		this.moderator = moderator;
+		this.updateClassFile();
 	}
 
 	public int getAverageMark(){
@@ -141,7 +164,15 @@ Module implements Serializable {
 		return maxmark;
 	}
 
+	public void updateClassFile() throws IOException {
+		String filename = "Modules/" +this.getModCode() + ".txt";
+		File oldFile = new File(filename);
+		oldFile.delete();
 
-
-
+		FileOutputStream f = new FileOutputStream(filename);
+		ObjectOutputStream o = new ObjectOutputStream(f);
+		o.writeObject(this);
+		o.close();
+		f.close();
+	}
 }

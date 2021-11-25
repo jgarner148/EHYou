@@ -2,10 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class GUIViewStudent implements ActionListener {
     private JFrame IDCardFrame = new JFrame();
+    private Student studentBeingViewed;
     private String studentCode;
     private JLabel IDLabel = new JLabel("");
     private JLabel fnameLabel = new JLabel("");
@@ -17,11 +19,14 @@ public class GUIViewStudent implements ActionListener {
     private JLabel allResultsLabel = new JLabel("");
     private JLabel containerLabel = new JLabel(" ");
     private JButton calculateButton = factory.makeFlatButton("Work out average per module");
+    private Font labelFont = new Font("Georgia", Font.ITALIC,15);
+    private JButton enterButton = factory.makeFlatButton("Enter");
+    private JTextField moduleInput = new JTextField();
 
 
     public GUIViewStudent( String studentCode) throws IOException, ClassNotFoundException {
         this.studentCode = studentCode;
-        Student studentBeingViewed = getobject.student(this.studentCode);
+        this.studentBeingViewed = getobject.student(this.studentCode);
         this.IDCardFrame.setSize(560,560);
         this.IDCardFrame.getContentPane().setBackground(new Color(165,213,220));
         this.IDCardFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE );
@@ -34,7 +39,7 @@ public class GUIViewStudent implements ActionListener {
         int xLabel = 20;
         int wLabel = 250;
         int hLabel = 25;
-        Font labelFont = new Font("Georgia", Font.ITALIC,15);
+
 
         IDLabel.setBounds(xLabel,50,wLabel,hLabel);
         IDLabel.setFont(labelFont);
@@ -69,7 +74,7 @@ public class GUIViewStudent implements ActionListener {
             allModulesText = allModulesText + currentModule.getModName() + " - " + currentModule.getModCode() + "<br>";
         }
 
-        allModulesLabel.setBounds(xLabel, 100, wLabel, 240);
+        allModulesLabel.setBounds(xLabel, 120, wLabel, 240);
         allModulesLabel.setFont(labelFont);
         allModulesLabel.setText("<html>" + "Modules:<br>" + allModulesText);
 
@@ -82,14 +87,12 @@ public class GUIViewStudent implements ActionListener {
             AllResultsText = AllResultsText + currentResult.getResultCode() + " - " + currentResult.getGrade() + "<br>";
         }
 
-        allResultsLabel.setBounds(220, 100, wLabel, 240);
+        allResultsLabel.setBounds(220, 120, wLabel, 240);
         allResultsLabel.setFont(labelFont);
-        allResultsLabel.setText("<html>" + "Results:<br>" + AllResultsText + "test");
+        allResultsLabel.setText("<html>" + "Results:<br>" + AllResultsText);
 
         calculateButton.setBounds(xLabel, 425,200, 50);
         calculateButton.addActionListener(this);
-
-        containerLabel.setText("hi");
 
 
         IDCardFrame.add(IDLabel);
@@ -108,10 +111,9 @@ public class GUIViewStudent implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==calculateButton){
-            System.out.println("Button worked");
             JFrame calulateFrame = new JFrame();
-            calulateFrame.setSize(240,240);
-            calulateFrame.getContentPane().setBackground(new Color(165,213,220));
+            calulateFrame.setSize(480,200);
+            calulateFrame.getContentPane().setBackground(new Color(216,198,236));
             calulateFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             calulateFrame.setTitle("Calculate");
             ImageIcon logoIcon = new ImageIcon("Images/icon.png");
@@ -119,7 +121,35 @@ public class GUIViewStudent implements ActionListener {
             calulateFrame.setResizable(false);
             calulateFrame.setVisible(true);
 
+            JLabel title = new JLabel("Enter module code");
+
+            JLabel container = new JLabel("");
+
+            title.setFont(labelFont);
+            title.setBounds(150,0,150,50);
+
+            moduleInput.setBounds(150,50,150,25);
+
+            this.enterButton.setBounds(200,100,75,25);
+            this.enterButton.addActionListener(this);
+
+            calulateFrame.add(title);
+            calulateFrame.add(moduleInput);
+            calulateFrame.add(this.enterButton);
+            calulateFrame.add(container);
+        }
+        if(e.getSource()==enterButton){
+            String inputtedText = this.moduleInput.getText();
+                try {
+                    int result = this.studentBeingViewed.averageGradeForModule(inputtedText);
+                    String resultAsString = Integer.toString(result);
+                    JOptionPane.showMessageDialog(null, "Calculation Result: " + resultAsString, "Complete!", JOptionPane.INFORMATION_MESSAGE);
+                } catch (IOException | ClassNotFoundException ex) {
+                    JOptionPane.showMessageDialog(null, "Error with Module code, make sure it is correct. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
+                }finally {
+                    JOptionPane.showMessageDialog(null, "Error with Module code, make sure it is correct. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
+                }
 
         }
+        }
     }
-}

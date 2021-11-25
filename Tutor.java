@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -39,6 +40,7 @@ public class Tutor extends Staff{
                 }
                 if (!doesexist) {
                     addingTo.addToTeachers(this.getStaffID());
+                    addingTo.updateClassFile();
                 }
             }
         }
@@ -58,6 +60,7 @@ public class Tutor extends Staff{
                 }
                 if (!doesexist) {
                     addingTo.setModerator(this.getStaffID());
+                    addingTo.updateClassFile();
                 }
             }
         }
@@ -67,34 +70,50 @@ public class Tutor extends Staff{
     }
 
     public String getOffice() {
-        return office;
+        return this.office;
     }
 
-    public void setOffice(String office) {
+    public void setOffice(String office) throws IOException {
         this.office = office;
+        this.updateClassFile();
     }
 
     public String getDegree() {
-        return degree;
+        return this.degree;
     }
 
-    public void setDegree(String degree) {
+    public void setDegree(String degree) throws IOException {
         this.degree = degree;
+        this.updateClassFile();
     }
 
     public String[] getModulesTeaching() {
-        return modulesTeaching;
+        return this.modulesTeaching;
     }
 
-    public void addToModulesTeaching(String newmodule) {
+    public void addToModulesTeaching(String newmodule) throws IOException {
         this.modulesTeaching = AddToArray.string(this.modulesTeaching, newmodule);
+        this.updateClassFile();
     }
 
     public String[] getModulesModerating() {
-        return modulesModerating;
+        return this.modulesModerating;
     }
 
-    public void addToModulesModerating(String newmodule) {
+    public void addToModulesModerating(String newmodule) throws IOException {
         this.modulesModerating = AddToArray.string(this.modulesModerating, newmodule);
+        this.updateClassFile();
+    }
+
+    public void updateClassFile() throws IOException {
+        String filename = "Tutors/" +this.getStaffID() + ".txt";
+        File oldFile = new File(filename);
+        oldFile.delete();
+
+        FileOutputStream f = new FileOutputStream(filename);
+        ObjectOutputStream o = new ObjectOutputStream(f);
+        o.writeObject(this);
+        o.close();
+        f.close();
     }
 }

@@ -61,6 +61,7 @@ public class Research implements Serializable {
                 }
                 if (!doesexist) {
                     addingTo.addToCurrentResearch(this.ResearchCode);
+                    addingTo.updateClassFile();
                 }
             }
         }
@@ -70,23 +71,33 @@ public class Research implements Serializable {
         return ResearchTitle;
     }
 
-    public void setResearchTitle(String researchTitle) {
+    public void setResearchTitle(String researchTitle) throws IOException {
         ResearchTitle = researchTitle;
+        this.updateClassFile();
     }
 
     public String[] getAcademicsResearching() {
         return AcademicsResearching;
     }
 
-    public void addToAcademicsResearching(String academicsResearching) {
+    public void addToAcademicsResearching(String academicsResearching) throws IOException {
         this.AcademicsResearching = AddToArray.string(this.AcademicsResearching, academicsResearching);
+        this.updateClassFile();
     }
 
     public String getResearchCode() {
         return ResearchCode;
     }
 
-    public void setResearchCode(String researchCode) {
-        ResearchCode = researchCode;
+    public void updateClassFile() throws IOException {
+        String filename = "Researches/" +this.getResearchCode() + ".txt";
+        File oldFile = new File(filename);
+        oldFile.delete();
+
+        FileOutputStream f = new FileOutputStream(filename);
+        ObjectOutputStream o = new ObjectOutputStream(f);
+        o.writeObject(this);
+        o.close();
+        f.close();
     }
 }

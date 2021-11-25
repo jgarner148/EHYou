@@ -97,6 +97,21 @@ public class GUISearchHome implements ActionListener{
                     JOptionPane.showMessageDialog(null, "An error occured. Error Code: 9999", "Oops", JOptionPane.ERROR_MESSAGE);
                 }
             }
+            if(objectType.equals("Modules")){
+                GUIViewModule viewModulePage = new GUIViewModule();
+            }
+            if(objectType.equals("Results")){
+                GUIViewResult viewResultPage = new GUIViewResult();
+            }
+            if(objectType.equals("Researches")){
+                GUIViewReseach viewResearchPage = new GUIViewReseach();
+            }
+            if(objectType.equals("Tutors")){
+                GUIViewTutor viewTutorPage = new GUIViewTutor();
+            }
+            if(objectType.equals("Academics")){
+                GUIViewAcademic viewAcademicPage = new GUIViewAcademic();
+            }
 
         }
 
