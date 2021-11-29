@@ -68,6 +68,11 @@ public class Student extends Person{
 		return dob;
 	}
 
+	public void setDob(String dob) throws IOException {
+		this.dob = dob;
+		this.updateClassFile();
+	}
+
 	public String[] getModulesTaking(){
 		return ModulesTaking;
 	}

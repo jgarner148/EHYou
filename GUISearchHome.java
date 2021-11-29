@@ -39,6 +39,7 @@ public class GUISearchHome implements ActionListener{
      */
     public GUISearchHome(JFrame mainFrame){
         this.mainFrame = mainFrame;
+        this.mainFrame.setTitle("EHYou - Search");
 
         //Setting up the back Button
         goBack.setBounds(0, 0,100,50);
@@ -93,6 +94,7 @@ public class GUISearchHome implements ActionListener{
                     searchBox.setText("");
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(null, "An error occured. Error Code: 4000X10", "Oops", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
                 } catch (ClassNotFoundException ex) {
                     JOptionPane.showMessageDialog(null, "An error occured. Error Code: 9999", "Oops", JOptionPane.ERROR_MESSAGE);
                 }
