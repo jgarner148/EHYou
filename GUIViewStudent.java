@@ -11,12 +11,19 @@ public class GUIViewStudent implements ActionListener {
     private String studentCode;
     private JLabel IDLabel = new JLabel("");
     private JLabel fnameLabel = new JLabel("");
+    private JButton fnameEditButton = factory.makeFlatButton("Edit");
     private JLabel lnameLabel = new JLabel("");
+    private JButton lnameEditButton = factory.makeFlatButton("Edit");
     private JLabel dobLabel = new JLabel("");
+    private JButton dobEditButton = factory.makeFlatButton("Edit");
     private JLabel staryYrLabel = new JLabel("");
+    private JButton startYrEditButton = factory.makeFlatButton("Edit");
     private JLabel endYrLabel = new JLabel("");
+    private JButton endYrEditButton = factory.makeFlatButton("Edit");
     private JLabel allModulesLabel = new JLabel("");
+    private JButton allModulesAddButton = factory.makeFlatButton("Add");
     private JLabel allResultsLabel = new JLabel("");
+    private JButton allResultsAddButton = factory.makeFlatButton("Add");
     private JLabel containerLabel = new JLabel(" ");
     private JButton calculateButton = factory.makeFlatButton("Work out average per module");
     private Font labelFont = new Font("Georgia", Font.ITALIC,15);
@@ -94,6 +101,7 @@ public class GUIViewStudent implements ActionListener {
         calculateButton.setBounds(xLabel, 425,200, 50);
         calculateButton.addActionListener(this);
 
+        this.fnameEditButton.setBounds(150,250,50,50);
 
         IDCardFrame.add(IDLabel);
         IDCardFrame.add(fnameLabel);
@@ -105,6 +113,8 @@ public class GUIViewStudent implements ActionListener {
         IDCardFrame.add(allResultsLabel);
         IDCardFrame.add(calculateButton);
         IDCardFrame.add(containerLabel);
+
+        IDCardFrame.add(this.fnameEditButton);
 
     }
 
@@ -140,15 +150,24 @@ public class GUIViewStudent implements ActionListener {
         }
         if(e.getSource()==enterButton){
             String inputtedText = this.moduleInput.getText();
-                try {
-                    int result = this.studentBeingViewed.averageGradeForModule(inputtedText);
-                    String resultAsString = Integer.toString(result);
-                    JOptionPane.showMessageDialog(null, "Calculation Result: " + resultAsString, "Complete!", JOptionPane.INFORMATION_MESSAGE);
-                } catch (IOException | ClassNotFoundException ex) {
-                    JOptionPane.showMessageDialog(null, "Error with Module code, make sure it is correct. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
-                }finally {
-                    JOptionPane.showMessageDialog(null, "Error with Module code, make sure it is correct. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
+            try {
+                boolean exists = quickMethods.checkIfInFile("codes/modulecodes.csv", inputtedText);
+                if(!exists){
+                    JOptionPane.showMessageDialog(null, "Error with Module code, make sure it is correct. Error Code: 50X10", "Oops", JOptionPane.ERROR_MESSAGE);
                 }
+                else{
+                    try {
+                        int result = this.studentBeingViewed.averageGradeForModule(inputtedText);
+                        String resultAsString = Integer.toString(result);
+                        JOptionPane.showMessageDialog(null, "Calculation Result for "  + inputtedText + ": " + resultAsString, "Complete!", JOptionPane.INFORMATION_MESSAGE);
+                        this.moduleInput.setText("");
+                    } catch (IOException | ClassNotFoundException ex) {
+                        JOptionPane.showMessageDialog(null, "Error with Module code, make sure it is correct. Error Code: 50X10", "Oops", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            } catch (FileNotFoundException ex) {
+                JOptionPane.showMessageDialog(null, "Error with Module code, make sure it is correct. Error Code: 50X10", "Oops", JOptionPane.ERROR_MESSAGE);
+            }
 
         }
         }

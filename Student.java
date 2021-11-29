@@ -122,7 +122,12 @@ public class Student extends Person{
 				resultsAmount++;
 			}
 		}
-		return allgrades/resultsAmount;
+		if(resultsAmount == 0){
+			return 0;
+		}
+		else {
+			return allgrades / resultsAmount;
+		}
 
 
 	}
