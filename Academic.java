@@ -1,19 +1,46 @@
+/**
+ * Class file for the Academic object
+ */
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 public class Academic extends Staff{
+    /**
+     * Academics office location
+     */
     private String office;
+    /**
+     * Academics degree
+     */
     private String degree;
+    /**
+     * String Array with research codes that corresponds to the research the academic is involved in
+     */
     private String[] currentResearch;
 
+    /**
+     * Constructor for Academic
+     * @param fname Academic's First name
+     * @param lname Academic's Last Name
+     * @param dob Academic's date of birth
+     * @param startyr Year Academic started work at the university
+     * @param salary Academic's salary
+     * @param office Academic's office location
+     * @param degree Academic's degree
+     * @param currentResearch String Array with research codes that corresponds to the research the academic is involved in
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public Academic(String fname, String lname, String dob, int startyr, int salary, String office, String degree, String[] currentResearch) throws IOException, ClassNotFoundException {
-        super(fname, lname, dob, startyr, salary);
-        this.office = office;
-        this.degree = degree;
-        this.currentResearch = currentResearch;
+        super(fname, lname, dob, startyr, salary); //Calling the constructor of the super classes
+        this.office = office; //Assigning the inputted office to the object's office variable
+        this.degree = degree; //Assigning the inputted degree to the object's office variable
+        this.currentResearch = currentResearch; //Assigning the inputted research array to the object's research array variable
 
+        //creating the class file for the newly created academic object
         String filename = "Academics/" +this.getStaffID() + ".txt";
         FileOutputStream f = new FileOutputStream(filename);
         ObjectOutputStream o = new ObjectOutputStream(f);
@@ -21,8 +48,9 @@ public class Academic extends Staff{
         o.close();
         f.close();
 
-        boolean isResearchEmpty = this.currentResearch.length == 0;
+        boolean isResearchEmpty = this.currentResearch.length == 0; //finding out if the current research array is empty
 
+        //adding the academic's staff ID to each the research's academics array
         if(!isResearchEmpty) {
             for (int i = 0; i < this.currentResearch.length; i++) {
                 Research addingTo = getobject.research(this.currentResearch[i]);
@@ -41,44 +69,77 @@ public class Academic extends Staff{
         }
     }
 
-    public String getOffice() {
-        return office;
-    }
+    /**
+     * Getter for office
+     * @return academic's office variable
+     */
+    public String getOffice() {return office;}
 
+    /**
+     * Setter for office
+     * @param office the value being assigned to office
+     * @throws IOException
+     */
     public void setOffice(String office) throws IOException {
         this.office = office;
         this.updateClassFile();
     }
 
-    public String getDegree() {
-        return degree;
-    }
+    /**
+     * getter for degree
+     * @return academic's degree variable
+     */
+    public String getDegree() {return degree;}
 
+    /**
+     * Setter for degree
+     * @param degree the value being assigned to degree
+     * @throws IOException
+     */
     public void setDegree(String degree) throws IOException {
         this.degree = degree;
         this.updateClassFile();
     }
 
-    public String[] getCurrentResearch() {
-        return currentResearch;
-    }
+    /**
+     * Getter for current research
+     * @return academic's current research string array
+     */
+    public String[] getCurrentResearch() {return currentResearch;}
 
+    /**
+     * Method to add string to the current research array
+     * @param newresearch item to be added to current research array
+     * @throws IOException
+     */
     public void addToCurrentResearch(String newresearch) throws IOException {
         this.currentResearch = AddToArray.string(this.currentResearch, newresearch);
         this.updateClassFile();
     }
 
+    /**
+     * Method to remove string from the current research array
+     * @param removingResearch item to be removed from research array
+     * @throws IOException
+     */
     public void removeFromCurrentResearch(String removingResearch) throws IOException {
         String[] newArray = quickMethods.removeFromStringArray(removingResearch, this.currentResearch);
         this.currentResearch = newArray;
         this.updateClassFile();
     }
 
+    /**
+     * Method to update class file be deleting the old one and creating a new one
+     * @throws IOException
+     */
     public void updateClassFile() throws IOException {
         String filename = "Academics/" +this.getStaffID() + ".txt";
+
+        //Deleting the old file
         File oldFile = new File(filename);
         oldFile.delete();
 
+        //Creating the new file
         FileOutputStream f = new FileOutputStream(filename);
         ObjectOutputStream o = new ObjectOutputStream(f);
         o.writeObject(this);
