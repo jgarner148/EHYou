@@ -51,10 +51,7 @@ Module implements Serializable {
 
 
 
-		boolean isModZero = false;
-		if(this.moderator.length()==0){
-			isModZero = true;
-		}
+		boolean isModZero = this.moderator.length() == 0;
 		if(!isModZero) {
 			Tutor addingTo = getobject.tutor(this.moderator);
 			String[] featchedModules = addingTo.getModulesModerating();
@@ -108,6 +105,12 @@ Module implements Serializable {
 		this.updateClassFile();
 	}
 
+	public void removeFromStudentsTaking(String removingStudent) throws IOException {
+		String[] newArray = quickMethods.removeFromStringArray(removingStudent, this.studentsTaking);
+		this.studentsTaking = newArray;
+		this.updateClassFile();
+	}
+
 	public int[] getTotalMarks(){return this.totalMarks;}
 
 	public void addToTotalMarks(int newmark) throws IOException {
@@ -124,6 +127,11 @@ Module implements Serializable {
 		this.updateClassFile();
 	}
 
+	public void removeFromTeachers(String removingTeacher){
+		String[] newArray = quickMethods.removeFromStringArray(removingTeacher, this.teachers);
+		this.teachers = newArray;
+	}
+
 	public String getModerator() {
 		return moderator;
 	}
@@ -138,8 +146,13 @@ Module implements Serializable {
 		for (int i = 0; i<this.totalMarks.length; i++){
 			allmarks = allmarks + this.totalMarks[i];
 		}
-		int totalAverage = allmarks/this.totalMarks.length;
-		return totalAverage;
+		if(this.totalMarks.length==0){
+			return 0;
+		}
+		else {
+			int totalAverage = allmarks / this.totalMarks.length;
+			return totalAverage;
+		}
 	}
 
 	public int getMinMark(){
@@ -150,7 +163,12 @@ Module implements Serializable {
 				minmark =currentmark;
 			}
 		}
-		return minmark;
+		if(minmark == 101){
+			return 0;
+		}
+		else {
+			return minmark;
+		}
 	}
 
 	public int getMaxMark(){

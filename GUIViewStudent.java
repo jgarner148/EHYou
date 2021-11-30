@@ -8,36 +8,38 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class GUIViewStudent implements ActionListener {
-    private JFrame IDCardFrame = new JFrame();
-    private Student studentBeingViewed;
-    private String studentCode;
-    private JLabel titleLabel = new JLabel("Student details");
-    private JLabel IDLabel = new JLabel("");
-    private JLabel fnameLabel = new JLabel("");
-    private JButton fnameEditButton = factory.makeFlatButton("Edit");
-    private JLabel lnameLabel = new JLabel("");
-    private JButton lnameEditButton = factory.makeFlatButton("Edit");
-    private JLabel dobLabel = new JLabel("");
-    private JButton dobEditButton = factory.makeFlatButton("Edit");
-    private JLabel staryYrLabel = new JLabel("");
-    private JButton startYrEditButton = factory.makeFlatButton("Edit");
-    private JLabel endYrLabel = new JLabel("");
-    private JButton endYrEditButton = factory.makeFlatButton("Edit");
-    private JLabel allModulesLabel = new JLabel("");
-    private JButton allModulesAddButton = factory.makeFlatButton("Add Module");
-    private JLabel allResultsLabel = new JLabel("");
-    private JButton calculateButton = factory.makeFlatButton("Work out average per module");
-    private Font labelFont = new Font("Georgia", Font.ITALIC,15);
-    private JButton deletebutton = factory.makeFlatButton("Delete");
+    private final JFrame IDCardFrame = new JFrame();
+    private final Student studentBeingViewed;
+    private final String studentCode;
+    private final JLabel titleLabel = new JLabel("Student details");
+    private final JLabel IDLabel = new JLabel("");
+    private final JLabel fnameLabel = new JLabel("");
+    private final JButton fnameEditButton = factory.makeFlatButton("Edit");
+    private final JLabel lnameLabel = new JLabel("");
+    private final JButton lnameEditButton = factory.makeFlatButton("Edit");
+    private final JLabel dobLabel = new JLabel("");
+    private final JButton dobEditButton = factory.makeFlatButton("Edit");
+    private final JLabel staryYrLabel = new JLabel("");
+    private final JButton startYrEditButton = factory.makeFlatButton("Edit");
+    private final JLabel endYrLabel = new JLabel("");
+    private final JButton endYrEditButton = factory.makeFlatButton("Edit");
+    private final JLabel allModulesLabel = new JLabel("");
+    private final JButton allModulesAddButton = factory.makeFlatButton("Add");
+    private final JButton allModulesDeleteButton = factory.makeFlatButton("Delete");
+    private final JLabel allResultsLabel = new JLabel("");
+    private final JButton calculateButton = factory.makeFlatButton("Work out average per module");
+    private final Font labelFont = new Font("Georgia", Font.ITALIC,15);
+    private final JButton deletebutton = factory.makeFlatButton("Delete");
 
-    private JTextField editAndCalcInput = new JTextField();
-    private JButton CalculateEnterButton = factory.makeFlatButton("Enter");
-    private JButton editFnameEnterButton = factory.makeFlatButton("Enter");
-    private JButton editLnameEnterButton = factory.makeFlatButton("Enter");
-    private JButton editDOBEnterButton = factory.makeFlatButton("Enter");
-    private JButton editStartYrEnterButton = factory.makeFlatButton("Enter");
-    private JButton editEndYrEnterButton = factory.makeFlatButton("Enter");
-    private JButton addModuleEnterButton = factory.makeFlatButton("Enter");
+    private final JTextField editAndCalcInput = new JTextField();
+    private final JButton CalculateEnterButton = factory.makeFlatButton("Enter");
+    private final JButton editFnameEnterButton = factory.makeFlatButton("Enter");
+    private final JButton editLnameEnterButton = factory.makeFlatButton("Enter");
+    private final JButton editDOBEnterButton = factory.makeFlatButton("Enter");
+    private final JButton editStartYrEnterButton = factory.makeFlatButton("Enter");
+    private final JButton editEndYrEnterButton = factory.makeFlatButton("Enter");
+    private final JButton addModuleEnterButton = factory.makeFlatButton("Enter");
+    private final JButton removeModuleEnterButton = factory.makeFlatButton("Enter");
 
     public GUIViewStudent(String studentCode) throws IOException, ClassNotFoundException {
         this.studentCode = studentCode;
@@ -127,8 +129,13 @@ public class GUIViewStudent implements ActionListener {
         endYrEditButton.setBounds(xButton,152,wButton,hButton);
         endYrEditButton.addActionListener(this);
 
-        allModulesAddButton.setBounds(50,425,130,hButton);
+        allModulesAddButton.setBounds(20,425,85,hButton);
         allModulesAddButton.addActionListener(this);
+
+        allModulesDeleteButton.setBounds(115,425,85,hButton);
+        allModulesDeleteButton.addActionListener(this);
+
+
 
         IDCardFrame.add(titleLabel);
 
@@ -149,6 +156,7 @@ public class GUIViewStudent implements ActionListener {
         IDCardFrame.add(startYrEditButton);
         IDCardFrame.add(endYrEditButton);
         IDCardFrame.add(allModulesAddButton);
+        IDCardFrame.add(allModulesDeleteButton);
 
     }
 
@@ -282,7 +290,29 @@ public class GUIViewStudent implements ActionListener {
             } catch (ClassNotFoundException classNotFoundException) {
                 JOptionPane.showMessageDialog(null, "That is not a valid Module code, make sure you have created the module first. Error Code: 50X10", "Oops", JOptionPane.ERROR_MESSAGE);
             }
-
+        }
+        if(e.getSource() == removeModuleEnterButton && !alreadyOpen){
+            alreadyOpen = true;
+            String inputtedModule = editAndCalcInput.getText();
+            try {
+                boolean exists = quickMethods.checkIfInFile("codes/modulecodes.csv", inputtedModule);
+                if (!exists) {
+                    JOptionPane.showMessageDialog(null, "That is not a valid Module code, make sure you have created the module first. Error Code: 50X10", "Oops", JOptionPane.ERROR_MESSAGE);
+                }
+                if (exists) {
+                    this.studentBeingViewed.removeFromModules(inputtedModule);
+                    Module newmodule = getobject.module(inputtedModule);
+                    newmodule.removeFromStudentsTaking(this.studentCode);
+                    JOptionPane.showMessageDialog(null, "Module removed successfully, refresh to see changes", "Complete!", JOptionPane.INFORMATION_MESSAGE);
+                    editAndCalcInput.setText("");
+                }
+            } catch (FileNotFoundException ex) {
+                JOptionPane.showMessageDialog(null, "You are missing a file! Error Code: 1000X10", "Oops", JOptionPane.ERROR_MESSAGE);
+            } catch (IOException ioException) {
+                JOptionPane.showMessageDialog(null, "Error with Student object. Error Code: 4000X10", "Oops", JOptionPane.ERROR_MESSAGE);
+            } catch (ClassNotFoundException classNotFoundException) {
+                JOptionPane.showMessageDialog(null, "That is not a valid Module code, make sure you have created the module first. Error Code: 50X10", "Oops", JOptionPane.ERROR_MESSAGE);
+            }
         }
         if(!alreadyOpen){
             JFrame InputFrame = new JFrame();
@@ -363,6 +393,15 @@ public class GUIViewStudent implements ActionListener {
                 this.addModuleEnterButton.addActionListener(this);
 
                 InputFrame.add(this.addModuleEnterButton);
+            }
+            if(e.getSource()==allModulesDeleteButton){
+                InputFrame.setTitle("Delete Module");
+                title.setText("Enter Module code");
+
+                this.removeModuleEnterButton.setBounds(200,100,75,25);
+                this.removeModuleEnterButton.addActionListener(this);
+
+                InputFrame.add(this.removeModuleEnterButton);
             }
         }
         }

@@ -4,10 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GUIWelcomePage implements ActionListener {
-    private JFrame mainFrame;
-    private JLabel logoText = new JLabel("EHYou");
-    private JButton goToCreate = factory.makeFlatButton("Create");
-    private JButton goToSearch = factory.makeFlatButton("Search");
+    private final JFrame mainFrame;
+    private final JLabel logoText = new JLabel("EHYou");
+    private final JButton goToCreate = factory.makeFlatButton("Create");
+    private final JButton goToSearch = factory.makeFlatButton("Search");
 
     public GUIWelcomePage(JFrame importedFrame) {
         //Setting up the Main Frame

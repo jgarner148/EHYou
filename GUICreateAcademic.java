@@ -7,36 +7,36 @@ import java.io.IOException;
 import java.util.Calendar;
 
 public class GUICreateAcademic implements ActionListener {
-    private JFrame mainFrame;
-    private  JButton goBack = factory.makeFlatButton("BACK");
-    private  JLabel titleLabel = new JLabel("Create Academic");
+    private final JFrame mainFrame;
+    private final JButton goBack = factory.makeFlatButton("BACK");
+    private final JLabel titleLabel = new JLabel("Create Academic");
 
-    private JLabel fnameLabel = new JLabel("*First name:");
-    private JTextField fnameInput = new JTextField();
+    private final JLabel fnameLabel = new JLabel("*First name:");
+    private final JTextField fnameInput = new JTextField();
 
-    private JLabel lnameLabel = new JLabel("*Last name:");
-    private JTextField lnameInput = new JTextField();
+    private final JLabel lnameLabel = new JLabel("*Last name:");
+    private final JTextField lnameInput = new JTextField();
 
-    private JLabel dobLabel = new JLabel("*Date of birth:");
-    private JTextField dobInput = new JTextField();
+    private final JLabel dobLabel = new JLabel("*Date of birth:");
+    private final JTextField dobInput = new JTextField();
 
-    private JLabel StartYrLabel = new JLabel("*Start Year:");
-    private JTextField StartYrInput = new JTextField();
+    private final JLabel StartYrLabel = new JLabel("*Start Year:");
+    private final JTextField StartYrInput = new JTextField();
 
-    private JLabel salaryLabel = new JLabel("*Salary");
-    private JTextField salaryInput = new JTextField();
+    private final JLabel salaryLabel = new JLabel("*Salary");
+    private final JTextField salaryInput = new JTextField();
 
-    private JLabel officeLabel = new JLabel("*Office");
-    private JTextField officeInput = new JTextField();
+    private final JLabel officeLabel = new JLabel("*Office");
+    private final JTextField officeInput = new JTextField();
 
-    private JLabel degreeLabel = new JLabel("*Degree");
-    private JTextField degreeInput = new JTextField();
+    private final JLabel degreeLabel = new JLabel("*Degree");
+    private final JTextField degreeInput = new JTextField();
 
-    private JLabel currentResearchLabel = new JLabel("Research");
-    private JTextField currentResearchInput = new JTextField();
-    private JButton addToCurrentResearch = factory.makeFlatButton("Add Another");
+    private final JLabel currentResearchLabel = new JLabel("Research");
+    private final JTextField currentResearchInput = new JTextField();
+    private final JButton addToCurrentResearch = factory.makeFlatButton("Add Another");
 
-    private JButton createButton = factory.makeFlatButton("Create");
+    private final JButton createButton = factory.makeFlatButton("Create");
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     private String fname;
@@ -55,7 +55,7 @@ public class GUICreateAcademic implements ActionListener {
 
         //Setting up the back Button
         goBack.setBounds(0, 0,100,50);
-        goBack.addActionListener((ActionListener) this);
+        goBack.addActionListener(this);
 
         titleLabel.setBounds(450, 30,450,110);
         titleLabel.setFont(new Font("Georgia", Font.PLAIN,55));

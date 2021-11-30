@@ -21,10 +21,7 @@ public class Academic extends Staff{
         o.close();
         f.close();
 
-        boolean isResearchEmpty = false;
-        if(this.currentResearch.length==0){
-            isResearchEmpty = true;
-        }
+        boolean isResearchEmpty = this.currentResearch.length == 0;
 
         if(!isResearchEmpty) {
             for (int i = 0; i < this.currentResearch.length; i++) {
@@ -68,6 +65,12 @@ public class Academic extends Staff{
 
     public void addToCurrentResearch(String newresearch) throws IOException {
         this.currentResearch = AddToArray.string(this.currentResearch, newresearch);
+        this.updateClassFile();
+    }
+
+    public void removeFromCurrentResearch(String removingResearch) throws IOException {
+        String[] newArray = quickMethods.removeFromStringArray(removingResearch, this.currentResearch);
+        this.currentResearch = newArray;
         this.updateClassFile();
     }
 

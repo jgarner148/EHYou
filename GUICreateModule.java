@@ -6,34 +6,34 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class GUICreateModule implements ActionListener{
-    private JFrame mainFrame;
-    private  JButton goBack = factory.makeFlatButton("BACK");
-    private  JLabel titleLabel = new JLabel("Create Module");
+    private final JFrame mainFrame;
+    private final JButton goBack = factory.makeFlatButton("BACK");
+    private final JLabel titleLabel = new JLabel("Create Module");
 
-    private JLabel modNameLabel = new JLabel("*Module name:");
-    private JTextField modNameInput = new JTextField();
+    private final JLabel modNameLabel = new JLabel("*Module name:");
+    private final JTextField modNameInput = new JTextField();
 
-    private JLabel modCodeLabel = new JLabel("*Module code: ");
-    private JTextField modCodeInput = new JTextField();
+    private final JLabel modCodeLabel = new JLabel("*Module code: ");
+    private final JTextField modCodeInput = new JTextField();
 
-    private JLabel studentsLabel = new JLabel("Students: ");
-    private JTextField studentsInput = new JTextField();
-    private JButton anotherStudent = factory.makeFlatButton("Add Another");
+    private final JLabel studentsLabel = new JLabel("Students: ");
+    private final JTextField studentsInput = new JTextField();
+    private final JButton anotherStudent = factory.makeFlatButton("Add Another");
 
-    private JLabel teachersLabel = new JLabel("Teachers: ");
-    private JTextField teachersInput = new JTextField();
-    private JButton anotherTeacher = factory.makeFlatButton("Add Another");
+    private final JLabel teachersLabel = new JLabel("Teachers: ");
+    private final JTextField teachersInput = new JTextField();
+    private final JButton anotherTeacher = factory.makeFlatButton("Add Another");
 
-    private JLabel moderatorLabel = new JLabel("Moderator: ");
-    private JTextField moderatorInput = new JTextField();
+    private final JLabel moderatorLabel = new JLabel("Moderator: ");
+    private final JTextField moderatorInput = new JTextField();
 
-    private JButton createButton = factory.makeFlatButton("Create");
+    private final JButton createButton = factory.makeFlatButton("Create");
 
     //////////////////////////////////////////////////////////////////////////
     private String modName;
     private String modCode;
     private String[] studentsTaking = new String[0];
-    private int[] totalMarks = new int[0];
+    private final int[] totalMarks = new int[0];
     private String[] teachers = new String[0];
     private String moderator = "";
 
@@ -45,7 +45,7 @@ public class GUICreateModule implements ActionListener{
 
         //Setting up the back Button
         goBack.setBounds(0, 0,100,50);
-        goBack.addActionListener((ActionListener) this);
+        goBack.addActionListener(this);
 
         titleLabel.setBounds(450, 30,450,110);
         titleLabel.setFont(new Font("Georgia", Font.PLAIN,55));

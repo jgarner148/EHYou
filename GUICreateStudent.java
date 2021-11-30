@@ -6,34 +6,34 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class GUICreateStudent implements ActionListener {
-    private  JFrame mainFrame;
-    private  JButton goBack = factory.makeFlatButton("BACK");
-    private  JLabel titleLabel = new JLabel("Create Student");
+    private final JFrame mainFrame;
+    private final JButton goBack = factory.makeFlatButton("BACK");
+    private final JLabel titleLabel = new JLabel("Create Student");
 
-    private JLabel fnameLabel = new JLabel("*First name:");
-    private JTextField fnameInput = new JTextField();
+    private final JLabel fnameLabel = new JLabel("*First name:");
+    private final JTextField fnameInput = new JTextField();
 
-    private JLabel lnameLabel = new JLabel("*Last name:");
-    private JTextField lnameInput = new JTextField();
+    private final JLabel lnameLabel = new JLabel("*Last name:");
+    private final JTextField lnameInput = new JTextField();
 
-    private JLabel dobLabel = new JLabel("*Date of birth:");
-    private JTextField dobInput = new JTextField();
+    private final JLabel dobLabel = new JLabel("*Date of birth:");
+    private final JTextField dobInput = new JTextField();
 
-    private JLabel ModulesTakingLabel = new JLabel("Module codes:");
-    private JTextField ModulesTakingInput = new JTextField();
-    private JButton addanotherModule = factory.makeFlatButton("Add another");
+    private final JLabel ModulesTakingLabel = new JLabel("Module codes:");
+    private final JTextField ModulesTakingInput = new JTextField();
+    private final JButton addanotherModule = factory.makeFlatButton("Add another");
 
-    private JLabel AllResultsLabel = new JLabel("Result Codes:");
-    private JTextField AllResultsInput = new JTextField();
-    private JButton addanotherResult = factory.makeFlatButton("Add another");
+    private final JLabel AllResultsLabel = new JLabel("Result Codes:");
+    private final JTextField AllResultsInput = new JTextField();
+    private final JButton addanotherResult = factory.makeFlatButton("Add another");
 
-    private JLabel StartYrLabel = new JLabel("*Start Year:");
-    private JTextField StartYrInput = new JTextField();
+    private final JLabel StartYrLabel = new JLabel("*Start Year:");
+    private final JTextField StartYrInput = new JTextField();
 
-    private JLabel EndYrLabel = new JLabel("*Final Year:");
-    private JTextField EndYrInput = new JTextField();
+    private final JLabel EndYrLabel = new JLabel("*Final Year:");
+    private final JTextField EndYrInput = new JTextField();
 
-    private JButton createButton = factory.makeFlatButton("Create");
+    private final JButton createButton = factory.makeFlatButton("Create");
 
     ////////////////////Object variables//////////////////////////////
     private String fname;
@@ -272,7 +272,7 @@ public class GUICreateStudent implements ActionListener {
                     mainFrame.repaint();
                     GUICreateHome createhomepage = new GUICreateHome(this.mainFrame);
 
-                } catch (IOException ex) {
+                } catch (IOException | ClassNotFoundException ex) {
                     JOptionPane.showMessageDialog(null, "An error occured. Error Code: 4000X10", "Oops", JOptionPane.ERROR_MESSAGE);
                     anyInvalid = true;
                 }

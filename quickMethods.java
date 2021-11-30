@@ -27,7 +27,6 @@ public class quickMethods {
         return stringAsNum;
     }
 
-
     public static boolean checkIfInFile(String filePath, String itemChecking) throws FileNotFoundException {
         Scanner checker = new Scanner(new File(filePath));
         checker.useDelimiter(",");
@@ -62,10 +61,7 @@ public class quickMethods {
     }
 
     public static boolean checkDOB(String DOBChecking) {
-        boolean returnResult = true;
-        if (DOBChecking.length() != 10) {
-            returnResult = false;
-        }
+        boolean returnResult = DOBChecking.length() == 10;
         StringBuilder day = new StringBuilder();
         StringBuilder month = new StringBuilder();
         StringBuilder year = new StringBuilder();
@@ -121,6 +117,16 @@ public class quickMethods {
             returnResult = false;
         }
 
-    return  returnResult;
+        return returnResult;
+    }
+
+    public static String[] removeFromStringArray(String stringRemoving, String[] originalArray) {
+        String[] newArray = new String[originalArray.length - 1];
+        for (int i = 0, j = 0; i < originalArray.length; i++) {
+            if (!originalArray[i].equals(stringRemoving)) {
+                newArray[j++] = originalArray[i];
+            }
+        }
+        return newArray;
     }
 }

@@ -2,7 +2,7 @@ import java.io.*;
 import java.time.YearMonth;
 
 public class Research implements Serializable {
-    private  String ResearchCode;
+    private final String ResearchCode;
     private String ResearchTitle;
     private String[] AcademicsResearching;
 
@@ -44,10 +44,7 @@ public class Research implements Serializable {
 
         quickMethods.addStringToCSV(filepath, genCode);
 
-        boolean isAcademicEmpty = false;
-        if(this.AcademicsResearching.length==0){
-            isAcademicEmpty = true;
-        }
+        boolean isAcademicEmpty = this.AcademicsResearching.length == 0;
 
         if(!isAcademicEmpty) {
             for (int i = 0; i < this.getAcademicsResearching().length; i++) {
@@ -83,6 +80,11 @@ public class Research implements Serializable {
     public void addToAcademicsResearching(String academicsResearching) throws IOException {
         this.AcademicsResearching = AddToArray.string(this.AcademicsResearching, academicsResearching);
         this.updateClassFile();
+    }
+
+    public void removeFromAcademicResearching(String removingAcademic){
+        String[] newArray = quickMethods.removeFromStringArray(removingAcademic, this.AcademicsResearching);
+        this.AcademicsResearching = newArray;
     }
 
     public String getResearchCode() {

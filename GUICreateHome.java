@@ -4,16 +4,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GUICreateHome implements ActionListener {
-    private JFrame mainFrame;
-    private JButton goBack = factory.makeFlatButton("BACK");
-    private JLabel titleLabel = new JLabel("Create");
-    private JLabel subtitleLabel = new JLabel("Welcome to create! Select what type you are wanting to make");
-    private JButton makeStudent = factory.makeFlatButton("Student");
-    private JButton makeModule = factory.makeFlatButton("Module");
-    private JButton makeResult = factory.makeFlatButton("Result");
-    private JButton makeTutor = factory.makeFlatButton("Tutor");
-    private JButton makeAcademic = factory.makeFlatButton("Academic");
-    private JButton makeResearch = factory.makeFlatButton("Research");
+    private final JFrame mainFrame;
+    private final JButton goBack = factory.makeFlatButton("BACK");
+    private final JLabel titleLabel = new JLabel("Create");
+    private final JLabel subtitleLabel = new JLabel("Welcome to create! Select what type you are wanting to make");
+    private final JButton makeStudent = factory.makeFlatButton("Student");
+    private final JButton makeModule = factory.makeFlatButton("Module");
+    private final JButton makeResult = factory.makeFlatButton("Result");
+    private final JButton makeTutor = factory.makeFlatButton("Tutor");
+    private final JButton makeAcademic = factory.makeFlatButton("Academic");
+    private final JButton makeResearch = factory.makeFlatButton("Research");
 
 
 

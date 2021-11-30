@@ -6,26 +6,26 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class GUICreateResult implements ActionListener {
-    private JFrame mainFrame;
-    private  JButton goBack = factory.makeFlatButton("BACK");
-    private  JLabel titleLabel = new JLabel("Create Result");
+    private final JFrame mainFrame;
+    private final JButton goBack = factory.makeFlatButton("BACK");
+    private final JLabel titleLabel = new JLabel("Create Result");
 
-    private JLabel assModuleLabel = new JLabel("*Module:");
-    private JTextField assModuleInput = new JTextField();
+    private final JLabel assModuleLabel = new JLabel("*Module:");
+    private final JTextField assModuleInput = new JTextField();
 
-    private JLabel weekAssLabel = new JLabel("*Week Assigned:");
-    private JTextField weekAssInput = new JTextField();
+    private final JLabel weekAssLabel = new JLabel("*Week Assigned:");
+    private final JTextField weekAssInput = new JTextField();
 
-    private JLabel gradeLabel = new JLabel("*Grade:");
-    private JTextField gradeInput = new JTextField();
+    private final JLabel gradeLabel = new JLabel("*Grade:");
+    private final JTextField gradeInput = new JTextField();
 
-    private JLabel assStudnetLabel = new JLabel("*Student code:");
-    private JTextField assStudentInput = new JTextField();
+    private final JLabel assStudnetLabel = new JLabel("*Student code:");
+    private final JTextField assStudentInput = new JTextField();
 
-    private JLabel feedbackLabel = new JLabel("*Feedback:");
-    private JTextField feedbackInput = new JTextField();
+    private final JLabel feedbackLabel = new JLabel("*Feedback:");
+    private final JTextField feedbackInput = new JTextField();
 
-    private JButton createButton = factory.makeFlatButton("Create");
+    private final JButton createButton = factory.makeFlatButton("Create");
 
     /////////////////////////////////////////////////////////////////////////
     private String AssModule;

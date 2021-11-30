@@ -23,10 +23,7 @@ public class Tutor extends Staff{
         o.close();
         f.close();
 
-        boolean isTeachingEmpty = false;
-        if(this.modulesTeaching.length == 0){
-            isTeachingEmpty = true;
-        }
+        boolean isTeachingEmpty = this.modulesTeaching.length == 0;
 
         if(!isTeachingEmpty) {
             for (int i = 0; i < this.modulesTeaching.length; i++) {
@@ -45,19 +42,13 @@ public class Tutor extends Staff{
             }
         }
 
-        boolean isModeratingEmpty = false;
-        if(this.modulesModerating.length==0){
-            isModeratingEmpty = true;
-        }
+        boolean isModeratingEmpty = this.modulesModerating.length == 0;
 
         if(!isModeratingEmpty) {
             for (int i = 0; i < this.modulesModerating.length; i++) {
                 Module addingTo = getobject.module(this.modulesModerating[i]);
                 String fetchedTeacher = addingTo.getModerator();
-                boolean doesexist = false;
-                if (fetchedTeacher.equals(this.getStaffID())) {
-                    doesexist = true;
-                }
+                boolean doesexist = fetchedTeacher.equals(this.getStaffID());
                 if (!doesexist) {
                     addingTo.setModerator(this.getStaffID());
                     addingTo.updateClassFile();
@@ -96,12 +87,24 @@ public class Tutor extends Staff{
         this.updateClassFile();
     }
 
+    public void removeFromModulesTeaching(String removingModule) throws IOException {
+        String[] newModulesArray = quickMethods.removeFromStringArray(removingModule, this.modulesModerating);
+        this.modulesTeaching = newModulesArray;
+        this.updateClassFile();
+    }
+
     public String[] getModulesModerating() {
         return this.modulesModerating;
     }
 
     public void addToModulesModerating(String newmodule) throws IOException {
         this.modulesModerating = AddToArray.string(this.modulesModerating, newmodule);
+        this.updateClassFile();
+    }
+
+    public void removeFromModulesModerating(String removingModule) throws IOException {
+        String[] newModulesArray = quickMethods.removeFromStringArray(removingModule, this.modulesModerating);
+        this.modulesModerating = newModulesArray;
         this.updateClassFile();
     }
 

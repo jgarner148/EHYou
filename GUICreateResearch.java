@@ -6,18 +6,18 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class GUICreateResearch implements ActionListener {
-    private JFrame mainFrame;
-    private  JButton goBack = factory.makeFlatButton("BACK");
-    private  JLabel titleLabel = new JLabel("Create Research");
+    private final JFrame mainFrame;
+    private final JButton goBack = factory.makeFlatButton("BACK");
+    private final JLabel titleLabel = new JLabel("Create Research");
 
-    private JLabel researchTitleLabel = new JLabel("*Title:");
-    private JTextField researchTitleInput = new JTextField();
+    private final JLabel researchTitleLabel = new JLabel("*Title:");
+    private final JTextField researchTitleInput = new JTextField();
 
-    private JLabel academicResearchingLabel = new JLabel("Researchers:");
-    private JTextField academicsResearchingInput = new JTextField();
-    private JButton addNewAcademic = factory.makeFlatButton("Add Another");
+    private final JLabel academicResearchingLabel = new JLabel("Researchers:");
+    private final JTextField academicsResearchingInput = new JTextField();
+    private final JButton addNewAcademic = factory.makeFlatButton("Add Another");
 
-    private JButton createButton = factory.makeFlatButton("Create");
+    private final JButton createButton = factory.makeFlatButton("Create");
 
     ////////////////////////////////////////////////////////////////////////////////////////
     private String ResearchTitle;
@@ -29,7 +29,7 @@ public class GUICreateResearch implements ActionListener {
 
         //Setting up the back Button
         goBack.setBounds(0, 0,100,50);
-        goBack.addActionListener((ActionListener) this);
+        goBack.addActionListener(this);
 
         titleLabel.setBounds(450, 30,450,110);
         titleLabel.setFont(new Font("Georgia", Font.PLAIN,55));

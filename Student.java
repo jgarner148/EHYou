@@ -10,7 +10,7 @@ public class Student extends Person{
 	private final String StudentNum;
 
 	//Constructor
-	public Student(String fname, String lname, String dob, String[] modulesTaking, String[] allResults, int startYr, int endYr) throws IOException {
+	public Student(String fname, String lname, String dob, String[] modulesTaking, String[] allResults, int startYr, int endYr) throws IOException, ClassNotFoundException {
 		super(fname, lname, dob);
 		this.ModulesTaking = modulesTaking;
 		this.AllResults = allResults;
@@ -41,6 +41,26 @@ public class Student extends Person{
 		o.writeObject(this);
 		o.close();
 		f.close();
+
+		boolean isModulesTakingEmpty = this.ModulesTaking.length == 0;
+
+
+        if(!isModulesTakingEmpty){
+			for (int i=0; i < this.ModulesTaking.length; i++){
+				Module addingTo = getobject.module(this.ModulesTaking[i]);
+				String[] fetchedStudents = addingTo.getStudentsTaking();
+				boolean doesexist = false;
+				for (int l =0; l < fetchedStudents.length;l++){
+					if(fetchedStudents[l].equals(this.StudentNum)){
+						doesexist = true;
+					}
+				}
+				if (!doesexist){
+					addingTo.addToStudentsTaking(this.StudentNum);
+					addingTo.updateClassFile();
+				}
+			}
+		}
 
 		quickMethods.addStringToCSV(filepath, genNumber);
 
@@ -82,6 +102,12 @@ public class Student extends Person{
 		this.updateClassFile();
 	}
 
+	public void removeFromModules(String removingModule) throws IOException {
+		String[] newArray = quickMethods.removeFromStringArray(removingModule,this.ModulesTaking);
+		this.ModulesTaking = newArray;
+		this.updateClassFile();
+	}
+
 	public int getStartYr() {
 		return StartYr;
 	}
@@ -110,6 +136,12 @@ public class Student extends Person{
 
 	public void addToAllResults(String newresult) throws IOException {
 		this.AllResults = AddToArray.string(this.AllResults, newresult);
+		this.updateClassFile();
+	}
+
+	public void removeFromAllResults(String removingResult) throws IOException {
+		String[] newResultsArray = quickMethods.removeFromStringArray(removingResult, this.AllResults);
+		this.AllResults = newResultsArray;
 		this.updateClassFile();
 	}
 

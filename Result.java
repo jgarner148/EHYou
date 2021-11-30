@@ -2,12 +2,12 @@ import java.io.*;
 import java.time.YearMonth;
 
 public class Result implements Serializable {
-    private String resultCode;
+    private final String resultCode;
     private String AssModule;
     private String WeekAss;
     private int Grade;
     private String Feedback;
-    private String assStudent;
+    private final String assStudent;
 
     //Constructor
     public Result(String assModule, String weekAss, int grade, String feedback, String assStudent) throws IOException, ClassNotFoundException {
@@ -50,10 +50,7 @@ public class Result implements Serializable {
 
         quickMethods.addStringToCSV(filepath, genCode);
 
-        boolean isStudentzero = false;
-        if(this.assStudent.length()==0){
-            isStudentzero = true;
-        }
+        boolean isStudentzero = this.assStudent.length() == 0;
 
         if(!isStudentzero) {
             Student Addingto = getobject.student(this.assStudent);
