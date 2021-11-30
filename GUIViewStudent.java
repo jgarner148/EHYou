@@ -160,6 +160,11 @@ public class GUIViewStudent implements ActionListener {
 
     }
 
+    /**
+     * Invoked when an action occurs.
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         boolean alreadyOpen = false;

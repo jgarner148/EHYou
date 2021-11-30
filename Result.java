@@ -7,7 +7,7 @@ public class Result implements Serializable {
     private String WeekAss;
     private int Grade;
     private String Feedback;
-    private final String assStudent;
+    private String assStudent;
 
     //Constructor
     public Result(String assModule, String weekAss, int grade, String feedback, String assStudent) throws IOException, ClassNotFoundException {
@@ -108,6 +108,14 @@ public class Result implements Serializable {
 
     public String getResultCode() {
         return resultCode;
+    }
+
+    public String getAssStudent() {
+        return assStudent;
+    }
+
+    public void setAssStudent(String assStudent) {
+        this.assStudent = assStudent;
     }
 
     public void updateClassFile() throws IOException {

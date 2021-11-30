@@ -168,6 +168,48 @@ public class GUICreateAcademic implements ActionListener {
                 }
             }
 
+            //Checking start year
+            if(!anyInvalid){
+                if(Integer.parseInt(StartYrInput.getText())<1900){
+                    JOptionPane.showMessageDialog(null, "Start year is not valid. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
+                    anyInvalid = true;
+                }
+                else{
+                    this.startyr = Integer.parseInt(StartYrInput.getText());
+                }
+            }
+
+            this.salary = Integer.parseInt(salaryInput.getText());
+            this.office = officeInput.getText();
+            this.degree = degreeInput.getText();
+
+            //checking Research
+            if(!anyInvalid && currentResearchInput.getText().length()>0){
+                String inputtedresearch = currentResearchInput.getText();
+                try {
+                    boolean exists = quickMethods.checkIfInFile("codes/researchcodes.csv", inputtedresearch);
+                    boolean correct = true;
+                    if (!exists) {
+                        JOptionPane.showMessageDialog(null, "That is not valid Research, make sure you have created the Research first. Error Code: 50X50", "Oops", JOptionPane.ERROR_MESSAGE);
+                        correct = false;
+                        anyInvalid = true;
+                    }
+                    for (int i = 0; i < this.currentResearch.length; i++) {
+                        if (this.currentResearch[i].equals(inputtedresearch)) {
+                            JOptionPane.showMessageDialog(null, "You've already added this code. Error Code: 256X01", "Oops", JOptionPane.ERROR_MESSAGE);
+                            correct = false;
+                            anyInvalid = true;
+                        }
+                    }
+                    if (correct) {
+                        this.currentResearch = AddToArray.string(this.currentResearch, inputtedresearch);
+                        currentResearchInput.setText("");
+                    }
+                } catch (FileNotFoundException ex) {
+                    JOptionPane.showMessageDialog(null, "You are missing a file! Error Code: 1000X50", "Oops", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
             //Creating the object
             if(!anyInvalid){
                 try{

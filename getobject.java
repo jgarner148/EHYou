@@ -43,7 +43,7 @@ public class getobject {
     }
 
     public static Academic academic(String staffID) throws IOException, ClassNotFoundException {
-        String filename = "Tutors/"+staffID+".txt";
+        String filename = "Academics/"+staffID+".txt";
         FileInputStream fi = new FileInputStream(new File(filename));
         ObjectInputStream oi = new ObjectInputStream(fi);
 

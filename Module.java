@@ -91,10 +91,6 @@ Module implements Serializable {
 		return modCode;
 	}
 
-	public void setModCode(String modCode) throws IOException {
-		this.modCode = modCode;
-		this.updateClassFile();
-	}
 
 	public String[] getStudentsTaking() {
 		return studentsTaking;

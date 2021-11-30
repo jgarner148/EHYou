@@ -51,6 +51,11 @@ public class Staff extends Person{
         return dob;
     }
 
+    public void setDob(String dob) throws IOException {
+        this.dob = dob;
+        this.updateClassFileStaff();
+    }
+
     public String getStaffID() {
         return staffID;
     }
@@ -81,10 +86,10 @@ public class Staff extends Person{
     public void updateClassFileStaff() throws IOException {
         String filename = "";
         String classType = this.getClass().getSimpleName();
-        if(classType == "Tutor"){
+        if(classType.equals("Tutor")){
             filename = "Tutors/" +this.getStaffID() + ".txt";
         }
-        if(classType == "Academic"){
+        if(classType.equals("Academic")){
             filename = "Academics/" +this.getStaffID() + ".txt";
         }
 

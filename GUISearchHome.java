@@ -102,22 +102,45 @@ public class GUISearchHome implements ActionListener{
             if(objectType.equals("Modules")){
                 try {
                     GUIViewModule viewModulePage = new GUIViewModule(searchContents);
+                    searchBox.setText("");
                 } catch (IOException | ClassNotFoundException ex) {
                     JOptionPane.showMessageDialog(null, "An error occurred. Error Code: 9999", "Oops", JOptionPane.ERROR_MESSAGE);
                 }
-                searchBox.setText("");
+
             }
             if(objectType.equals("Results")){
-                GUIViewResult viewResultPage = new GUIViewResult();
+                try {
+                    GUIViewResult viewResultPage = new GUIViewResult(searchContents);
+                    searchBox.setText("");
+                } catch (IOException | ClassNotFoundException ex) {
+                    JOptionPane.showMessageDialog(null, "An error occurred. Error Code: 9999", "Oops", JOptionPane.ERROR_MESSAGE);
+                }
             }
             if(objectType.equals("Researches")){
-                GUIViewReseach viewResearchPage = new GUIViewReseach();
+                try {
+                    GUIViewReseach viewResearchPage = new GUIViewReseach(searchContents);
+                    searchBox.setText("");
+                } catch (IOException | ClassNotFoundException ex) {
+                    JOptionPane.showMessageDialog(null, "An error occurred. Error Code: 9999", "Oops", JOptionPane.ERROR_MESSAGE);
+                }
             }
             if(objectType.equals("Tutors")){
-                GUIViewTutor viewTutorPage = new GUIViewTutor();
+                try {
+                    GUIViewTutor viewTutorPage = new GUIViewTutor(searchContents);
+                    searchBox.setText("");
+                } catch (IOException | ClassNotFoundException ex) {
+                    JOptionPane.showMessageDialog(null, "An error occurred. Error Code: 9999", "Oops", JOptionPane.ERROR_MESSAGE);
+                }
             }
             if(objectType.equals("Academics")){
-                GUIViewAcademic viewAcademicPage = new GUIViewAcademic();
+                try {
+                    GUIViewAcademic viewAcademicPage = new GUIViewAcademic(searchContents);
+                    searchBox.setText("");
+                } catch (IOException | ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "An error occurred. Error Code: 9999", "Oops", JOptionPane.ERROR_MESSAGE);
+                }
+
             }
 
         }

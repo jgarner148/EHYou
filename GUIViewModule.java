@@ -135,7 +135,11 @@ public class GUIViewModule implements ActionListener {
         IDCardFrame.add(allTutorsDeleteButton);
 
     }
-
+    /**
+     * Invoked when an action occurs.
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         boolean alreadyOpen = false;
@@ -154,6 +158,7 @@ public class GUIViewModule implements ActionListener {
             alreadyOpen = true;
             JFrame ClassListFrame = new JFrame();
             ClassListFrame.setSize(450, 500);
+            ClassListFrame.setTitle(modulebeingviewed.getModName() + " Class List");
             ClassListFrame.getContentPane().setBackground(new Color(165,213,220));
             ClassListFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             ImageIcon logoIcon = new ImageIcon("Images/icon.png");
@@ -168,7 +173,7 @@ public class GUIViewModule implements ActionListener {
             JLabel containLabel = new JLabel("");
 
             listTitle.setFont(new Font("Georgia", Font.ITALIC,25));
-            listTitle.setBounds(10,10,200,40);
+            listTitle.setBounds(10,10,400,40);
 
             String[] allStudents = modulebeingviewed.getStudentsTaking();
             String allStudetnsText = "";
@@ -251,7 +256,7 @@ public class GUIViewModule implements ActionListener {
                 if(exists){
                     this.modulebeingviewed.addToTeachers(inputtedtutor);
                     Tutor newTeacher = getobject.tutor(inputtedtutor);
-                    this.allTutorsLabel.setText(this.allTutorsLabel.getText() + newTeacher.getStaffID() + " - " + newTeacher.getFname() + " " + newTeacher.getLname());
+                    this.allTutorsLabel.setText(this.allTutorsLabel.getText() + newTeacher.getStaffID() + " - " + newTeacher.getFname() + " " + newTeacher.getLname() + "<br>");
                     JOptionPane.showMessageDialog(null, "Teacher added successfully", "Complete!", JOptionPane.INFORMATION_MESSAGE);
                     editAndCalcInput.setText("");
                 }
