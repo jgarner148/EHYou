@@ -157,119 +157,13 @@ public class GUICreateAcademic implements ActionListener {
             this.fname = fnameInput.getText();
             this.lname = lnameInput.getText();
 
-            StringBuilder day = new StringBuilder();
-            StringBuilder month = new StringBuilder();
-            StringBuilder year = new StringBuilder();
-            boolean slashcorrect1 = false;
-            boolean slashcorrect2 = false;
-
-            //Checking date length
-            if((dobInput.getText().length()!= 10) && !anyInvalid){
-                JOptionPane.showMessageDialog(null, "Date of birth not valid, please use the format DD/MM/YYYY. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
-                anyInvalid=true;
-            }
-
-            //checking date format
-            try {
-                if (!anyInvalid) {
-                    for (int i = 0; i < 11; i++) {
-                        if (i == 0 || i == 1) {
-                            day.append(dobInput.getText().charAt(i));
-                        }
-                        if (i == 2) {
-                            int comparison = Character.compare(dobInput.getText().charAt(i), '/');
-                            if (comparison == 0) {
-                                slashcorrect1 = true;
-                            }
-                        }
-                        if (i == 3 || i == 4) {
-                            month.append(dobInput.getText().charAt(i));
-                        }
-                        if (i == 5) {
-                            int comparison = Character.compare(dobInput.getText().charAt(i), '/');
-                            if (comparison == 0) {
-                                slashcorrect2 = true;
-                            }
-                        }
-                        if (i == 6 || i == 7 || i == 8 || i == 9) {
-                            year.append(dobInput.getText().charAt(i));
-                        }
-                    }
-
-                    int dayAsNum = Integer.parseInt(day.toString());
-                    int monthAsNum = Integer.parseInt(month.toString());
-                    int yearAsNum = Integer.parseInt(year.toString());
-
-                    if (!slashcorrect1 || !slashcorrect2 || dayAsNum > 31 || monthAsNum > 13 || yearAsNum < 1900) {
-                        JOptionPane.showMessageDialog(null, "Date of birth not valid, please use the format DD/MM/YYYY. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
-                        anyInvalid = true;
-                    }
-
-                    if ((monthAsNum == 4 || monthAsNum == 6 || monthAsNum == 9 || monthAsNum == 11) && !anyInvalid) {
-                        if (dayAsNum > 30) {
-                            JOptionPane.showMessageDialog(null, "Date of birth not valid, please use the format DD/MM/YYYY. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
-                            anyInvalid = true;
-                        }
-                    }
-
-                    if (monthAsNum == 2 && !anyInvalid) {
-                        if (dayAsNum > 29) {
-                            JOptionPane.showMessageDialog(null, "Date of birth not valid, please use the format DD/MM/YYYY. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
-                            anyInvalid = true;
-                        }
-                    } else {
-                        this.dob = dobInput.getText();
-                    }
-
-                }
-            }
-            catch (NumberFormatException ex){
-                JOptionPane.showMessageDialog(null, "Date of birth not valid, please use the format DD/MM/YYYY. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
-                anyInvalid = true;
-            }
-
-            //checking start year
-            if(!anyInvalid){
-                int startyrAsInt = Integer.parseInt(StartYrInput.getText());
-                int currentyear = Calendar.getInstance().get(Calendar.YEAR);
-                currentyear = currentyear +2;
-                if(startyrAsInt>1900 && startyrAsInt<currentyear){
-                    this.startyr = startyrAsInt;
-                }
-                else{
-                    JOptionPane.showMessageDialog(null, "Start year is not valid. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
-                    anyInvalid = true;
-                }
-            }
-
-            this.salary = Integer.parseInt(salaryInput.getText());
-            this.office = officeInput.getText();
-            this.degree = degreeInput.getText();
-
-            //checking research
-            if(!anyInvalid && currentResearchInput.getText().length()>0) {
-                String inputtedresearch = currentResearchInput.getText();
-                try {
-                    boolean exists = quickMethods.checkIfInFile("codes/researchcodes.csv", inputtedresearch);
-                    boolean correct = true;
-                    if (exists == false) {
-                        JOptionPane.showMessageDialog(null, "That is not valid Research, make sure you have created the Research first. Error Code: 50X50", "Oops", JOptionPane.ERROR_MESSAGE);
-                        correct = false;
-                        anyInvalid = true;
-                    }
-                    for (int i = 0; i < this.currentResearch.length; i++) {
-                        if (this.currentResearch[i].equals(inputtedresearch)) {
-                            JOptionPane.showMessageDialog(null, "You've already added this code. Error Code: 256X01", "Oops", JOptionPane.ERROR_MESSAGE);
-                            correct = false;
-                            anyInvalid = true;
-                        }
-                    }
-                    if (correct == true) {
-                        this.currentResearch = AddToArray.string(this.currentResearch, inputtedresearch);
-                        currentResearchInput.setText("");
-                    }
-                } catch (FileNotFoundException ex) {
-                    JOptionPane.showMessageDialog(null, "You are missing a file! Error Code: 1000X50", "Oops", JOptionPane.ERROR_MESSAGE);
+            //Checking Date of Birth
+            if(!anyInvalid) {
+                boolean DOBValid = quickMethods.checkDOB(dobInput.getText());
+                if (DOBValid) {
+                    this.dob = dobInput.getText();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Date of birth not valid, please use the format DD/MM/YYYY. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
                     anyInvalid = true;
                 }
             }

@@ -100,7 +100,12 @@ public class GUISearchHome implements ActionListener{
                 }
             }
             if(objectType.equals("Modules")){
-                GUIViewModule viewModulePage = new GUIViewModule();
+                try {
+                    GUIViewModule viewModulePage = new GUIViewModule(searchContents);
+                } catch (IOException | ClassNotFoundException ex) {
+                    JOptionPane.showMessageDialog(null, "An error occured. Error Code: 9999", "Oops", JOptionPane.ERROR_MESSAGE);
+                }
+                searchBox.setText("");
             }
             if(objectType.equals("Results")){
                 GUIViewResult viewResultPage = new GUIViewResult();

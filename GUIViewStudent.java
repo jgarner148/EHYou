@@ -26,7 +26,6 @@ public class GUIViewStudent implements ActionListener {
     private JLabel allModulesLabel = new JLabel("");
     private JButton allModulesAddButton = factory.makeFlatButton("Add Module");
     private JLabel allResultsLabel = new JLabel("");
-    private JButton allResultsAddButton = factory.makeFlatButton("Add Result");
     private JButton calculateButton = factory.makeFlatButton("Work out average per module");
     private Font labelFont = new Font("Georgia", Font.ITALIC,15);
     private JButton deletebutton = factory.makeFlatButton("Delete");
@@ -38,9 +37,9 @@ public class GUIViewStudent implements ActionListener {
     private JButton editDOBEnterButton = factory.makeFlatButton("Enter");
     private JButton editStartYrEnterButton = factory.makeFlatButton("Enter");
     private JButton editEndYrEnterButton = factory.makeFlatButton("Enter");
+    private JButton addModuleEnterButton = factory.makeFlatButton("Enter");
 
-
-    public GUIViewStudent( String studentCode) throws IOException, ClassNotFoundException {
+    public GUIViewStudent(String studentCode) throws IOException, ClassNotFoundException {
         this.studentCode = studentCode;
         this.studentBeingViewed = getobject.student(this.studentCode);
         this.IDCardFrame.setSize(560,560);
@@ -130,8 +129,6 @@ public class GUIViewStudent implements ActionListener {
 
         allModulesAddButton.setBounds(50,425,130,hButton);
         allModulesAddButton.addActionListener(this);
-        allResultsAddButton.setBounds(315,425,130,hButton);
-        allResultsAddButton.addActionListener(this);
 
         IDCardFrame.add(titleLabel);
 
@@ -152,7 +149,6 @@ public class GUIViewStudent implements ActionListener {
         IDCardFrame.add(startYrEditButton);
         IDCardFrame.add(endYrEditButton);
         IDCardFrame.add(allModulesAddButton);
-        IDCardFrame.add(allResultsAddButton);
 
     }
 
@@ -168,7 +164,6 @@ public class GUIViewStudent implements ActionListener {
                 oldFile.delete();
                 IDCardFrame.dispatchEvent(new WindowEvent(IDCardFrame, WindowEvent.WINDOW_CLOSING));
                 JOptionPane.showMessageDialog(null, "Student Deleted", "Deleted!", JOptionPane.INFORMATION_MESSAGE);
-
             }
         }
         if (e.getSource() == CalculateEnterButton && !alreadyOpen) {
@@ -217,81 +212,19 @@ public class GUIViewStudent implements ActionListener {
         }
         if(e.getSource() == editDOBEnterButton && !alreadyOpen){
             alreadyOpen = true;
-            boolean valid = true;
-            if(editAndCalcInput.getText().length()!= 10){
-                JOptionPane.showMessageDialog(null, "Date of birth not valid, please use the format DD/MM/YYYY. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
-                valid = false;
-            }
-            StringBuilder day = new StringBuilder();
-            StringBuilder month = new StringBuilder();
-            StringBuilder year = new StringBuilder();
-            boolean slashcorrect1 = false;
-            boolean slashcorrect2 = false;
-            try {
-                if (valid) {
-                    for (int i = 0; i < 11; i++) {
-                        if (i == 0 || i == 1) {
-                            day.append(editAndCalcInput.getText().charAt(i));
-                        }
-                        if (i == 2) {
-                            int comparison = Character.compare(editAndCalcInput.getText().charAt(i), '/');
-                            if (comparison == 0) {
-                                slashcorrect1 = true;
-                            }
-                        }
-                        if (i == 3 || i == 4) {
-                            month.append(editAndCalcInput.getText().charAt(i));
-                        }
-                        if (i == 5) {
-                            int comparison = Character.compare(editAndCalcInput.getText().charAt(i), '/');
-                            if (comparison == 0) {
-                                slashcorrect2 = true;
-                            }
-                        }
-                        if (i == 6 || i == 7 || i == 8 || i == 9) {
-                            year.append(editAndCalcInput.getText().charAt(i));
-                        }
-                    }
-
-                    int dayAsNum = Integer.parseInt(day.toString());
-                    int monthAsNum = Integer.parseInt(month.toString());
-                    int yearAsNum = Integer.parseInt(year.toString());
-
-                    if (!slashcorrect1 || !slashcorrect2 || dayAsNum > 31 || monthAsNum > 13 || yearAsNum < 1900) {
-                        JOptionPane.showMessageDialog(null, "Date of birth not valid, please use the format DD/MM/YYYY. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
-                        valid = false;
-                    }
-
-                    if ((monthAsNum == 4 || monthAsNum == 6 || monthAsNum == 9 || monthAsNum == 11) && valid) {
-                        if (dayAsNum > 30) {
-                            JOptionPane.showMessageDialog(null, "Date of birth not valid, please use the format DD/MM/YYYY. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
-                            valid = false;
-                        }
-                    }
-
-                    if (monthAsNum == 2 && valid) {
-                        if (dayAsNum > 29) {
-                            JOptionPane.showMessageDialog(null, "Date of birth not valid, please use the format DD/MM/YYYY. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
-                            valid = false;
-                        }
-                    } else {
-                        try {
-                            if(valid) {
-                                this.studentBeingViewed.setDob(this.editAndCalcInput.getText());
-                                this.dobLabel.setText("Date of Birth: " + studentBeingViewed.getDob());
-                                JOptionPane.showMessageDialog(null, "Date of Birth changed successfully", "Complete!", JOptionPane.INFORMATION_MESSAGE);
-                                editAndCalcInput.setText("");
-                            }
-                        } catch (IOException ex) {
-                            JOptionPane.showMessageDialog(null, "Error with Student object. Error Code: 4000X10", "Oops", JOptionPane.ERROR_MESSAGE);
-                        }
-                    }
-
+            boolean isValid = quickMethods.checkDOB(editAndCalcInput.getText());
+            if(isValid){
+                try {
+                    this.studentBeingViewed.setDob(this.editAndCalcInput.getText());
+                    this.dobLabel.setText("Date of Birth: " + studentBeingViewed.getDob());
+                    JOptionPane.showMessageDialog(null, "Date of Birth changed successfully", "Complete!", JOptionPane.INFORMATION_MESSAGE);
+                    editAndCalcInput.setText("");
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Error with Student object. Error Code: 4000X10", "Oops", JOptionPane.ERROR_MESSAGE);
                 }
             }
-            catch (NumberFormatException ex){
+            else{
                 JOptionPane.showMessageDialog(null, "Date of birth not valid, please use the format DD/MM/YYYY. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
-                valid = false;
             }
 
         }
@@ -326,6 +259,30 @@ public class GUIViewStudent implements ActionListener {
             else{
                 JOptionPane.showMessageDialog(null, "Invalid Input. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
             }
+        }
+        if(e.getSource() == addModuleEnterButton && !alreadyOpen){
+            alreadyOpen = true;
+            String inputtedModule = editAndCalcInput.getText();
+            try {
+                boolean exists = quickMethods.checkIfInFile("codes/modulecodes.csv", inputtedModule);
+                if (!exists) {
+                    JOptionPane.showMessageDialog(null, "That is not a valid Module code, make sure you have created the module first. Error Code: 50X10", "Oops", JOptionPane.ERROR_MESSAGE);
+                }
+                if (exists) {
+                    this.studentBeingViewed.addToModulesTaking(inputtedModule);
+                    Module newmodule = getobject.module(inputtedModule);
+                    this.allModulesLabel.setText(this.allModulesLabel.getText() + newmodule.getModName() + " - " + inputtedModule + "<br>");
+                    JOptionPane.showMessageDialog(null, "Module Code added successfully", "Complete!", JOptionPane.INFORMATION_MESSAGE);
+                    editAndCalcInput.setText("");
+                }
+            } catch (FileNotFoundException ex) {
+                JOptionPane.showMessageDialog(null, "You are missing a file! Error Code: 1000X10", "Oops", JOptionPane.ERROR_MESSAGE);
+            } catch (IOException ioException) {
+                JOptionPane.showMessageDialog(null, "Error with Student object. Error Code: 4000X10", "Oops", JOptionPane.ERROR_MESSAGE);
+            } catch (ClassNotFoundException classNotFoundException) {
+                JOptionPane.showMessageDialog(null, "That is not a valid Module code, make sure you have created the module first. Error Code: 50X10", "Oops", JOptionPane.ERROR_MESSAGE);
+            }
+
         }
         if(!alreadyOpen){
             JFrame InputFrame = new JFrame();
@@ -397,6 +354,15 @@ public class GUIViewStudent implements ActionListener {
                 this.editEndYrEnterButton.addActionListener(this);
 
                 InputFrame.add(this.editEndYrEnterButton);
+            }
+            if(e.getSource() == allModulesAddButton){
+                InputFrame.setTitle("Add Module");
+                title.setText("Enter new Module");
+
+                this.addModuleEnterButton.setBounds(200,100,75,25);
+                this.addModuleEnterButton.addActionListener(this);
+
+                InputFrame.add(this.addModuleEnterButton);
             }
         }
         }

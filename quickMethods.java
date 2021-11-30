@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -5,13 +6,13 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.Random;
 
-public class quickMethods{
+public class quickMethods {
 
-    public static int randnum(int min, int max){
-        return (int)(Math.random()*((max - min) + 1))+min;
+    public static int randnum(int min, int max) {
+        return (int) (Math.random() * ((max - min) + 1)) + min;
     }
 
-    public static int stringToNum(String originalString){
+    public static int stringToNum(String originalString) {
         int stringAsNum = 0;
         /**
          * Try catch loop code supplied from
@@ -37,7 +38,9 @@ public class quickMethods{
                 exists++;
             }
         }
-        if (exists == 0) {reutrnValue = false;}
+        if (exists == 0) {
+            reutrnValue = false;
+        }
         checker.close();
         return reutrnValue;
     }
@@ -50,7 +53,7 @@ public class quickMethods{
         csvWriter.close();
     }
 
-    public static char randchar(){
+    public static char randchar() {
         Random random = new Random();
 
         char randomchar = (char) (random.nextInt(26) + 'a');
@@ -58,12 +61,66 @@ public class quickMethods{
         return randomchar;
     }
 
+    public static boolean checkDOB(String DOBChecking) {
+        boolean returnResult = true;
+        if (DOBChecking.length() != 10) {
+            returnResult = false;
+        }
+        StringBuilder day = new StringBuilder();
+        StringBuilder month = new StringBuilder();
+        StringBuilder year = new StringBuilder();
+        boolean slashcorrect1 = false;
+        boolean slashcorrect2 = false;
+        try {
+            if (returnResult) {
+                for (int i = 0; i < 11; i++) {
+                    if (i == 0 || i == 1) {
+                        day.append(DOBChecking.charAt(i));
+                    }
+                    if (i == 2) {
+                        int comparison = Character.compare(DOBChecking.charAt(i), '/');
+                        if (comparison == 0) {
+                            slashcorrect1 = true;
+                        }
+                    }
+                    if (i == 3 || i == 4) {
+                        month.append(DOBChecking.charAt(i));
+                    }
+                    if (i == 5) {
+                        int comparison = Character.compare(DOBChecking.charAt(i), '/');
+                        if (comparison == 0) {
+                            slashcorrect2 = true;
+                        }
+                    }
+                    if (i == 6 || i == 7 || i == 8 || i == 9) {
+                        year.append(DOBChecking.charAt(i));
+                    }
+                }
 
+                int dayAsNum = Integer.parseInt(day.toString());
+                int monthAsNum = Integer.parseInt(month.toString());
+                int yearAsNum = Integer.parseInt(year.toString());
 
+                if (!slashcorrect1 || !slashcorrect2 || dayAsNum > 31 || monthAsNum > 13 || yearAsNum < 1900) {
+                    returnResult = false;
+                }
 
+                if ((monthAsNum == 4 || monthAsNum == 6 || monthAsNum == 9 || monthAsNum == 11) && returnResult) {
+                    if (dayAsNum > 30) {
+                        returnResult = false;
+                    }
+                }
 
+                if (monthAsNum == 2 && returnResult) {
+                    if (dayAsNum > 29) {
+                        returnResult = false;
+                    }
+                }
+            }
+        } catch (NumberFormatException ex) {
+            returnResult = false;
+        }
 
-
-
-
+    return  returnResult;
+    }
 }
