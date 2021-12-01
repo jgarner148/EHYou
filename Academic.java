@@ -35,18 +35,11 @@ public class Academic extends Staff{
      * @throws ClassNotFoundException
      */
     public Academic(String fname, String lname, String dob, int startyr, int salary, String office, String degree, String[] currentResearch) throws IOException, ClassNotFoundException {
-        super(fname, lname, dob, startyr, salary); //Calling the constructor of the super classes
-        this.office = office; //Assigning the inputted office to the object's office variable
-        this.degree = degree; //Assigning the inputted degree to the object's office variable
-        this.currentResearch = currentResearch; //Assigning the inputted research array to the object's research array variable
-
-        //creating the class file for the newly created academic object
-        String filename = "Academics/" +this.getStaffID() + ".txt";
-        FileOutputStream f = new FileOutputStream(filename);
-        ObjectOutputStream o = new ObjectOutputStream(f);
-        o.writeObject(this);
-        o.close();
-        f.close();
+        super(fname, lname, dob, startyr, salary); //Calling the constructor of the super classes using the taken in variables
+        //Assigning the taken in variables to the appropriate class variable
+        this.office = office;
+        this.degree = degree;
+        this.currentResearch = currentResearch;
 
         boolean isResearchEmpty = this.currentResearch.length == 0; //finding out if the current research array is empty
 
@@ -67,6 +60,14 @@ public class Academic extends Staff{
                 }
             }
         }
+
+        //creating the class file for the newly created academic object
+        String filename = "Academics/" +this.getStaffID() + ".txt";
+        FileOutputStream f = new FileOutputStream(filename);
+        ObjectOutputStream o = new ObjectOutputStream(f);
+        o.writeObject(this);
+        o.close();
+        f.close();
     }
 
     /**
@@ -111,21 +112,31 @@ public class Academic extends Staff{
      * Method to add string to the current research array
      * @param newresearch item to be added to current research array
      * @throws IOException
+     * @throws ClassNotFoundException
      */
-    public void addToCurrentResearch(String newresearch) throws IOException {
+    public void addToCurrentResearch(String newresearch) throws IOException, ClassNotFoundException {
         this.currentResearch = AddToArray.string(this.currentResearch, newresearch);
         this.updateClassFile();
+
+        //Updating the research class that has just been added to this academic
+        Research addingTo = getobject.research(newresearch);
+        addingTo.addToAcademicsResearching(this.getStaffID());
     }
 
     /**
      * Method to remove string from the current research array
      * @param removingResearch item to be removed from research array
      * @throws IOException
+     * @throws ClassNotFoundException
      */
-    public void removeFromCurrentResearch(String removingResearch) throws IOException {
+    public void removeFromCurrentResearch(String removingResearch) throws IOException, ClassNotFoundException {
         String[] newArray = quickMethods.removeFromStringArray(removingResearch, this.currentResearch);
         this.currentResearch = newArray;
         this.updateClassFile();
+
+        //Updating the research class that has just been removed from this academic
+        Research removingFrom = getobject.research(removingResearch);
+        removingFrom.removeFromAcademicResearching(this.getStaffID());
     }
 
     /**

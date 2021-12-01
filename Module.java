@@ -1,56 +1,92 @@
+/**
+ * Class file for Module object
+ */
+
 import java.io.*;
 
-public class
-Module implements Serializable {
+public class Module implements Serializable {
+	/**
+	 * Module name
+	 */
 	private String modName;
+	/**
+	 * Module Code
+	 */
 	private String modCode;
+	/**
+	 * String array of the IDs of all the students taking the module
+	 */
 	private String[] studentsTaking;
+	/**
+	 * Int array of all the marks
+	 */
 	private int[] totalMarks = new int[0];
+	/**
+	 * String array of all the IDs of the Tutors teaching the module
+	 */
 	private String[] teachers;
+	/**
+	 * ID of the tutor moderating the module
+	 */
 	private String moderator;
 
-	//Constructor
-	public Module(String modName, String modCode, String[] studentsTaking, /**int[] totalMarks,**/ String[] teachers, String moderator) throws IOException, ClassNotFoundException {
+	/**
+	 * Constructor for Module
+	 * @param modName Module name
+	 * @param modCode Module code
+	 * @param studentsTaking String array of the IDs of all the students taking the module
+	 * @param teachers String array of all the IDs of the Tutors teaching the module
+	 * @param moderator ID of the tutor moderating the module
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public Module(String modName, String modCode, String[] studentsTaking, String[] teachers, String moderator) throws IOException, ClassNotFoundException {
+		//Assigning the taken in variables to the appropriate class variable
 		this.modName = modName;
 		this.modCode = modCode;
 		this.studentsTaking = studentsTaking;
-		//this.totalMarks = totalMarks;
 		this.teachers = teachers;
 		this.moderator = moderator;
 
-		for(int i=0; i<this.teachers.length; i++){
-			Tutor addingTo = getobject.tutor(this.teachers[i]);
-			String[] fetchedModules = addingTo.getModulesTeaching();
-			boolean doesexist = false;
-			for(int l=0; l<fetchedModules.length;l++){
-				if(fetchedModules[l].equals(this.modCode)){
-					doesexist=true;
+		//Adding the module ID to all the tutors in the teachers array
+		boolean isTeachersEmpty = this.teachers.length == 0;
+		if(!isTeachersEmpty) {
+			for (int i = 0; i < this.teachers.length; i++) {
+				Tutor addingTo = getobject.tutor(this.teachers[i]);
+				String[] fetchedModules = addingTo.getModulesTeaching();
+				boolean doesexist = false;
+				for (int l = 0; l < fetchedModules.length; l++) {
+					if (fetchedModules[l].equals(this.modCode)) {
+						doesexist = true;
+					}
 				}
-			}
-			if(!doesexist) {
-				addingTo.addToModulesTeaching(this.modCode);
-				addingTo.updateClassFile();
+				if (!doesexist) {
+					addingTo.addToModulesTeaching(this.modCode);
+					addingTo.updateClassFile();
+				}
 			}
 		}
 
-		for(int i=0; i<this.studentsTaking.length; i++){
-			Student addingTo = getobject.student(this.studentsTaking[i]);
-			String[] fetchedModules = addingTo.getModulesTaking();
-			boolean doesexist = false;
-			for(int l=0; l<fetchedModules.length;l++){
-				if(fetchedModules[l].equals(this.modCode)){
-					doesexist=true;
+		//Adding the module ID to all the students in the students array
+		boolean isStudentsEmpty = this.studentsTaking.length == 0;
+		if(!isStudentsEmpty) {
+			for (int i = 0; i < this.studentsTaking.length; i++) {
+				Student addingTo = getobject.student(this.studentsTaking[i]);
+				String[] fetchedModules = addingTo.getModulesTaking();
+				boolean doesexist = false;
+				for (int l = 0; l < fetchedModules.length; l++) {
+					if (fetchedModules[l].equals(this.modCode)) {
+						doesexist = true;
+					}
 				}
-			}
-			if(!doesexist) {
-				addingTo.addToModulesTaking(this.modCode);
-				addingTo.updateClassFile();
+				if (!doesexist) {
+					addingTo.addToModulesTaking(this.modCode);
+					addingTo.updateClassFile();
+				}
 			}
 		}
 
-
-
-
+		//Adding the module ID to the Tutor moderating the module
 		boolean isModZero = this.moderator.length() == 0;
 		if(!isModZero) {
 			Tutor addingTo = getobject.tutor(this.moderator);
@@ -67,6 +103,7 @@ Module implements Serializable {
 			}
 		}
 
+		//Creating the class file for the newly created module object
 		String filename = "Modules/" +this.getModCode() + ".txt";
 		FileOutputStream f = new FileOutputStream(filename);
 		ObjectOutputStream o = new ObjectOutputStream(f);
@@ -74,115 +111,203 @@ Module implements Serializable {
 		o.close();
 		f.close();
 
-		quickMethods.addStringToCSV("codes/modulecodes.csv", modCode);
+		quickMethods.addStringToCSV("codes/modulecodes.csv", modCode);//Adding the module code the overall module codes csv file
 
 	}
 
-	public String getModName() {
-		return modName;
-	}
+	/**
+	 * Getter for Module name
+	 * @return Module's name
+	 */
+	public String getModName() {return this.modName;}
 
+	/**
+	 * Setter for module name
+	 * @param modName the value being assigned to module name
+	 * @throws IOException
+	 */
 	public void setModName(String modName) throws IOException {
 		this.modName = modName;
 		this.updateClassFile();
 	}
 
-	public String getModCode() {
-		return modCode;
-	}
+	/**
+	 *Getter for the module code
+	 * @return The module's code
+	 */
+	public String getModCode() {return this.modCode;}
 
+	/**
+	 * Getter for students taking array
+	 * @return module's students taking string array
+	 */
+	public String[] getStudentsTaking() {return this.studentsTaking;}
 
-	public String[] getStudentsTaking() {
-		return studentsTaking;
-	}
-
-	public void addToStudentsTaking(String studentsTaking) throws IOException {
+	/**
+	 * Method to add string to the students taking array
+	 * @param studentsTaking item to be added to the students taking array
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public void addToStudentsTaking(String studentsTaking) throws IOException, ClassNotFoundException {
 		this.studentsTaking = AddToArray.string(this.studentsTaking, studentsTaking);
 		this.updateClassFile();
+
+		//Updating the student class that's just be assigned to this module
+		Student addingTo = getobject.student(studentsTaking);
+		addingTo.addToModulesTaking(this.modCode);
+
 	}
 
-	public void removeFromStudentsTaking(String removingStudent) throws IOException {
+	/**
+	 * Method to remove string from the studetns taking array
+	 * @param removingStudent item to be removed from studetns array
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public void removeFromStudentsTaking(String removingStudent) throws IOException, ClassNotFoundException {
 		String[] newArray = quickMethods.removeFromStringArray(removingStudent, this.studentsTaking);
 		this.studentsTaking = newArray;
 		this.updateClassFile();
+
+		//Updating the student class that has just been removed from the students taking array
+		Student removingFrom = getobject.student(removingStudent);
+		removingFrom.removeFromModules(this.modCode);
 	}
 
-	public int[] getTotalMarks(){return this.totalMarks;}
-
+	/**
+	 * Method to add an Int to the total marks array
+	 * @param newmark Int being added to the array
+	 * @throws IOException
+	 */
 	public void addToTotalMarks(int newmark) throws IOException {
 		this.totalMarks = AddToArray.integer(this.totalMarks, newmark);
 		this.updateClassFile();
 	}
 
-	public String[] getTeachers() {
-		return teachers;
-	}
+	/**
+	 * Getter for the teachers array
+	 * @return The module's teachers array
+	 */
+	public String[] getTeachers() {return this.teachers;}
 
-	public void addToTeachers(String newteacher) throws IOException {
+	/**
+	 * Method to add new tutor to the teachers array
+	 * @param newteacher Item being added to teachers array
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public void addToTeachers(String newteacher) throws IOException, ClassNotFoundException {
 		this.teachers = AddToArray.string(this.teachers, newteacher);
 		this.updateClassFile();
+
+		//Updating the tutor that has just been added to the teachers array
+		Tutor addingTo = getobject.tutor(newteacher);
+		addingTo.addToModulesTeaching(this.modCode);
 	}
 
-	public void removeFromTeachers(String removingTeacher){
+	/**
+	 * Method to remove a tutor from the teachers array
+	 * @param removingTeacher Item being removed from teachers array
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public void removeFromTeachers(String removingTeacher) throws IOException, ClassNotFoundException {
 		String[] newArray = quickMethods.removeFromStringArray(removingTeacher, this.teachers);
 		this.teachers = newArray;
+
+		//Updating the tutor that has just been removed from this module
+		Tutor removingFrom = getobject.tutor(removingTeacher);
+		removingFrom.removeFromModulesTeaching(this.modCode);
 	}
 
-	public String getModerator() {
-		return moderator;
-	}
+	/**
+	 * Getter for moderator
+	 * @return The module's moderator
+	 */
+	public String getModerator() {return this.moderator;}
 
+	/**
+	 * Setter for moderator
+	 * @param moderator
+	 * @throws IOException
+	 */
 	public void setModerator(String moderator) throws IOException {
 		this.moderator = moderator;
 		this.updateClassFile();
 	}
 
+	/**
+	 * Method for getting a modules average mark
+	 * @return Average mark calculated
+	 */
 	public int getAverageMark(){
 		int allmarks = 0;
+		//Adding all the marks to a variable
 		for (int i = 0; i<this.totalMarks.length; i++){
 			allmarks = allmarks + this.totalMarks[i];
 		}
+		//Returning 0 is the array is empty
 		if(this.totalMarks.length==0){
 			return 0;
 		}
+		//Returning the average
 		else {
-			int totalAverage = allmarks / this.totalMarks.length;
-			return totalAverage;
+			return allmarks / this.totalMarks.length;
 		}
 	}
 
+	/**
+	 * Method for getting the minimum mark for the module
+	 * @return Minimum mark calculated
+	 */
 	public int getMinMark(){
 		int minmark = 101;
+		//Finding the lowest mark
 		for (int i = 0 ; i<this.totalMarks.length; i++){
 			int currentmark =  this.totalMarks[i];
 			if (currentmark<minmark){
 				minmark =currentmark;
 			}
 		}
+		//Returning 0 if no marks are found
 		if(minmark == 101){
 			return 0;
 		}
+		//Returning the lowest mark
 		else {
 			return minmark;
 		}
 	}
 
+	/**
+	 * Method for getting the maximum mark for the module
+	 * @return Maximum mark calculated
+	 */
 	public int getMaxMark(){
 		int maxmark = 0;
+		//Finding the maximum mark
 		for (int i = 0 ; i<this.totalMarks.length; i++){
 			int currentmark =  this.totalMarks[i];
 			if (currentmark>maxmark){
 				maxmark =currentmark;
 			}
 		}
-		return maxmark;
+		return maxmark;//Returning the maximum mark
 	}
 
+	/**
+	 * Method to update class file be deleting the old one and creating a new one
+	 * @throws IOException
+	 */
 	public void updateClassFile() throws IOException {
 		String filename = "Modules/" +this.getModCode() + ".txt";
+
+		//Deleting the old file
 		File oldFile = new File(filename);
 		oldFile.delete();
 
+		//Creating the new file
 		FileOutputStream f = new FileOutputStream(filename);
 		ObjectOutputStream o = new ObjectOutputStream(f);
 		o.writeObject(this);

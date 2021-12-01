@@ -1,16 +1,39 @@
+/**
+ * Class file from the Staff object
+ */
+
 import java.io.*;
 
 public class Staff extends Person{
+    /**
+     * The staff ID
+     */
     private String staffID;
+    /**
+     * The year the staff started working at the university
+     */
     private int startyr;
+    /**
+     * The staff's salary
+     */
     private int salary;
 
+    /**
+     * Constructor for staff
+     * @param fname Staff's first name
+     * @param lname Staff's last name
+     * @param dob Staff's Date of Birth
+     * @param startyr The year the staff started working at the university
+     * @param salary The staff's salary
+     * @throws IOException
+     */
     public Staff(String fname, String lname, String dob, int startyr, int salary) throws IOException {
-        super(fname, lname, dob);
+        super(fname, lname, dob);//Calling the constructor of the super classes using the taken in variables
+        //Assigning the taken in variables to the appropriate class variable
         this.startyr = startyr;
         this.salary = salary;
 
-        //Section for generating a staffID
+        //Generating the Staff ID
         boolean looping = true;
         String filepath = "codes/staffcodes.csv";
         String genNumber = "";
@@ -25,77 +48,120 @@ public class Staff extends Person{
                 looping = false;
             }
         }
-        quickMethods.addStringToCSV(filepath, genNumber);
-        this.staffID = genNumber;
+
+
+        quickMethods.addStringToCSV(filepath, genNumber); //Adding the staff ID to the overall staff codes CSV file
+        this.staffID = genNumber; //Assigning the generated staff
     }
 
-    public String getFname() {
-        return fname;
-    }
+    /**
+     * Getter for first name
+     * @return the staff's first name
+     */
+    public String getFname() {return fname;}
 
+    /**
+     * Setter for first name
+     * @param fname the value being assigned to first name
+     * @throws IOException
+     */
     public void setFname(String fname) throws IOException {
         this.fname = fname;
         this.updateClassFileStaff();
     }
 
-    public String getLname() {
-        return lname;
-    }
+    /**
+     * Getter for last name
+     * @return the staff's last name
+     */
+    public String getLname() {return this.lname;}
 
+    /**
+     * Setter for last name
+     * @param lname the value being assigned to last name
+     * @throws IOException
+     */
     public void setLname(String lname) throws IOException {
         this.lname = lname;
         this.updateClassFileStaff();
     }
 
-    public String getDob() {
-        return dob;
-    }
+    /**
+     * Getter for DOB
+     * @return the staff's date of birth
+     */
+    public String getDob() {return this.dob;}
 
+    /**
+     * Setter for dob
+     * @param dob the value being assigned to dob
+     * @throws IOException
+     */
     public void setDob(String dob) throws IOException {
         this.dob = dob;
         this.updateClassFileStaff();
     }
 
-    public String getStaffID() {
-        return staffID;
-    }
+    /**
+     * Getter for staff ID
+     * @return the staff ID
+     */
+    public String getStaffID() {return this.staffID;}
 
-    public void setStaffID(String staffID) throws IOException {
-        this.staffID = staffID;
-        this.updateClassFileStaff();
-    }
+    /**
+     * getter for start year
+     * @return the staff's start year
+     */
+    public int getStartyr() {return this.startyr;}
 
-    public int getStartyr() {
-        return startyr;
-    }
-
+    /**
+     * Setter for start year
+     * @param startyr the value being assigned to start year
+     * @throws IOException
+     */
     public void setStartyr(int startyr) throws IOException {
         this.startyr = startyr;
         this.updateClassFileStaff();
     }
 
-    public int getSalary() {
-        return salary;
-    }
+    /**
+     * Getter for salary
+     * @return the staff's salary
+     */
+    public int getSalary() {return this.salary;}
 
+    /**
+     * The setter for salary
+     * @param salary the value being assigned to salary
+     * @throws IOException
+     */
     public void setSalary(int salary) throws IOException {
         this.salary = salary;
         this.updateClassFileStaff();
     }
 
+    /**
+     * Method to update class file be deleting the old one and creating a new one
+     * @throws IOException
+     */
     public void updateClassFileStaff() throws IOException {
         String filename = "";
-        String classType = this.getClass().getSimpleName();
+
+        String classType = this.getClass().getSimpleName();//Getting the class Type
+        //Getting the file path if the class type is tutor
         if(classType.equals("Tutor")){
             filename = "Tutors/" +this.getStaffID() + ".txt";
         }
+        //Getting the file path if the class type is academic
         if(classType.equals("Academic")){
             filename = "Academics/" +this.getStaffID() + ".txt";
         }
 
+        //Deleting the old file
         File oldFile = new File(filename);
         oldFile.delete();
 
+        //Creating the new file
         FileOutputStream f = new FileOutputStream(filename);
         ObjectOutputStream o = new ObjectOutputStream(f);
         o.writeObject(this);

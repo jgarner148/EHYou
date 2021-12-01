@@ -1,28 +1,58 @@
-import java.io.*;
-import java.time.YearMonth;
+/**
+ *Class file for the student object
+ */
 
+import java.io.*;
 
 public class Student extends Person{
+	/**
+	 * String array of the modules the student is taking
+	 */
 	private String[] ModulesTaking;
+	/**
+	 * String array of the all results the student has been given
+	 */
 	private String[] AllResults;
+	/**
+	 * The year the student started at the university
+	 */
 	private int StartYr;
+	/**
+	 * The year the student will leave the university
+	 */
 	private int EndYr;
+	/**
+	 * The student number
+	 */
 	private final String StudentNum;
 
-	//Constructor
+	/**
+	 * The constructor for student
+	 * @param fname The student's first name
+	 * @param lname The student's last name
+	 * @param dob The students date of birth
+	 * @param modulesTaking String array of the modules the student is taking
+	 * @param allResults String array of the all results the student has been given
+	 * @param startYr The year the student started at the university
+	 * @param endYr The year the student will leave the university
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public Student(String fname, String lname, String dob, String[] modulesTaking, String[] allResults, int startYr, int endYr) throws IOException, ClassNotFoundException {
-		super(fname, lname, dob);
+		super(fname, lname, dob); //Calling the constructor of the super classes using the taken in variables
+		//Assigning the taken in variables to the appropriate class variable
 		this.ModulesTaking = modulesTaking;
 		this.AllResults = allResults;
 		this.StartYr = startYr;
 		this.EndYr = endYr;
-		//Section for generating a user number
+
+		//Generating the student number
 		boolean looping = true;
 		String filepath = "codes/studentNumbers.csv";
 		String genNumber = "";
 		while (looping) {
 			int yearstarted = this.StartYr;
-			int randomnumber = quickMethods.randnum(1000, 9999); //Generates a random number using my class randnum and its class method generate
+			int randomnumber = quickMethods.randnum(1000, 9999); //Generates a random number using my class randnum and its class method generate  jglhmb
 			String yearAsString = String.valueOf(yearstarted); //Turns yearstarted into String
 			String numAsString = String.valueOf(randomnumber); //Turns randumnumber into string
 			genNumber = yearAsString + numAsString; //Combines to two
@@ -32,9 +62,9 @@ public class Student extends Person{
 			}
 		}
 
-		this.StudentNum = genNumber;
+		this.StudentNum = genNumber; //Assigning the generated student number to the student number variable
 
-		
+		//Creating class file for the newly created studetn class
 		String filename = "Students/" +this.getStudentNum() + ".txt";
 		FileOutputStream f = new FileOutputStream(filename);
 		ObjectOutputStream o = new ObjectOutputStream(f);
@@ -42,9 +72,8 @@ public class Student extends Person{
 		o.close();
 		f.close();
 
+		//Adding the student number to each of the modules in the modules taking array
 		boolean isModulesTakingEmpty = this.ModulesTaking.length == 0;
-
-
         if(!isModulesTakingEmpty){
 			for (int i=0; i < this.ModulesTaking.length; i++){
 				Module addingTo = getobject.module(this.ModulesTaking[i]);
@@ -62,93 +91,169 @@ public class Student extends Person{
 			}
 		}
 
-		quickMethods.addStringToCSV(filepath, genNumber);
+		quickMethods.addStringToCSV(filepath, genNumber);//adding the student number to the overall student number CSV file
 
 	}
 
-	public String getFname() {
-		return this.fname;
-	}
+	/**
+	 * Getter for first name
+	 * @return first name
+	 */
+	public String getFname() {return this.fname;}
 
+	/**
+	 * Setter for first name
+	 * @param fname The value being assigned to first name
+	 * @throws IOException
+	 */
 	public void setFname(String fname) throws IOException {
 		this.fname = fname;
 		this.updateClassFile();
 	}
 
-	public String getLname() {
-		return lname;
-	}
+	/**
+	 * Getter for last name
+	 * @return last name
+	 */
+	public String getLname() {return this.lname;}
 
+	/**
+	 * Setter for last name
+	 * @param lname the value being assigned to last name
+	 * @throws IOException
+	 */
 	public void setLname(String lname) throws IOException {
 		this.lname = lname;
 		this.updateClassFile();
 	}
 
-	public String getDob() {
-		return dob;
-	}
+	/**
+	 * Getter for dob
+	 * @return date of birth
+	 */
+	public String getDob() {return this.dob;}
 
+	/**
+	 * Setter for dob
+	 * @param dob the value being assigned to dob
+	 * @throws IOException
+	 */
 	public void setDob(String dob) throws IOException {
 		this.dob = dob;
 		this.updateClassFile();
 	}
 
-	public String[] getModulesTaking(){
-		return ModulesTaking;
-	}
+	/**
+	 * Getter for modules taking
+	 * @return modules taking array
+	 */
+	public String[] getModulesTaking(){return this.ModulesTaking;}
 
-	public void addToModulesTaking(String newmodule) throws IOException {
+	/**
+	 * Method to add a module code to the modules taking array
+	 * @param newmodule the module code being added to the array
+	 * @throws IOException
+	 */
+	public void addToModulesTaking(String newmodule) throws IOException, ClassNotFoundException {
 		this.ModulesTaking = AddToArray.string(this.ModulesTaking, newmodule);
 		this.updateClassFile();
+
+		//Updating the module that has just been added this is student
+		Module addingTo = getobject.module(newmodule);
+		addingTo.addToStudentsTaking(this.StudentNum);
 	}
 
-	public void removeFromModules(String removingModule) throws IOException {
+	/**
+	 * Method to remove module from the modules taking array
+	 * @param removingModule the module code of the item being removed from the array
+	 * @throws IOException
+	 */
+	public void removeFromModules(String removingModule) throws IOException, ClassNotFoundException {
 		String[] newArray = quickMethods.removeFromStringArray(removingModule,this.ModulesTaking);
 		this.ModulesTaking = newArray;
 		this.updateClassFile();
+
+		//Updating the module that has just been removed from the array
+		Module removingFrom = getobject.module(removingModule);
+		removingFrom.removeFromStudentsTaking(this.StudentNum);
 	}
 
-	public int getStartYr() {
-		return StartYr;
-	}
+	/**
+	 * getter for start year
+	 * @return start year
+	 */
+	public int getStartYr() {return this.StartYr;}
 
+	/**
+	 * Setter for start year
+	 * @param startYr the value being assigned to start year
+	 * @throws IOException
+	 */
 	public void setStartYr(int startYr) throws IOException {
 		this.StartYr = startYr;
 		this.updateClassFile();
 	}
 
-	public int getEndYr() {
-		return EndYr;
-	}
+	/**
+	 * Getter for end year
+	 * @return end year
+	 */
+	public int getEndYr() {return this.EndYr;}
 
+	/**
+	 * Setter for end year
+	 * @param endYr value being assigned to end year
+	 * @throws IOException
+	 */
 	public void setEndYr(int endYr) throws IOException {
 		EndYr = endYr;
 		this.updateClassFile();
 	}
 
-	public String getStudentNum() {
-		return StudentNum;
-	}
+	/**
+	 * Getter for student number
+	 * @return student number
+	 */
+	public String getStudentNum() {return this.StudentNum;}
 
-	public String[] getAllResults() {
-		return this.AllResults;
-	}
+	/**
+	 * Getter for the all results array
+	 * @return all results array
+	 */
+	public String[] getAllResults() {return this.AllResults;}
 
+	/**
+	 * Method to add a result to all results array
+	 * @param newresult string being added to array
+	 * @throws IOException
+	 */
 	public void addToAllResults(String newresult) throws IOException {
 		this.AllResults = AddToArray.string(this.AllResults, newresult);
 		this.updateClassFile();
 	}
 
+	/**
+	 * Method to remove result code from all results string array
+	 * @param removingResult result to be removed
+	 * @throws IOException
+	 */
 	public void removeFromAllResults(String removingResult) throws IOException {
-		String[] newResultsArray = quickMethods.removeFromStringArray(removingResult, this.AllResults);
-		this.AllResults = newResultsArray;
+		this.AllResults = quickMethods.removeFromStringArray(removingResult, this.AllResults);
 		this.updateClassFile();
 	}
 
+	/**
+	 * Method to work out a students average grade for a given module
+	 * @param targetModuleCode Module to be calculated from
+	 * @return Result of calculation
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public int averageGradeForModule(String targetModuleCode) throws IOException, ClassNotFoundException {
 		String[] allResults = this.getAllResults();
 		int allgrades = 0;
 		int resultsAmount = 0;
+		//Adding up all the grades
 		for(int i=0; i < allResults.length; i++) {
 			String currentResultCode = allResults[i];
 			Result currentResult = getobject.result(currentResultCode);
@@ -159,26 +264,32 @@ public class Student extends Person{
 				resultsAmount++;
 			}
 		}
+		//If there are no results returning 0
 		if(resultsAmount == 0){
 			return 0;
 		}
+		//returning the result of the calculation
 		else {
 			return allgrades / resultsAmount;
 		}
-
-
 	}
 
+	/**
+	 * Method to update class file be deleting the old one and creating a new one
+	 * @throws IOException
+	 */
 	public void updateClassFile() throws IOException {
 		String filename = "Students/" +this.getStudentNum() + ".txt";
+
+		//Deleting the old file
 		File oldFile = new File(filename);
 		oldFile.delete();
 
+		//Creating the new file
 		FileOutputStream f = new FileOutputStream(filename);
 		ObjectOutputStream o = new ObjectOutputStream(f);
 		o.writeObject(this);
 		o.close();
 		f.close();
 	}
-
 }
