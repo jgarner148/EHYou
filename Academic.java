@@ -120,6 +120,7 @@ public class Academic extends Staff{
 
         //Updating the research class that has just been added to this academic
         Research addingTo = getobject.research(newresearch);
+        boolean exists;
         addingTo.addToAcademicsResearching(this.getStaffID());
     }
 

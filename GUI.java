@@ -1,8 +1,18 @@
+/**
+ * Programs main method that sets up the GUI's JFrame
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
 public class GUI {
+    /**
+     *
+     * @param args
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         String[] test1 = {};
         int[] test2 = {};
