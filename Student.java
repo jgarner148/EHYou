@@ -64,8 +64,8 @@ public class Student extends Person{
 
 		this.StudentNum = genNumber; //Assigning the generated student number to the student number variable
 
-		//Creating class file for the newly created studetn class
-		String filename = "Students/" +this.getStudentNum() + ".txt";
+		//Creating class file for the newly created student class
+		String filename = "Students/" + this.getStudentNum() + ".txt";
 		FileOutputStream f = new FileOutputStream(filename);
 		ObjectOutputStream o = new ObjectOutputStream(f);
 		o.writeObject(this);
