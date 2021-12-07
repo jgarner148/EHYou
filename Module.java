@@ -12,7 +12,7 @@ public class Module implements Serializable {
 	/**
 	 * Module Code
 	 */
-	private String modCode;
+	private final String modCode;
 	/**
 	 * String array of the IDs of all the students taking the module
 	 */

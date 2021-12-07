@@ -8,7 +8,7 @@ public class Staff extends Person{
     /**
      * The staff ID
      */
-    private String staffID;
+    private final String staffID;
     /**
      * The year the staff started working at the university
      */

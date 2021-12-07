@@ -13,9 +13,8 @@ public class AddToArray {
         int length = orignalarray.length; //Gets the length of the original array
         int[] newarray = new int[length + 1]; //Makes a new array that is one item bigger
 
-        for (int i = 0; i < length; i++) { //sets all the old array items into the new array
-            newarray[i] = orignalarray[i];
-        }
+        //sets all the old array items into the new array
+        System.arraycopy(orignalarray, 0, newarray, 0, length);
 
         newarray[length] = newitem; //sets the new item to its place in the new array
 
@@ -32,9 +31,8 @@ public class AddToArray {
         int length = orignalarray.length; //Gets the length of the original array
         String[] newarray = new String[length + 1]; //Makes a new array that is one item bigger
 
-        for (int i = 0; i < length; i++) { //sets all the old array items into the new array
-            newarray[i] = orignalarray[i];
-        }
+        //sets all the old array items into the new array
+        System.arraycopy(orignalarray, 0, newarray, 0, length);
 
         newarray[length] = newitem; //sets the new item to its place in the new array
 

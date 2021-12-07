@@ -1,3 +1,7 @@
+/**
+ * The class that houses the GUI for creating a Module
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -6,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class GUICreateModule implements ActionListener{
+    //Setting up the global GUI elements
     private final JFrame mainFrame;
     private final JButton goBack = factory.makeFlatButton("BACK");
     private final JLabel titleLabel = new JLabel("Create Module");
@@ -29,17 +34,19 @@ public class GUICreateModule implements ActionListener{
 
     private final JButton createButton = factory.makeFlatButton("Create");
 
-    //////////////////////////////////////////////////////////////////////////
+    //Setting up the global variables that will have the values of the module being created assigned to them.
     private String modName;
     private String modCode;
     private String[] studentsTaking = new String[0];
-    private final int[] totalMarks = new int[0];
     private String[] teachers = new String[0];
     private String moderator = "";
 
-
-
+    /**
+     * Constructor for the class that will be called when wanting to display the GUI for creating a module
+     * @param mainFrame The master frame that is already being displayed to the user when the method is called
+     */
     public GUICreateModule(JFrame mainFrame) {
+        //Setting up the main frame
         this.mainFrame = mainFrame;
         this.mainFrame.setTitle("EHYou - Create Module");
 
@@ -47,9 +54,11 @@ public class GUICreateModule implements ActionListener{
         goBack.setBounds(0, 0,100,50);
         goBack.addActionListener(this);
 
+        //Setting up the title label
         titleLabel.setBounds(450, 30,450,110);
         titleLabel.setFont(new Font("Georgia", Font.PLAIN,55));
 
+        //Setting label locations
         int xLabel = 400;
         int wLabel = 100;
         int hLabel = 50;
@@ -59,7 +68,7 @@ public class GUICreateModule implements ActionListener{
         teachersLabel.setBounds(xLabel,300,wLabel,hLabel);
         moderatorLabel.setBounds(xLabel, 350,wLabel,hLabel);
 
-
+        //Setting input locations
         int xInput = 510;
         int wInput = 250;
         int hInput = 30;
@@ -69,15 +78,19 @@ public class GUICreateModule implements ActionListener{
         teachersInput.setBounds(xInput,310,wInput,hInput);
         moderatorInput.setBounds(xInput,360,wInput,hInput);
 
+        //Setting up the add another student button
         anotherStudent.setBounds(775, 262, 125,25);
         anotherStudent.addActionListener(this);
 
+        //Setting up the add another teacher button
         anotherTeacher.setBounds(775, 312, 125,25);
         anotherTeacher.addActionListener(this);
 
+        //Setting up the create button
         createButton.setBounds(535, 420, 200, 35);
         createButton.addActionListener(this);
 
+        //Adding all the elements to the frame
         mainFrame.add(goBack);
         mainFrame.add(titleLabel);
         mainFrame.add(modNameLabel);
@@ -93,23 +106,29 @@ public class GUICreateModule implements ActionListener{
         mainFrame.add(moderatorLabel);
         mainFrame.add(moderatorInput);
         mainFrame.add(createButton);
-
     }
 
+    /**
+     * Invoked when an action occurs.
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
+        //Method for when the go back button is pressed that returns the user to the create home page
         if (e.getSource()==goBack){
             mainFrame.getContentPane().removeAll();
             mainFrame.repaint();
             GUICreateHome createhomepage = new GUICreateHome(this.mainFrame);
         }
 
+        //Method for when the adding a student button is clicked that checks the student code is valid and then adds it to the array
         if(e.getSource()==anotherStudent){
             String inputtedModule = studentsInput.getText();
             try {
                 boolean exists = quickMethods.checkIfInFile("codes/studentNumbers.csv",inputtedModule);
                 boolean correct = true;
-                if(exists == false){
+                if(!exists){
                     JOptionPane.showMessageDialog(null, "That is not a valid Student code, make sure you have created the student first. Error Code: 50X30", "Oops", JOptionPane.ERROR_MESSAGE);
                     correct = false;
                 }
@@ -119,7 +138,7 @@ public class GUICreateModule implements ActionListener{
                         correct = false;
                     }
                 }
-                if (correct==true){
+                if (correct){
                     this.studentsTaking = AddToArray.string(this.studentsTaking, inputtedModule);
                     studentsInput.setText("");
                 }
@@ -129,6 +148,7 @@ public class GUICreateModule implements ActionListener{
             }
         }
 
+        //Methods for when the adding a teacher button is clicked that checks the tutor code is valid and then adds it to the array
         if(e.getSource()==anotherTeacher){
             String inputtedModule = teachersInput.getText();
             try {
@@ -154,6 +174,7 @@ public class GUICreateModule implements ActionListener{
             }
         }
 
+        //Method for when the create button is clicked that takes all the information from the form, checks it for errors and then makes the object
         if(e.getSource()==createButton){
             boolean anyInvalid = false;
 
@@ -170,12 +191,12 @@ public class GUICreateModule implements ActionListener{
                 String inputtedModule = modCodeInput.getText();
                 try {
                     boolean exists = quickMethods.checkIfInFile("codes/modulecodes.csv", inputtedModule);
-                    if (exists == true) {
+                    if (exists) {
                         JOptionPane.showMessageDialog(null, "That module code is already taken. Error Code: 85X10", "Oops", JOptionPane.ERROR_MESSAGE);
                         anyInvalid = true;
                     }
 
-                    if (exists == false) {
+                    if (!exists) {
                         this.modCode = modCodeInput.getText();
                     }
                 } catch (FileNotFoundException ex) {
@@ -190,7 +211,7 @@ public class GUICreateModule implements ActionListener{
                 try {
                     boolean exists = quickMethods.checkIfInFile("codes/studentNumbers.csv",inputtedModule);
                     boolean correct = true;
-                    if(exists == false){
+                    if(!exists){
                         JOptionPane.showMessageDialog(null, "That is not a valid Student code, make sure you have created the student first. Error Code: 50X30", "Oops", JOptionPane.ERROR_MESSAGE);
                         anyInvalid = true;
                         correct = false;
@@ -202,7 +223,7 @@ public class GUICreateModule implements ActionListener{
                             correct = false;
                         }
                     }
-                    if (correct==true){
+                    if (correct){
                         this.studentsTaking = AddToArray.string(this.studentsTaking, inputtedModule);
                         studentsInput.setText("");
                     }
@@ -263,6 +284,7 @@ public class GUICreateModule implements ActionListener{
                 }
             }
 
+            //Creating the object
             if(!anyInvalid){
                 try{
                     Module newModule = new Module(this.modName,this.modCode,this.studentsTaking,this.teachers, this.moderator);
@@ -275,17 +297,6 @@ public class GUICreateModule implements ActionListener{
                     anyInvalid = true;
                 }
             }
-
-
-
-
-
-
-
-
-
-
-
         }
     }
 }

@@ -31,8 +31,8 @@ public class Academic extends Staff{
      * @param office Academic's office location
      * @param degree Academic's degree
      * @param currentResearch String Array with research codes that corresponds to the research the academic is involved in
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException IOError
+     * @throws ClassNotFoundException Class not found error
      */
     public Academic(String fname, String lname, String dob, int startyr, int salary, String office, String degree, String[] currentResearch) throws IOException, ClassNotFoundException {
         super(fname, lname, dob, startyr, salary); //Calling the constructor of the super classes using the taken in variables
@@ -79,7 +79,7 @@ public class Academic extends Staff{
     /**
      * Setter for office
      * @param office the value being assigned to office
-     * @throws IOException
+     * @throws IOException IO exception
      */
     public void setOffice(String office) throws IOException {
         this.office = office;
@@ -95,7 +95,7 @@ public class Academic extends Staff{
     /**
      * Setter for degree
      * @param degree the value being assigned to degree
-     * @throws IOException
+     * @throws IOException IO exception
      */
     public void setDegree(String degree) throws IOException {
         this.degree = degree;
@@ -111,8 +111,8 @@ public class Academic extends Staff{
     /**
      * Method to add string to the current research array
      * @param newresearch item to be added to current research array
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException IO exception
+     * @throws ClassNotFoundException CLass not found exception
      */
     public void addToCurrentResearch(String newresearch) throws IOException, ClassNotFoundException {
         this.currentResearch = AddToArray.string(this.currentResearch, newresearch);
@@ -120,29 +120,35 @@ public class Academic extends Staff{
 
         //Updating the research class that has just been added to this academic
         Research addingTo = getobject.research(newresearch);
-        boolean exists;
-        addingTo.addToAcademicsResearching(this.getStaffID());
+        String[] addingToArray = addingTo.getAcademicsResearching();
+        boolean exists = quickMethods.checkIfInStringArray(newresearch, addingToArray);
+        if(!exists){
+            addingTo.addToAcademicsResearching(this.getStaffID());
+        }
     }
 
     /**
      * Method to remove string from the current research array
      * @param removingResearch item to be removed from research array
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException IO exception
+     * @throws ClassNotFoundException Class not found exception
      */
     public void removeFromCurrentResearch(String removingResearch) throws IOException, ClassNotFoundException {
-        String[] newArray = quickMethods.removeFromStringArray(removingResearch, this.currentResearch);
-        this.currentResearch = newArray;
+        this.currentResearch = quickMethods.removeFromStringArray(removingResearch, this.currentResearch);
         this.updateClassFile();
 
         //Updating the research class that has just been removed from this academic
         Research removingFrom = getobject.research(removingResearch);
-        removingFrom.removeFromAcademicResearching(this.getStaffID());
+        String[] removingFromArray = removingFrom.getAcademicsResearching();
+        boolean exists = quickMethods.checkIfInStringArray(removingResearch, removingFromArray);
+        if(exists){
+            removingFrom.removeFromAcademicResearching(this.getStaffID());
+        }
     }
 
     /**
      * Method to update class file be deleting the old one and creating a new one
-     * @throws IOException
+     * @throws IOException IO exception
      */
     public void updateClassFile() throws IOException {
         String filename = "Academics/" +this.getStaffID() + ".txt";

@@ -19,7 +19,7 @@ public class GUISearchHome implements ActionListener{
     /**
      * Label for the subtitle
      */
-    private final JLabel subtitleLabel = new JLabel("Search using the unique ID code of the entity you are trying to find");
+    private final JLabel subtitleLabel = new JLabel("Search using the ID code of the entity or a Student's full name");
     /**
      * The button that allows the user to go back to the
      */
@@ -86,7 +86,31 @@ public class GUISearchHome implements ActionListener{
                 JOptionPane.showMessageDialog(null, "An error occurred. Error Code: 4050X10", "Oops", JOptionPane.ERROR_MESSAGE);
             }
             if(objectType.equals("none")){
-                JOptionPane.showMessageDialog(null, "That wasn't a valid code, make sure you have created the entity. Error code: 500","Oops", JOptionPane.ERROR_MESSAGE);
+                String studentCode = "";
+                try {
+                    studentCode = search.studentName(searchContents);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "An error occurred. Error Code: 4050X10", "Oops", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
+                    studentCode = " ";
+                } catch (ClassNotFoundException ex) {
+                    JOptionPane.showMessageDialog(null, "Invalid input. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
+                    studentCode = " ";
+                }
+                if(studentCode.equals("")){
+                    JOptionPane.showMessageDialog(null, "Invalid Input. Error code: 500","Oops", JOptionPane.ERROR_MESSAGE);
+                }
+                else{
+                    try {
+                        GUIViewStudent viewstudentpage = new GUIViewStudent(studentCode);
+                        searchBox.setText("");
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(null, "An error occurred. Error Code: 4000X10", "Oops", JOptionPane.ERROR_MESSAGE);
+                    } catch (ClassNotFoundException ex) {
+                        JOptionPane.showMessageDialog(null, "Invalid Input Error code: 500","Oops", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+
             }
             if(objectType.equals("Students")){
                 try {
@@ -94,7 +118,6 @@ public class GUISearchHome implements ActionListener{
                     searchBox.setText("");
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(null, "An error occurred. Error Code: 4000X10", "Oops", JOptionPane.ERROR_MESSAGE);
-                    ex.printStackTrace();
                 } catch (ClassNotFoundException ex) {
                     JOptionPane.showMessageDialog(null, "An error occurred. Error Code: 9999", "Oops", JOptionPane.ERROR_MESSAGE);
                 }

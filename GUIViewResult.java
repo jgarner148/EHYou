@@ -73,7 +73,7 @@ public class GUIViewResult implements ActionListener {
 
         gradeLabel.setBounds(xLabel,130,wLabel,hLabel);
         gradeLabel.setFont(labelFont);
-        gradeLabel.setText("Grade: " + Integer.toString(resultBeingViewed.getGrade()));
+        gradeLabel.setText("Grade: " + resultBeingViewed.getGrade());
 
         feedbackLabel.setBounds(xLabel,150,wLabel,hLabel);
         feedbackLabel.setFont(labelFont);

@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Scanner;
 
 public class main_testing {
 
@@ -41,7 +42,17 @@ public class main_testing {
 		//Module module1 = new Module("Testing", "CIS007", testarray3, testintarray, testarray4, "Dave");
 		//Research study1 = new Research("Study 1", testarray3);
 
-
-
+		String filePath = "codes/modulecodes.csv";
+		Scanner checker = new Scanner(new File(filePath));
+		checker.useDelimiter(",");
+		int exists = 0;
+		boolean reutrnValue = true;
+		//checks if item exists in file
+		while (checker.hasNext()) {
+			System.out.println(checker.next());
+		}
 	}
+
+
+
 }

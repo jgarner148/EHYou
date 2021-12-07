@@ -159,4 +159,21 @@ public class quickMethods {
         }
         return newArray;
     }
+
+    /**
+     * Method to check if an inputed item exists in an inputted string array
+     * @param itemChecking String that is being checked for
+     * @param arrayChecking String array that is being checked
+     * @return A boolean value that is "true" if the string does exist and "false" if it does not
+     */
+    public static boolean checkIfInStringArray(String itemChecking, String[] arrayChecking){
+       boolean isInArray = false;
+       for(int i=0; i < arrayChecking.length; i++){
+           if (arrayChecking[i].equals(itemChecking)) {
+               isInArray = true;
+               break;
+           }
+       }
+       return isInArray;
+    }
 }

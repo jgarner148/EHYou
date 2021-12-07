@@ -1,12 +1,16 @@
+/**
+ * The class that houses the GUI for creating an academic
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Calendar;
 
 public class GUICreateAcademic implements ActionListener {
+    //Setting up the global GUI elements
     private final JFrame mainFrame;
     private final JButton goBack = factory.makeFlatButton("BACK");
     private final JLabel titleLabel = new JLabel("Create Academic");
@@ -38,7 +42,7 @@ public class GUICreateAcademic implements ActionListener {
 
     private final JButton createButton = factory.makeFlatButton("Create");
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Setting up the global variables that will have the values of the academic being created assigned to them.
     private String fname;
     private String lname;
     private String dob;
@@ -48,8 +52,12 @@ public class GUICreateAcademic implements ActionListener {
     private String degree;
     private String[] currentResearch=new String[0];
 
-
+    /**
+     * Constructor for the class that will be called when wanting to display the GUI for creating an academic
+     * @param mainFrame The master frame that is already being displayed to the user when the method is called
+     */
     public GUICreateAcademic(JFrame mainFrame) {
+        //Configuring the main frame
         this.mainFrame = mainFrame;
         this.mainFrame.setTitle("EHYou - Create Academic");
 
@@ -57,9 +65,11 @@ public class GUICreateAcademic implements ActionListener {
         goBack.setBounds(0, 0,100,50);
         goBack.addActionListener(this);
 
+        //Setting up the title label
         titleLabel.setBounds(450, 30,450,110);
         titleLabel.setFont(new Font("Georgia", Font.PLAIN,55));
 
+        //Setting label locations
         int xLabel = 400;
         fnameLabel.setBounds(xLabel, 150,100,50);
         lnameLabel.setBounds(xLabel, 200,100,50);
@@ -70,6 +80,7 @@ public class GUICreateAcademic implements ActionListener {
         degreeLabel.setBounds(xLabel,450,100,50);
         currentResearchLabel.setBounds(xLabel, 500,100,50);
 
+        //Setting input locations
         int xInput = 510;
         int wInput = 250;
         int hInput = 30;
@@ -82,13 +93,15 @@ public class GUICreateAcademic implements ActionListener {
         degreeInput.setBounds(xInput,460,wInput,hInput);
         currentResearchInput.setBounds(xInput,510,wInput,hInput);
 
+        //Setting up the add to buttons
         addToCurrentResearch.setBounds(775,512,125,25);
         addToCurrentResearch.addActionListener(this);
 
+        //Setting up the create button
         createButton.setBounds(535, 570, 200, 35);
         createButton.addActionListener(this);
 
-
+        //Adding all the elements to the frame
         mainFrame.add(fnameLabel);
         mainFrame.add(lnameLabel);
         mainFrame.add(dobLabel);
@@ -106,27 +119,32 @@ public class GUICreateAcademic implements ActionListener {
         mainFrame.add(currentResearchLabel);
         mainFrame.add(currentResearchInput);
         mainFrame.add(addToCurrentResearch);
-
         mainFrame.add(createButton);
-
         mainFrame.add(goBack);
         mainFrame.add(titleLabel);
     }
 
+    /**
+     * Invoked when an action occurs.
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
+        //Method for when the go back button is pressed that returns the user to the create home page
         if (e.getSource()==goBack){
             mainFrame.getContentPane().removeAll();
             mainFrame.repaint();
             GUICreateHome createhomepage = new GUICreateHome(this.mainFrame);
         }
 
+        //Method for when the adding to research button is clicked that checks if the research code exists and then adds it to the array if it does not
         if(e.getSource()==addToCurrentResearch){
             String inputtedresearch = currentResearchInput.getText();
             try {
                 boolean exists = quickMethods.checkIfInFile("codes/researchcodes.csv", inputtedresearch);
                 boolean correct = true;
-                if (exists == false) {
+                if (!exists) {
                     JOptionPane.showMessageDialog(null, "That is not valid Research, make sure you have created the Research first. Error Code: 50X50", "Oops", JOptionPane.ERROR_MESSAGE);
                     correct = false;
                 }
@@ -136,7 +154,7 @@ public class GUICreateAcademic implements ActionListener {
                         correct = false;
                     }
                 }
-                if (correct == true) {
+                if (correct) {
                     this.currentResearch = AddToArray.string(this.currentResearch, inputtedresearch);
                     currentResearchInput.setText("");
                 }
@@ -145,6 +163,7 @@ public class GUICreateAcademic implements ActionListener {
             }
         }
 
+        //Method for when the create button is clicked that takes the information inputted into the form, checks it for errors and then makes the object
         if(e.getSource()==createButton){
             boolean anyInvalid = false;
 

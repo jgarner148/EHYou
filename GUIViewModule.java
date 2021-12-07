@@ -183,7 +183,7 @@ public class GUIViewModule implements ActionListener {
                 try {
                     currentStudnet = getobject.student(currentcode);
                 } catch (IOException | ClassNotFoundException ex) {
-                    JOptionPane.showMessageDialog(null, "Error with Student object. Error Code: 4000X10", "Oops", JOptionPane.ERROR_MESSAGE);;
+                    JOptionPane.showMessageDialog(null, "Error with Student object. Error Code: 4000X10", "Oops", JOptionPane.ERROR_MESSAGE);
                 }
                 assert currentStudnet != null;
                 allStudetnsText = allStudetnsText + currentStudnet.getStudentNum() + " - " + currentStudnet.getFname() + " " + currentStudnet.getLname() + "<br>";
