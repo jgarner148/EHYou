@@ -21,7 +21,7 @@ public class GUISearchHome implements ActionListener{
      */
     private final JLabel subtitleLabel = new JLabel("Search using the ID code of the entity or a Student's full name");
     /**
-     * The button that allows the user to go back to the
+     * The button that allows the user to go back
      */
     private final JButton goBack = factory.makeFlatButton("BACK");
     /**
@@ -60,31 +60,39 @@ public class GUISearchHome implements ActionListener{
         goSearch.setBounds(880, 280, 85, 35);
         goSearch.addActionListener(this);
 
+        //Adding all the elements to the frame
         mainFrame.add(titleLabel);
         mainFrame.add(goBack);
         mainFrame.add(subtitleLabel);
         mainFrame.add(searchBox);
         mainFrame.add(goSearch);
 
-
-
     }
 
+    /**
+     * Invoked when an action occurs.
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
+        //Method for when the go back button is pressed that returns the user to the create home page
         if (e.getSource()==goBack){
             mainFrame.getContentPane().removeAll();
             mainFrame.repaint();
             GUIWelcomePage welcomepage = new GUIWelcomePage(this.mainFrame);
         }
+        //Mwthod for when the search button is clicked that searches for an object using the information inputted by the user
         if(e.getSource()==goSearch){
             String searchContents = searchBox.getText();
             String objectType = "";
+            //Runs the search.code method to check if the user has inputted an object code
             try {
                 objectType = search.code(searchContents);
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, "An error occurred. Error Code: 4050X10", "Oops", JOptionPane.ERROR_MESSAGE);
             }
+            //Runs the search.studentname method if the search.code method returns nothing. This will check if the user has entered the full name of a student
             if(objectType.equals("none")){
                 String studentCode = "";
                 try {
@@ -97,9 +105,11 @@ public class GUISearchHome implements ActionListener{
                     JOptionPane.showMessageDialog(null, "Invalid input. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
                     studentCode = " ";
                 }
+                //If no search methods return results the user is told that the object does not exist
                 if(studentCode.equals("")){
                     JOptionPane.showMessageDialog(null, "Invalid Input. Error code: 500","Oops", JOptionPane.ERROR_MESSAGE);
                 }
+                //Opens the view Student GUI
                 else{
                     try {
                         GUIViewStudent viewstudentpage = new GUIViewStudent(studentCode);
@@ -112,6 +122,7 @@ public class GUISearchHome implements ActionListener{
                 }
 
             }
+            //Opens the view Student GUI if the user has inputted a student code
             if(objectType.equals("Students")){
                 try {
                     GUIViewStudent viewStudentPage = new GUIViewStudent(searchContents);
@@ -122,6 +133,7 @@ public class GUISearchHome implements ActionListener{
                     JOptionPane.showMessageDialog(null, "An error occurred. Error Code: 9999", "Oops", JOptionPane.ERROR_MESSAGE);
                 }
             }
+            //Opens the view module GUI if the user has inputted a module code
             if(objectType.equals("Modules")){
                 try {
                     GUIViewModule viewModulePage = new GUIViewModule(searchContents);
@@ -131,6 +143,7 @@ public class GUISearchHome implements ActionListener{
                 }
 
             }
+            //Opens the view results GUI is the user has inputted a results code
             if(objectType.equals("Results")){
                 try {
                     GUIViewResult viewResultPage = new GUIViewResult(searchContents);
@@ -139,6 +152,7 @@ public class GUISearchHome implements ActionListener{
                     JOptionPane.showMessageDialog(null, "An error occurred. Error Code: 9999", "Oops", JOptionPane.ERROR_MESSAGE);
                 }
             }
+            //Opens the view research GUI is the user has inputted a research code
             if(objectType.equals("Researches")){
                 try {
                     GUIViewReseach viewResearchPage = new GUIViewReseach(searchContents);
@@ -147,6 +161,7 @@ public class GUISearchHome implements ActionListener{
                     JOptionPane.showMessageDialog(null, "An error occurred. Error Code: 9999", "Oops", JOptionPane.ERROR_MESSAGE);
                 }
             }
+            //Opens the view tutor GUI is the user has inputted a tutor code
             if(objectType.equals("Tutors")){
                 try {
                     GUIViewTutor viewTutorPage = new GUIViewTutor(searchContents);
@@ -155,6 +170,7 @@ public class GUISearchHome implements ActionListener{
                     JOptionPane.showMessageDialog(null, "An error occurred. Error Code: 9999", "Oops", JOptionPane.ERROR_MESSAGE);
                 }
             }
+            //Opens the view academic GUI is the user has inputted an academic code
             if(objectType.equals("Academics")){
                 try {
                     GUIViewAcademic viewAcademicPage = new GUIViewAcademic(searchContents);
@@ -163,10 +179,7 @@ public class GUISearchHome implements ActionListener{
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "An error occurred. Error Code: 9999", "Oops", JOptionPane.ERROR_MESSAGE);
                 }
-
             }
-
         }
-
     }
 }

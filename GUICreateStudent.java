@@ -1,3 +1,7 @@
+/**
+ * The class that houses the GUI for creating a student
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -6,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class GUICreateStudent implements ActionListener {
+    //Setting up the global GUI elements
     private final JFrame mainFrame;
     private final JButton goBack = factory.makeFlatButton("BACK");
     private final JLabel titleLabel = new JLabel("Create Student");
@@ -35,7 +40,7 @@ public class GUICreateStudent implements ActionListener {
 
     private final JButton createButton = factory.makeFlatButton("Create");
 
-    ////////////////////Object variables//////////////////////////////
+    //Setting up the global variables that will have the values of the student being created assigned to them.
     private String fname;
     private String lname;
     private String dob;
@@ -44,8 +49,12 @@ public class GUICreateStudent implements ActionListener {
     private int StartYr;
     private int EndYr;
 
-
+    /**
+     * Constructor for the class that will be called when wanting to display the GUI for creating a student
+     * @param mainFrame The master frame that is already being dispayed when the method is called
+     */
     public GUICreateStudent(JFrame mainFrame) {
+        //Setting up the main frame
         this.mainFrame = mainFrame;
         this.mainFrame.setTitle("EHYou - Create Student");
 
@@ -53,10 +62,11 @@ public class GUICreateStudent implements ActionListener {
         goBack.setBounds(0, 0,100,50);
         goBack.addActionListener(this);
 
+        //Setting up the title label
         titleLabel.setBounds(450, 30,450,110);
         titleLabel.setFont(new Font("Georgia", Font.PLAIN,55));
 
-
+        //Setting label locations
         int xLabel = 400;
         fnameLabel.setBounds(xLabel, 150,100,50);
         lnameLabel.setBounds(xLabel, 200,100,50);
@@ -66,6 +76,7 @@ public class GUICreateStudent implements ActionListener {
         StartYrLabel.setBounds(xLabel, 400,100,50);
         EndYrLabel.setBounds(xLabel, 450,100,50);
 
+        //Setting input locations
         int xInput = 510;
         int wInput = 250;
         int hInput = 30;
@@ -77,18 +88,21 @@ public class GUICreateStudent implements ActionListener {
         StartYrInput.setBounds(xInput, 410,wInput,hInput);
         EndYrInput.setBounds(xInput, 460,wInput,hInput);
 
+        //Setting up the add another module button
         addanotherModule.setBounds(775, 312,125,25);
         addanotherModule.addActionListener(this);
 
+        //Setting up the add another result button
         addanotherResult.setBounds(775, 362,125,25);
         addanotherResult.addActionListener(this);
 
+        //Setting up the create button
         createButton.setBounds(535, 520, 200, 35);
         createButton.addActionListener(this);
 
+        //Adding all the elements to the frame
         mainFrame.add(goBack);
         mainFrame.add(titleLabel);
-
         mainFrame.add(fnameLabel);
         mainFrame.add(lnameLabel);
         mainFrame.add(dobLabel);
@@ -96,7 +110,6 @@ public class GUICreateStudent implements ActionListener {
         mainFrame.add(AllResultsLabel);
         mainFrame.add(StartYrLabel);
         mainFrame.add(EndYrLabel);
-
         mainFrame.add(fnameInput);
         mainFrame.add(lnameInput);
         mainFrame.add(dobInput);
@@ -104,28 +117,32 @@ public class GUICreateStudent implements ActionListener {
         mainFrame.add(AllResultsInput);
         mainFrame.add(StartYrInput);
         mainFrame.add(EndYrInput);
-
         mainFrame.add(addanotherModule);
         mainFrame.add(addanotherResult);
-
         mainFrame.add(createButton);
-
     }
 
+    /**
+     * Invoked when an action occurs.
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
+        //Method for when the go back button is pressed that returns the user to the create home page
         if (e.getSource()==goBack){
             mainFrame.getContentPane().removeAll();
             mainFrame.repaint();
             GUICreateHome createhomepage = new GUICreateHome(this.mainFrame);
         }
 
+        //Method for when the adding a module button is clicked that checks the module code is valid and then adds it to the array
         if (e.getSource()==addanotherModule){
             String inputtedModule = ModulesTakingInput.getText();
             try {
                 boolean exists = quickMethods.checkIfInFile("codes/modulecodes.csv",inputtedModule);
                 boolean correct = true;
-                if(exists == false){
+                if(!exists){
                     JOptionPane.showMessageDialog(null, "That is not a valid Module code, make sure you have created the module first. Error Code: 50X10", "Oops", JOptionPane.ERROR_MESSAGE);
                     correct = false;
                 }
@@ -135,7 +152,7 @@ public class GUICreateStudent implements ActionListener {
                         correct = false;
                     }
                 }
-                if (correct==true){
+                if (correct){
                     this.ModulesTaking = AddToArray.string(this.ModulesTaking, inputtedModule);
                     ModulesTakingInput.setText("");
                 }
@@ -143,15 +160,15 @@ public class GUICreateStudent implements ActionListener {
             catch (FileNotFoundException ex) {
                 JOptionPane.showMessageDialog(null, "You are missing a file! Error Code: 1000X10", "Oops", JOptionPane.ERROR_MESSAGE);
             }
-
         }
 
+        //Method for when the adding a result button is clicked that checks the result code is valid and then adds it to the array
         if (e.getSource()==addanotherResult){
             String inputtedModule = AllResultsInput.getText();
             try {
                 boolean exists = quickMethods.checkIfInFile("codes/resultcodes.csv",inputtedModule);
                 boolean correct = true;
-                if(exists == false){
+                if(!exists){
                     JOptionPane.showMessageDialog(null, "That is not a valid Result code, make sure you have created the result first. Error Code: 50X20", "Oops", JOptionPane.ERROR_MESSAGE);
                     correct = false;
                 }
@@ -161,7 +178,7 @@ public class GUICreateStudent implements ActionListener {
                         correct = false;
                     }
                 }
-                if (correct==true){
+                if (correct){
                     this.Allresults = AddToArray.string(this.Allresults, inputtedModule);
                     AllResultsInput.setText("");
                     System.out.println("added");
@@ -173,6 +190,7 @@ public class GUICreateStudent implements ActionListener {
 
         }
 
+        //Method for when the create button is clicked that takes all the information from the form, checks it for errors and then makes the object
         if (e.getSource()==createButton){
             boolean anyInvalid = false;
 
@@ -225,8 +243,7 @@ public class GUICreateStudent implements ActionListener {
                 String inputtedModule = AllResultsInput.getText();
                 try {
                     boolean exists = quickMethods.checkIfInFile("codes/resultcodes.csv",inputtedModule);
-                    boolean correct = true;
-                    if(exists == false){
+                    if(!exists){
                         JOptionPane.showMessageDialog(null, "That is not a valid Result code, make sure you have created the result first. Error Code: 50X20", "Oops", JOptionPane.ERROR_MESSAGE);
                         anyInvalid = true;
                     }
@@ -277,7 +294,6 @@ public class GUICreateStudent implements ActionListener {
                     anyInvalid = true;
                 }
             }
-
         }
     }
 }

@@ -1,3 +1,7 @@
+/**
+ * The class that houses the GUi for creating a Tutor
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,6 +11,7 @@ import java.io.IOException;
 import java.util.Calendar;
 
 public class GUICreateTutor implements ActionListener {
+    //Setting up the global GUI elements
     private final JFrame mainFrame;
     private final JButton goBack = factory.makeFlatButton("BACK");
     private final JLabel titleLabel = new JLabel("Create Tutor");
@@ -42,7 +47,7 @@ public class GUICreateTutor implements ActionListener {
 
     private final JButton createButton = factory.makeFlatButton("Create");
 
-    //////////////////////////////////////////////////////////////////////////////////////////////
+    //Setting up the global variables that will have the values of the Tutor being created assigned to them.
     private String fname;
     private String lname;
     private String dob;
@@ -54,7 +59,12 @@ public class GUICreateTutor implements ActionListener {
     private String[] modulesModerating = new String[0];
 
 
+    /**
+     * Constructor for the class that will be called when wanting to display the GUI for creating a tutor
+     * @param mainFrame The master frame that is already being displayed to the user when the method is called
+     */
     public GUICreateTutor(JFrame mainFrame) {
+        //Setting up the main frame
         this.mainFrame = mainFrame;
         this.mainFrame.setTitle("EHYou - Create Tutor");
 
@@ -62,9 +72,11 @@ public class GUICreateTutor implements ActionListener {
         goBack.setBounds(0, 0, 100, 50);
         goBack.addActionListener(this);
 
+        //Setting up the title label
         titleLabel.setBounds(450, 30, 450, 110);
         titleLabel.setFont(new Font("Georgia", Font.PLAIN, 55));
 
+        //Setting label locations
         int xLabel = 400;
         fnameLabel.setBounds(xLabel, 150, 100, 50);
         lnameLabel.setBounds(xLabel, 200, 100, 50);
@@ -76,6 +88,7 @@ public class GUICreateTutor implements ActionListener {
         modulesTeachingLabel.setBounds(xLabel, 500, 100, 50);
         modulesMonitoringLabel.setBounds(xLabel, 550, 100, 50);
 
+        //Setting button locations
         int xInput = 510;
         int wInput = 250;
         int hInput = 30;
@@ -89,18 +102,21 @@ public class GUICreateTutor implements ActionListener {
         moduleTeachingInput.setBounds(xInput, 510, wInput, hInput);
         modulesMonitoringInput.setBounds(xInput, 560, wInput, hInput);
 
+        //Setting up the add another module teaching button
         addAnothermoduleTeaching.setBounds(775, 512, 125, 25);
         addAnothermoduleTeaching.addActionListener(this);
 
+        //setting up the add another module moderating button
         addAnotherModuleModerating.setBounds(775, 562, 125, 25);
         addAnotherModuleModerating.addActionListener(this);
 
+        //Setting up the create button
         createButton.setBounds(535, 620, 200, 35);
         createButton.addActionListener(this);
 
+        //Adding all the elements to the frame
         mainFrame.add(goBack);
         mainFrame.add(titleLabel);
-
         mainFrame.add(fnameLabel);
         mainFrame.add(lnameLabel);
         mainFrame.add(dobLabel);
@@ -121,24 +137,30 @@ public class GUICreateTutor implements ActionListener {
         mainFrame.add(modulesMonitoringLabel);
         mainFrame.add(modulesMonitoringInput);
         mainFrame.add(addAnotherModuleModerating);
-
         mainFrame.add(createButton);
     }
 
+    /**
+     * Invoked when an action occurs.
+     *
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
+       //Method for when the go back button is pressed that returns the user to the create home page
         if (e.getSource() == goBack) {
             mainFrame.getContentPane().removeAll();
             mainFrame.repaint();
             GUICreateHome createhomepage = new GUICreateHome(this.mainFrame);
         }
 
+        //Method for when the add another module teaching button is clicked that checks the module code is valid and then adds it to the array
         if (e.getSource() == addAnothermoduleTeaching) {
             String inputtedModule = moduleTeachingInput.getText();
             try {
                 boolean exists = quickMethods.checkIfInFile("codes/modulecodes.csv", inputtedModule);
                 boolean correct = true;
-                if (exists == false) {
+                if (!exists) {
                     JOptionPane.showMessageDialog(null, "That is not a valid Module, make sure you have created the module first. Error Code: 50X10", "Oops", JOptionPane.ERROR_MESSAGE);
                     correct = false;
                 }
@@ -148,7 +170,7 @@ public class GUICreateTutor implements ActionListener {
                         correct = false;
                     }
                 }
-                if (correct == true) {
+                if (correct) {
                     this.modulesTeaching = AddToArray.string(this.modulesTeaching, inputtedModule);
                     moduleTeachingInput.setText("");
                 }
@@ -157,12 +179,13 @@ public class GUICreateTutor implements ActionListener {
             }
         }
 
+        //Method for when the add another module moderating button is clicked that checks the module code is valid and then adds it to the array
         if(e.getSource()==addAnotherModuleModerating){
             String inputtedModule = modulesMonitoringInput.getText();
             try {
                 boolean exists = quickMethods.checkIfInFile("codes/modulecodes.csv",inputtedModule);
                 boolean correct = true;
-                if(exists == false){
+                if(!exists){
                     JOptionPane.showMessageDialog(null, "That is not a valid Module code, make sure you have created the module first. Error Code: 50X10", "Oops", JOptionPane.ERROR_MESSAGE);
                     correct = false;
                 }
@@ -172,7 +195,7 @@ public class GUICreateTutor implements ActionListener {
                         correct = false;
                     }
                 }
-                if (correct==true){
+                if (correct){
                     this.modulesModerating = AddToArray.string(this.modulesModerating, inputtedModule);
                     modulesMonitoringInput.setText("");
                 }
@@ -182,6 +205,7 @@ public class GUICreateTutor implements ActionListener {
             }
         }
 
+        //Method for when the create button is clicked that takes all the information from the form, checks it for errors and then makes the object
         if(e.getSource()==createButton){
             boolean anyInvalid = false;
 
@@ -229,7 +253,7 @@ public class GUICreateTutor implements ActionListener {
                 try {
                     boolean exists = quickMethods.checkIfInFile("codes/modulecodes.csv", inputtedModule);
                     boolean correct = true;
-                    if (exists == false) {
+                    if (!exists) {
                         JOptionPane.showMessageDialog(null, "That is not a valid Module, make sure you have created the module first. Error Code: 50X10", "Oops", JOptionPane.ERROR_MESSAGE);
                         correct = false;
                         anyInvalid = true;
@@ -241,7 +265,7 @@ public class GUICreateTutor implements ActionListener {
                             anyInvalid = true;
                         }
                     }
-                    if (correct == true) {
+                    if (correct) {
                         this.modulesTeaching = AddToArray.string(this.modulesTeaching, inputtedModule);
                         moduleTeachingInput.setText("");
                     }
@@ -257,7 +281,7 @@ public class GUICreateTutor implements ActionListener {
                 try {
                     boolean exists = quickMethods.checkIfInFile("codes/modulecodes.csv",inputtedModule);
                     boolean correct = true;
-                    if(exists == false){
+                    if(!exists){
                         JOptionPane.showMessageDialog(null, "That is not a valid Module code, make sure you have created the module first. Error Code: 50X10", "Oops", JOptionPane.ERROR_MESSAGE);
                         correct = false;
                         anyInvalid = true;
@@ -269,7 +293,7 @@ public class GUICreateTutor implements ActionListener {
                             anyInvalid = true;
                         }
                     }
-                    if (correct==true){
+                    if (correct){
                         this.modulesModerating = AddToArray.string(this.modulesModerating, inputtedModule);
                         modulesMonitoringInput.setText("");
                     }
@@ -295,7 +319,6 @@ public class GUICreateTutor implements ActionListener {
                     anyInvalid = true;
                 }
             }
-
-        }
         }
     }
+}

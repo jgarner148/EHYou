@@ -1,3 +1,7 @@
+/**
+ * Class that houses the GUI for viewing an Acadmeic
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class GUIViewAcademic implements ActionListener {
+    //Setting up the elements that house the academic data as well as the buttons the edit them
     private final JFrame IDCardFrame = new JFrame();
     private final String staffID;
     private final Academic academicBeingviewed;
@@ -31,9 +36,13 @@ public class GUIViewAcademic implements ActionListener {
     private final JButton currentResearchAddButton = factory.makeFlatButton("Add");
     private final JButton currentResearchDeleteButton = factory.makeFlatButton("Delete");
 
+    //Setting up the standard font
     private final Font labelFont = new Font("Georgia", Font.ITALIC, 15);
+
+    //Setting up the object delete button
     private final JButton deletebutton = factory.makeFlatButton("Delete");
 
+    //Setting up the elements for the edit pages
     private final JTextField editAndCalcInput = new JTextField();
     private final JButton editFnameEnterButton = factory.makeFlatButton("Enter");
     private final JButton editLnameEnterButton = factory.makeFlatButton("Enter");
@@ -46,9 +55,18 @@ public class GUIViewAcademic implements ActionListener {
     private final JButton removeResearchEnterButton = factory.makeFlatButton("Enter");
 
 
+    /**
+     * Constructor for the class that will be called when wanting to view an academic
+     * @param staffID The ID of the academic being viewed
+     * @throws IOException Io exception
+     * @throws ClassNotFoundException Class not found exception
+     */
     public GUIViewAcademic(String staffID) throws IOException, ClassNotFoundException {
+        //Setting up some global variables
         this.staffID = staffID;
         this.academicBeingviewed = getobject.academic(this.staffID);
+
+        //Setting up the Id card frame
         this.IDCardFrame.setSize(560, 560);
         this.IDCardFrame.getContentPane().setBackground(new Color(165, 213, 220));
         this.IDCardFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -60,9 +78,11 @@ public class GUIViewAcademic implements ActionListener {
         this.IDCardFrame.setResizable(false);
         this.IDCardFrame.setVisible(true);
 
+        //Setting up the title label
         titleLabel.setBounds(20, 15, 225, 25);
         titleLabel.setFont(new Font("Georgia", Font.ITALIC, 25));
 
+        //Setting up the object information labels
         int xLabel = 20;
         int wLabel = 250;
         int hLabel = 25;
@@ -98,6 +118,7 @@ public class GUIViewAcademic implements ActionListener {
         degreeLabel.setFont(labelFont);
         degreeLabel.setText("Degree: " + academicBeingviewed.getDegree());
 
+        //Adding the content of the all research array to the label and then setting up the label
         String[] allResearch = academicBeingviewed.getCurrentResearch();
         String allResearchText = "";
         for (int i = 0; i < allResearch.length; i++) {
@@ -105,15 +126,15 @@ public class GUIViewAcademic implements ActionListener {
             Research currentResarch = getobject.research(currentcode);
             allResearchText = allResearchText + currentResarch.getResearchCode() + " - " + currentResarch.getResearchTitle() + "<br>";
         }
-
         currentResearchLabel.setBounds(xLabel, 200, 400, 240);
         currentResearchLabel.setFont(labelFont);
         currentResearchLabel.setText("<html>" + "Research:<br>" + allResearchText);
 
-
+        //Setting up the delete button
         deletebutton.setBounds(320, 460, 200, 50);
         deletebutton.addActionListener(this);
 
+        //Setting up all buttons
         int xButton = 420;
         int wButton = 75;
         int hButton = 18;
@@ -138,8 +159,8 @@ public class GUIViewAcademic implements ActionListener {
         currentResearchDeleteButton.setBounds(115, 475, 85, hButton);
         currentResearchDeleteButton.addActionListener(this);
 
+        //Adding all the elements to the frame
         IDCardFrame.add(titleLabel);
-
         IDCardFrame.add(IDLabel);
         IDCardFrame.add(fnameLabel);
         IDCardFrame.add(lnameLabel);
@@ -150,7 +171,6 @@ public class GUIViewAcademic implements ActionListener {
         IDCardFrame.add(degreeLabel);
         IDCardFrame.add(currentResearchLabel);
         IDCardFrame.add(deletebutton);
-
         IDCardFrame.add(fnameEditButton);
         IDCardFrame.add(lnameEditButton);
         IDCardFrame.add(dobEditButton);
@@ -169,7 +189,8 @@ public class GUIViewAcademic implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        boolean alreadyOpen = false;
+        boolean alreadyOpen = false; //Boolean that stops the program from displaying multiple error messages/input windows by setting itself to true when an action is performed
+        //Method performed when the delete button is clicked that deletes the academic object
         if (e.getSource() == deletebutton && !alreadyOpen) {
             alreadyOpen = true;
             int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + academicBeingviewed.getStaffID(), "Confirm delete", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
@@ -181,6 +202,7 @@ public class GUIViewAcademic implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Academic Deleted", "Deleted!", JOptionPane.INFORMATION_MESSAGE);
             }
         }
+        //Method performed when changing the first name
         if(e.getSource() == editFnameEnterButton && !alreadyOpen){
             alreadyOpen = true;
             try {
@@ -192,6 +214,7 @@ public class GUIViewAcademic implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Error with Academic object. Error Code: 4000X50", "Oops", JOptionPane.ERROR_MESSAGE);
             }
         }
+        //Method performed when changing the last name
         if(e.getSource() == editLnameEnterButton && !alreadyOpen){
             alreadyOpen = true;
             try {
@@ -203,6 +226,7 @@ public class GUIViewAcademic implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Error with Academic object. Error Code: 4000X50", "Oops", JOptionPane.ERROR_MESSAGE);
             }
         }
+        //Method performed when changing the date of birth
         if(e.getSource() == editDOBEnterButton && !alreadyOpen){
             alreadyOpen = true;
             boolean isValid = quickMethods.checkDOB(editAndCalcInput.getText());
@@ -221,6 +245,7 @@ public class GUIViewAcademic implements ActionListener {
             }
 
         }
+        //Method performed when changing the start year
         if(e.getSource() == editStartYrEnterButton && !alreadyOpen){
             alreadyOpen = true;
             if(Integer.parseInt(editAndCalcInput.getText())>1900){
@@ -237,6 +262,7 @@ public class GUIViewAcademic implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Invalid Input. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
             }
         }
+        //Method performed when changing the salary
         if(e.getSource() == editsalaryEnterButton && !alreadyOpen){
             alreadyOpen = true;
             try {
@@ -248,6 +274,7 @@ public class GUIViewAcademic implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Error with Academic object. Error Code: 4000X50", "Oops", JOptionPane.ERROR_MESSAGE);
             }
         }
+        //Method performed when changing the office
         if(e.getSource() == editofficeEnterButton && !alreadyOpen){
             alreadyOpen = true;
             try {
@@ -259,6 +286,7 @@ public class GUIViewAcademic implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Error with Academic object. Error Code: 4000X50", "Oops", JOptionPane.ERROR_MESSAGE);
             }
         }
+        //Method performed when changing the degree
         if(e.getSource() == editdegreeEnterButton && !alreadyOpen){
             alreadyOpen = true;
             try {
@@ -270,6 +298,7 @@ public class GUIViewAcademic implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Error with Academic object. Error Code: 4000X50", "Oops", JOptionPane.ERROR_MESSAGE);
             }
         }
+        //Method performed when adding another research code to the array
         if(e.getSource() == addResearchEnterButton && !alreadyOpen){
             alreadyOpen = true;
             String inputtedResearch = editAndCalcInput.getText();
@@ -293,6 +322,7 @@ public class GUIViewAcademic implements ActionListener {
                 JOptionPane.showMessageDialog(null, "That is not a valid research code, make sure you have created the research first. Error Code: 50X50", "Oops", JOptionPane.ERROR_MESSAGE);
             }
         }
+        //Method performed when removing a research code from the array
         if(e.getSource() == removeResearchEnterButton && !alreadyOpen){
             alreadyOpen = true;
             String inputtedResearch = editAndCalcInput.getText();
@@ -317,6 +347,7 @@ public class GUIViewAcademic implements ActionListener {
             }
         }
         if (!alreadyOpen) {
+            //Setting up the edit frame
             JFrame InputFrame = new JFrame();
             InputFrame.setSize(480, 200);
             InputFrame.getContentPane().setBackground(new Color(216, 198, 236));
@@ -333,6 +364,7 @@ public class GUIViewAcademic implements ActionListener {
             editAndCalcInput.setBounds(150, 65, 150, 25);
             InputFrame.add(editAndCalcInput);
             InputFrame.add(title);
+            //Method to ask the user for a new first name
             if (e.getSource() == fnameEditButton) {
                 InputFrame.setTitle("Edit First Name");
                 title.setText("Enter new First Name");
@@ -342,6 +374,7 @@ public class GUIViewAcademic implements ActionListener {
 
                 InputFrame.add(this.editFnameEnterButton);
             }
+            //Method to ask the user for a new last name
             if (e.getSource() == lnameEditButton) {
                 InputFrame.setTitle("Edit Last Name");
                 title.setText("Enter new Last Name");
@@ -351,6 +384,7 @@ public class GUIViewAcademic implements ActionListener {
 
                 InputFrame.add(this.editLnameEnterButton);
             }
+            //MEthod to ask the user for a new date of birth
             if (e.getSource() == dobEditButton) {
                 InputFrame.setTitle("Edit Date of Birth");
                 title.setText("Enter new DOB");
@@ -360,6 +394,7 @@ public class GUIViewAcademic implements ActionListener {
 
                 InputFrame.add(editDOBEnterButton);
             }
+            //Method to ask the user for a new start year
             if (e.getSource() == startYrEditButton) {
                 InputFrame.setTitle("Edit Start Year");
                 title.setText("Enter new Start Year");
@@ -369,6 +404,7 @@ public class GUIViewAcademic implements ActionListener {
 
                 InputFrame.add(this.editStartYrEnterButton);
             }
+            //Method to ask the user for a new salary
             if (e.getSource() == salaryEditButton) {
                 InputFrame.setTitle("Edit Salary");
                 title.setText("Enter new Salary");
@@ -378,6 +414,7 @@ public class GUIViewAcademic implements ActionListener {
 
                 InputFrame.add(this.editsalaryEnterButton);
             }
+            //Method to ask the user for a new office
             if (e.getSource() == officeEditButton) {
                 InputFrame.setTitle("Edit Office");
                 title.setText("Enter new Office");
@@ -387,6 +424,7 @@ public class GUIViewAcademic implements ActionListener {
 
                 InputFrame.add(this.editofficeEnterButton);
             }
+            //Method to ask the user for a new degree
             if (e.getSource() == degreeEditButton) {
                 InputFrame.setTitle("Edit Degree");
                 title.setText("Enter new Degree");
@@ -396,6 +434,7 @@ public class GUIViewAcademic implements ActionListener {
 
                 InputFrame.add(this.editdegreeEnterButton);
             }
+            //Method to ask the user for a research code to be added to the array
             if (e.getSource() == currentResearchAddButton) {
                 InputFrame.setTitle("Add Research");
                 title.setText("Enter new Research");
@@ -405,6 +444,7 @@ public class GUIViewAcademic implements ActionListener {
 
                 InputFrame.add(this.addResearchEnterButton);
             }
+            //Method to ask the user for a research code to be removed from the array
             if (e.getSource() == currentResearchDeleteButton) {
                 InputFrame.setTitle("Delete Research");
                 title.setText("Enter Research Code");
