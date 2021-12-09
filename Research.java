@@ -23,8 +23,8 @@ public class Research implements Serializable {
      * Constructor for Research
      * @param researchTitle Title of Research
      * @param academicsResearching String array with Staff codes of the academics researching
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException IO Exception
+     * @throws ClassNotFoundException Class not found exception
      */
     public Research(String researchTitle, String[] academicsResearching) throws IOException, ClassNotFoundException {
         //Assigning the taken in variables to the appropriate class variable
@@ -95,7 +95,7 @@ public class Research implements Serializable {
     /**
      * Setter for research title
      * @param researchTitle the value being assigned to research title
-     * @throws IOException
+     * @throws IOException IO Exception
      */
     public void setResearchTitle(String researchTitle) throws IOException {
         ResearchTitle = researchTitle;
@@ -111,8 +111,8 @@ public class Research implements Serializable {
     /**
      * Method for adding string to the academics researching array
      * @param academicsResearching string to be added to the array
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException IO Exception
+     * @throws ClassNotFoundException Class not found exception
      */
     public void addToAcademicsResearching(String academicsResearching) throws IOException, ClassNotFoundException {
         this.AcademicsResearching = AddToArray.string(this.AcademicsResearching, academicsResearching);
@@ -120,7 +120,11 @@ public class Research implements Serializable {
 
         //Updating the academic that's just been added to the academics researching array
         Academic addingTo = getobject.academic(academicsResearching);
-        addingTo.addToCurrentResearch(this.ResearchCode);
+        String[] addingToArray = addingTo.getCurrentResearch();
+        boolean exists = quickMethods.checkIfInStringArray(this.ResearchCode, addingToArray);
+        if(!exists) {
+            addingTo.addToCurrentResearch(this.ResearchCode);
+        }
     }
 
     /**
@@ -128,12 +132,15 @@ public class Research implements Serializable {
      * @param removingAcademic item to be removed from academics researching array
      */
     public void removeFromAcademicResearching(String removingAcademic) throws IOException, ClassNotFoundException {
-        String[] newArray = quickMethods.removeFromStringArray(removingAcademic, this.AcademicsResearching);
-        this.AcademicsResearching = newArray;
+        this.AcademicsResearching = quickMethods.removeFromStringArray(removingAcademic, this.AcademicsResearching);
 
         //Updating the academics that's just been removed from the academics researching array
         Academic removingFrom = getobject.academic(removingAcademic);
-        removingFrom.removeFromCurrentResearch(this.ResearchCode);
+        String[] removingFromArray = removingFrom.getCurrentResearch();
+        boolean exists = quickMethods.checkIfInStringArray(this.ResearchCode, removingFromArray);
+        if(exists){
+            removingFrom.removeFromCurrentResearch(this.ResearchCode);
+        }
     }
 
     /**
@@ -144,7 +151,7 @@ public class Research implements Serializable {
 
     /**
      * Method to update class file be deleting the old one and creating a new one
-     * @throws IOException
+     * @throws IOException IO Exception
      */
     public void updateClassFile() throws IOException {
         String filename = "Researches/" +this.getResearchCode() + ".txt";

@@ -36,8 +36,8 @@ public class Tutor extends Staff{
      * @param degree tutor's degree
      * @param modulesTeaching String array with module codes for the modules the tutor is teaching
      * @param modulesModerating String array with module codes for the modules the tutor is moderating
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException IO Exception
+     * @throws ClassNotFoundException Class not found exception
      */
     public Tutor(String fname, String lname, String dob, int startyr, int salary, String office, String degree, String[] modulesTeaching, String[] modulesModerating) throws IOException, ClassNotFoundException {
         super(fname, lname, dob, startyr, salary);//Calling the constructor of the super classes using the taken in variables
@@ -99,7 +99,7 @@ public class Tutor extends Staff{
     /**
      * Setter for office
      * @param office value being assigned to office
-     * @throws IOException
+     * @throws IOException IO Exception
      */
     public void setOffice(String office) throws IOException {
         this.office = office;
@@ -115,7 +115,7 @@ public class Tutor extends Staff{
     /**
      * Setter for degree
      * @param degree item being assigned to degree
-     * @throws IOException
+     * @throws IOException IO Exception
      */
     public void setDegree(String degree) throws IOException {
         this.degree = degree;
@@ -133,8 +133,8 @@ public class Tutor extends Staff{
     /**
      * Method to add a module code to the modules teaching array
      * @param newmodule Module code being added to the array
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException IO Exception
+     * @throws ClassNotFoundException Class not found exception
      */
     public void addToModulesTeaching(String newmodule) throws IOException, ClassNotFoundException {
         this.modulesTeaching = AddToArray.string(this.modulesTeaching, newmodule);
@@ -142,15 +142,18 @@ public class Tutor extends Staff{
 
         //Updating the module that has just been added
         Module addingTO = getobject.module(newmodule);
-        addingTO.addToTeachers(this.getStaffID());
+        String[] addingTOArray = addingTO.getTeachers();
+        boolean exists = quickMethods.checkIfInStringArray(this.getStaffID(), addingTOArray);
+        if(!exists) {
+            addingTO.addToTeachers(this.getStaffID());
+        }
     }
-
 
     /**
      * Method to remove module from modules teaching array
      * @param removingModule Module code ot be removed
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException IO Exception
+     * @throws ClassNotFoundException Class not found exception
      */
     public void removeFromModulesTeaching(String removingModule) throws IOException, ClassNotFoundException {
         this.modulesTeaching = quickMethods.removeFromStringArray(removingModule, this.modulesModerating);
@@ -158,41 +161,58 @@ public class Tutor extends Staff{
 
         //Updating module that has just been removed
         Module removingFrom = getobject.module(removingModule);
-        removingFrom.removeFromTeachers(this.getStaffID());
+        String[] removingFromArray = removingFrom.getTeachers();
+        boolean exists = quickMethods.checkIfInStringArray(this.getStaffID(), removingFromArray);
+        if(exists) {
+            removingFrom.removeFromTeachers(this.getStaffID());
+        }
     }
 
     /**
      * Getter for modules taking array
      * @return Modules taking string array
      */
-    public String[] getModulesModerating() {
-        return this.modulesModerating;
-    }
+    public String[] getModulesModerating() {return this.modulesModerating;}
 
     /**
      * Method to add a module to modules moderating array
      * @param newmodule Module to be added
-     * @throws IOException
+     * @throws IOException IO Exception
+     * @throws ClassNotFoundException Class not found exception
      */
-    public void addToModulesModerating(String newmodule) throws IOException {
+    public void addToModulesModerating(String newmodule) throws IOException, ClassNotFoundException {
         this.modulesModerating = AddToArray.string(this.modulesModerating, newmodule);
         this.updateClassFile();
+
+        //Updating the module that has just been added
+        Module addingTO = getobject.module(newmodule);
+        String addingTOString = addingTO.getModerator();
+        if(!addingTOString.equals(this.getStaffID())) {
+            addingTO.setModerator(this.getStaffID());
+        }
     }
 
     /**
      * Method to remove a module from the modules moderating array
-     * @param removingModule
-     * @throws IOException
+     * @param removingModule Module being removed from the array
+     * @throws IOException IO Exception
+     * @throws ClassNotFoundException Class not found exception
      */
-    public void removeFromModulesModerating(String removingModule) throws IOException {
-        String[] newModulesArray = quickMethods.removeFromStringArray(removingModule, this.modulesModerating);
-        this.modulesModerating = newModulesArray;
+    public void removeFromModulesModerating(String removingModule) throws IOException, ClassNotFoundException {
+        this.modulesModerating = quickMethods.removeFromStringArray(removingModule, this.modulesModerating);
         this.updateClassFile();
+
+        //Updating the module that has just been removed
+        Module removing = getobject.module(removingModule);
+        String removingString = removing.getModerator();
+        if(removingString.equals(this.getStaffID())) {
+            removing.setModerator("");
+        }
     }
 
     /**
      * Method to update class file be deleting the old one and creating a new one
-     * @throws IOException
+     * @throws IOException IO Exception
      */
     public void updateClassFile() throws IOException {
         String filename = "Tutors/" +this.getStaffID() + ".txt";

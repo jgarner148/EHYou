@@ -25,7 +25,7 @@ public class quickMethods {
      * @param filePath Location of the file to be checked
      * @param itemChecking Item that is being looked for
      * @return Boolean that is "true" if the item exists in the file and "false" if the item does not
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException File not found exception
      */
     public static boolean checkIfInFile(String filePath, String itemChecking) throws FileNotFoundException {
         Scanner checker = new Scanner(new File(filePath));
@@ -50,7 +50,7 @@ public class quickMethods {
      * Method to add a string to a CSV file
      * @param filepath location of CSV file that the string is being added to
      * @param itemAdding Item being added to the CSV file
-     * @throws IOException
+     * @throws IOException IO Exception
      */
     public static void addStringToCSV(String filepath, String itemAdding) throws IOException {
         FileWriter csvWriter = new FileWriter(filepath, true);
@@ -66,8 +66,7 @@ public class quickMethods {
      */
     public static char randchar() {
         Random random = new Random();
-        char randomchar = (char) (random.nextInt(26) + 'a');
-        return randomchar;
+        return (char) (random.nextInt(26) + 'a');
     }
 
     /**

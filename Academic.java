@@ -121,7 +121,7 @@ public class Academic extends Staff{
         //Updating the research class that has just been added to this academic
         Research addingTo = getobject.research(newresearch);
         String[] addingToArray = addingTo.getAcademicsResearching();
-        boolean exists = quickMethods.checkIfInStringArray(newresearch, addingToArray);
+        boolean exists = quickMethods.checkIfInStringArray(this.getStaffID(), addingToArray);
         if(!exists){
             addingTo.addToAcademicsResearching(this.getStaffID());
         }
@@ -140,7 +140,7 @@ public class Academic extends Staff{
         //Updating the research class that has just been removed from this academic
         Research removingFrom = getobject.research(removingResearch);
         String[] removingFromArray = removingFrom.getAcademicsResearching();
-        boolean exists = quickMethods.checkIfInStringArray(removingResearch, removingFromArray);
+        boolean exists = quickMethods.checkIfInStringArray(this.getStaffID(), removingFromArray);
         if(exists){
             removingFrom.removeFromAcademicResearching(this.getStaffID());
         }

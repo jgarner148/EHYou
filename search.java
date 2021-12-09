@@ -61,7 +61,6 @@ public class search {
             if(currentName.equals(fullName)){
                 IDnumber = currentChecking.getStudentNum();
             }
-            currentChecking = null;
         }
         return IDnumber;
     }

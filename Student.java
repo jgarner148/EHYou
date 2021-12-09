@@ -35,8 +35,8 @@ public class Student extends Person{
 	 * @param allResults String array of the all results the student has been given
 	 * @param startYr The year the student started at the university
 	 * @param endYr The year the student will leave the university
-	 * @throws IOException
-	 * @throws ClassNotFoundException
+	 * @throws IOException IO Exception
+	 * @throws ClassNotFoundException Class not found exception
 	 */
 	public Student(String fname, String lname, String dob, String[] modulesTaking, String[] allResults, int startYr, int endYr) throws IOException, ClassNotFoundException {
 		super(fname, lname, dob); //Calling the constructor of the super classes using the taken in variables
@@ -104,7 +104,7 @@ public class Student extends Person{
 	/**
 	 * Setter for first name
 	 * @param fname The value being assigned to first name
-	 * @throws IOException
+	 * @throws IOException IO Exception
 	 */
 	public void setFname(String fname) throws IOException {
 		this.fname = fname;
@@ -120,7 +120,7 @@ public class Student extends Person{
 	/**
 	 * Setter for last name
 	 * @param lname the value being assigned to last name
-	 * @throws IOException
+	 * @throws IOException IO Exception
 	 */
 	public void setLname(String lname) throws IOException {
 		this.lname = lname;
@@ -136,7 +136,7 @@ public class Student extends Person{
 	/**
 	 * Setter for dob
 	 * @param dob the value being assigned to dob
-	 * @throws IOException
+	 * @throws IOException IO Exception
 	 */
 	public void setDob(String dob) throws IOException {
 		this.dob = dob;
@@ -152,7 +152,7 @@ public class Student extends Person{
 	/**
 	 * Method to add a module code to the modules taking array
 	 * @param newmodule the module code being added to the array
-	 * @throws IOException
+	 * @throws IOException IO Exception
 	 */
 	public void addToModulesTaking(String newmodule) throws IOException, ClassNotFoundException {
 		this.ModulesTaking = AddToArray.string(this.ModulesTaking, newmodule);
@@ -160,22 +160,29 @@ public class Student extends Person{
 
 		//Updating the module that has just been added this is student
 		Module addingTo = getobject.module(newmodule);
-		addingTo.addToStudentsTaking(this.StudentNum);
+		String[] addingToArray = addingTo.getStudentsTaking();
+		boolean exists = quickMethods.checkIfInStringArray(this.StudentNum, addingToArray);
+		if(!exists) {
+			addingTo.addToStudentsTaking(this.StudentNum);
+		}
 	}
 
 	/**
 	 * Method to remove module from the modules taking array
 	 * @param removingModule the module code of the item being removed from the array
-	 * @throws IOException
+	 * @throws IOException IO Exception
 	 */
 	public void removeFromModules(String removingModule) throws IOException, ClassNotFoundException {
-		String[] newArray = quickMethods.removeFromStringArray(removingModule,this.ModulesTaking);
-		this.ModulesTaking = newArray;
+		this.ModulesTaking = quickMethods.removeFromStringArray(removingModule, this.ModulesTaking);
 		this.updateClassFile();
 
 		//Updating the module that has just been removed from the array
 		Module removingFrom = getobject.module(removingModule);
-		removingFrom.removeFromStudentsTaking(this.StudentNum);
+		String[] removingFromArray = removingFrom.getStudentsTaking();
+		boolean exists = quickMethods.checkIfInStringArray(this.StudentNum, removingFromArray);
+		if(exists) {
+			removingFrom.removeFromStudentsTaking(this.StudentNum);
+		}
 	}
 
 	/**
@@ -187,7 +194,7 @@ public class Student extends Person{
 	/**
 	 * Setter for start year
 	 * @param startYr the value being assigned to start year
-	 * @throws IOException
+	 * @throws IOException IO Exception
 	 */
 	public void setStartYr(int startYr) throws IOException {
 		this.StartYr = startYr;
@@ -203,7 +210,7 @@ public class Student extends Person{
 	/**
 	 * Setter for end year
 	 * @param endYr value being assigned to end year
-	 * @throws IOException
+	 * @throws IOException IO Exception
 	 */
 	public void setEndYr(int endYr) throws IOException {
 		EndYr = endYr;
@@ -225,29 +232,45 @@ public class Student extends Person{
 	/**
 	 * Method to add a result to all results array
 	 * @param newresult string being added to array
-	 * @throws IOException
+	 * @throws IOException IO Exception
+	 * @throws ClassNotFoundException Class not found exception
 	 */
-	public void addToAllResults(String newresult) throws IOException {
+	public void addToAllResults(String newresult) throws IOException, ClassNotFoundException {
 		this.AllResults = AddToArray.string(this.AllResults, newresult);
 		this.updateClassFile();
+
+		//Updating the Result object
+		Result addingTo = getobject.result(newresult);
+		String addingToStudent = addingTo.getAssStudent();
+		if(!addingToStudent.equals(this.StudentNum)){
+			addingTo.setAssStudent(this.StudentNum);
+		}
 	}
 
 	/**
 	 * Method to remove result code from all results string array
 	 * @param removingResult result to be removed
-	 * @throws IOException
+	 * @throws IOException IO Exception
+	 * @throws ClassNotFoundException Class not found exception
 	 */
-	public void removeFromAllResults(String removingResult) throws IOException {
+	public void removeFromAllResults(String removingResult) throws IOException, ClassNotFoundException {
 		this.AllResults = quickMethods.removeFromStringArray(removingResult, this.AllResults);
 		this.updateClassFile();
+
+		//Updating the Result object
+		Result removingFrom = getobject.result(removingResult);
+		String removingFromStudent = removingFrom.getAssStudent();
+		if(removingFromStudent.equals(this.StudentNum)){
+			removingFrom.setAssStudent("");
+		}
 	}
 
 	/**
 	 * Method to work out a students average grade for a given module
 	 * @param targetModuleCode Module to be calculated from
 	 * @return Result of calculation
-	 * @throws IOException
-	 * @throws ClassNotFoundException
+	 * @throws IOException IO Exception
+	 * @throws ClassNotFoundException Class not found exception
 	 */
 	public int averageGradeForModule(String targetModuleCode) throws IOException, ClassNotFoundException {
 		String[] allResults = this.getAllResults();
@@ -276,7 +299,7 @@ public class Student extends Person{
 
 	/**
 	 * Method to update class file be deleting the old one and creating a new one
-	 * @throws IOException
+	 * @throws IOException IO Exception
 	 */
 	public void updateClassFile() throws IOException {
 		String filename = "Students/" +this.getStudentNum() + ".txt";

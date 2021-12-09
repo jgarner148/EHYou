@@ -37,8 +37,8 @@ public class Module implements Serializable {
 	 * @param studentsTaking String array of the IDs of all the students taking the module
 	 * @param teachers String array of all the IDs of the Tutors teaching the module
 	 * @param moderator ID of the tutor moderating the module
-	 * @throws IOException
-	 * @throws ClassNotFoundException
+	 * @throws IOException IO Exception
+	 * @throws ClassNotFoundException CLass not Found Exception
 	 */
 	public Module(String modName, String modCode, String[] studentsTaking, String[] teachers, String moderator) throws IOException, ClassNotFoundException {
 		//Assigning the taken in variables to the appropriate class variable
@@ -124,7 +124,7 @@ public class Module implements Serializable {
 	/**
 	 * Setter for module name
 	 * @param modName the value being assigned to module name
-	 * @throws IOException
+	 * @throws IOException IO Exception
 	 */
 	public void setModName(String modName) throws IOException {
 		this.modName = modName;
@@ -146,8 +146,8 @@ public class Module implements Serializable {
 	/**
 	 * Method to add string to the students taking array
 	 * @param studentsTaking item to be added to the students taking array
-	 * @throws IOException
-	 * @throws ClassNotFoundException
+	 * @throws IOException IO Exception
+	 * @throws ClassNotFoundException Class not found Exception
 	 */
 	public void addToStudentsTaking(String studentsTaking) throws IOException, ClassNotFoundException {
 		this.studentsTaking = AddToArray.string(this.studentsTaking, studentsTaking);
@@ -155,30 +155,36 @@ public class Module implements Serializable {
 
 		//Updating the student class that's just be assigned to this module
 		Student addingTo = getobject.student(studentsTaking);
-		addingTo.addToModulesTaking(this.modCode);
-
+		String[] addingToArray = addingTo.getModulesTaking();
+		boolean exists = quickMethods.checkIfInStringArray(this.modCode, addingToArray);
+		if(!exists) {
+			addingTo.addToModulesTaking(this.modCode);
+		}
 	}
 
 	/**
 	 * Method to remove string from the studetns taking array
 	 * @param removingStudent item to be removed from studetns array
-	 * @throws IOException
-	 * @throws ClassNotFoundException
+	 * @throws IOException IO Exception
+	 * @throws ClassNotFoundException Class not found exception
 	 */
 	public void removeFromStudentsTaking(String removingStudent) throws IOException, ClassNotFoundException {
-		String[] newArray = quickMethods.removeFromStringArray(removingStudent, this.studentsTaking);
-		this.studentsTaking = newArray;
+		this.studentsTaking = quickMethods.removeFromStringArray(removingStudent, this.studentsTaking);
 		this.updateClassFile();
 
 		//Updating the student class that has just been removed from the students taking array
 		Student removingFrom = getobject.student(removingStudent);
-		removingFrom.removeFromModules(this.modCode);
+		String[] removingFromArray = removingFrom.getModulesTaking();
+		boolean exists = quickMethods.checkIfInStringArray(this.modCode, removingFromArray);
+		if(exists) {
+			removingFrom.removeFromModules(this.modCode);
+		}
 	}
 
 	/**
 	 * Method to add an Int to the total marks array
 	 * @param newmark Int being added to the array
-	 * @throws IOException
+	 * @throws IOException IO Exception
 	 */
 	public void addToTotalMarks(int newmark) throws IOException {
 		this.totalMarks = AddToArray.integer(this.totalMarks, newmark);
@@ -194,8 +200,8 @@ public class Module implements Serializable {
 	/**
 	 * Method to add new tutor to the teachers array
 	 * @param newteacher Item being added to teachers array
-	 * @throws IOException
-	 * @throws ClassNotFoundException
+	 * @throws IOException IO Exception
+	 * @throws ClassNotFoundException Class not found exception
 	 */
 	public void addToTeachers(String newteacher) throws IOException, ClassNotFoundException {
 		this.teachers = AddToArray.string(this.teachers, newteacher);
@@ -203,22 +209,30 @@ public class Module implements Serializable {
 
 		//Updating the tutor that has just been added to the teachers array
 		Tutor addingTo = getobject.tutor(newteacher);
-		addingTo.addToModulesTeaching(this.modCode);
+		String[] addingToArray = addingTo.getModulesTeaching();
+		boolean exists = quickMethods.checkIfInStringArray(this.modCode, addingToArray);
+		if (!exists) {
+			addingTo.addToModulesTeaching(this.modCode);
+		}
 	}
 
 	/**
 	 * Method to remove a tutor from the teachers array
 	 * @param removingTeacher Item being removed from teachers array
-	 * @throws IOException
-	 * @throws ClassNotFoundException
+	 * @throws IOException IO Exception
+	 * @throws ClassNotFoundException Class not found exception
 	 */
 	public void removeFromTeachers(String removingTeacher) throws IOException, ClassNotFoundException {
-		String[] newArray = quickMethods.removeFromStringArray(removingTeacher, this.teachers);
-		this.teachers = newArray;
+		this.teachers = quickMethods.removeFromStringArray(removingTeacher, this.teachers);
+		this.updateClassFile();
 
 		//Updating the tutor that has just been removed from this module
 		Tutor removingFrom = getobject.tutor(removingTeacher);
-		removingFrom.removeFromModulesTeaching(this.modCode);
+		String[] removingFromArray = removingFrom.getModulesTeaching();
+		boolean exists = quickMethods.checkIfInStringArray(this.modCode, removingFromArray);
+		if(exists) {
+			removingFrom.removeFromModulesTeaching(this.modCode);
+		}
 	}
 
 	/**
@@ -229,12 +243,20 @@ public class Module implements Serializable {
 
 	/**
 	 * Setter for moderator
-	 * @param moderator
-	 * @throws IOException
+	 * @param moderator Value being added to moderator
+	 * @throws IOException IO Exception
 	 */
-	public void setModerator(String moderator) throws IOException {
+	public void setModerator(String moderator) throws IOException, ClassNotFoundException {
 		this.moderator = moderator;
 		this.updateClassFile();
+
+		//Updating the tutor that has just been assigned as moderator
+		Tutor newMod = getobject.tutor(moderator);
+		String[] newModArray = newMod.getModulesModerating();
+		boolean exists = quickMethods.checkIfInStringArray(this.modCode, newModArray);
+		if(!exists){
+			newMod.addToModulesModerating(this.modCode);
+		}
 	}
 
 	/**
@@ -298,7 +320,7 @@ public class Module implements Serializable {
 
 	/**
 	 * Method to update class file be deleting the old one and creating a new one
-	 * @throws IOException
+	 * @throws IOException IO Exception
 	 */
 	public void updateClassFile() throws IOException {
 		String filename = "Modules/" +this.getModCode() + ".txt";

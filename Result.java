@@ -38,8 +38,8 @@ public class Result implements Serializable {
      * @param grade The grade the student achieved
      * @param feedback The feedback, usually short
      * @param assStudent The student the result is assigned to
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException IO Exception
+     * @throws ClassNotFoundException Class not found exception
      */
     public Result(String assModule, String weekAss, int grade, String feedback, String assStudent) throws IOException, ClassNotFoundException {
         //Assigning the taken in variables to the appropriate class variable
@@ -116,7 +116,7 @@ public class Result implements Serializable {
     /**
      * Setter for the assigned module
      * @param assModule the value being assigned to assigned module
-     * @throws IOException
+     * @throws IOException IO Exception
      */
     public void setAssModule(String assModule) throws IOException {
         AssModule = assModule;
@@ -132,7 +132,7 @@ public class Result implements Serializable {
     /**
      * Setter for assigned week
      * @param weekAss the value being assigned to assigned week
-     * @throws IOException
+     * @throws IOException IO Exception
      */
     public void setWeekAss(String weekAss) throws IOException {
         WeekAss = weekAss;
@@ -148,7 +148,7 @@ public class Result implements Serializable {
     /**
      * Setter for grade
      * @param grade the value being assigned to grade
-     * @throws IOException
+     * @throws IOException IO Exception
      */
     public void setGrade(int grade) throws IOException {
         this.Grade = grade;
@@ -163,8 +163,8 @@ public class Result implements Serializable {
 
     /**
      * Setter for feedback
-     * @param feedback
-     * @throws IOException
+     * @param feedback the value being assigned to feedback
+     * @throws IOException IO Exception
      */
     public void setFeedback(String feedback) throws IOException {
         this.Feedback = feedback;
@@ -186,15 +186,25 @@ public class Result implements Serializable {
     /**
      * Setter for assigned student
      * @param assStudent the value being assigned to assigned student
+     * @throws IOException IO Exception
+     * @throws ClassNotFoundException Class not found exception
      */
-    public void setAssStudent(String assStudent) throws IOException {
+    public void setAssStudent(String assStudent) throws IOException, ClassNotFoundException {
         this.assStudent = assStudent;
         this.updateClassFile();
+
+        //Updating the assigned students results array
+        Student newResultStudent = getobject.student(assStudent);
+        String[] newResultStudentArray = newResultStudent.getAllResults();
+        boolean exists = quickMethods.checkIfInStringArray(this.getResultCode(), newResultStudentArray);
+        if(!exists){
+            newResultStudent.addToAllResults(this.resultCode);
+        }
     }
 
     /**
      * Method to update class file be deleting the old one and creating a new one
-     * @throws IOException
+     * @throws IOException IO Exception
      */
     public void updateClassFile() throws IOException {
         String filename = "Results/" +this.getResultCode() + ".txt";

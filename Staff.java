@@ -25,7 +25,7 @@ public class Staff extends Person{
      * @param dob Staff's Date of Birth
      * @param startyr The year the staff started working at the university
      * @param salary The staff's salary
-     * @throws IOException
+     * @throws IOException IO Exception
      */
     public Staff(String fname, String lname, String dob, int startyr, int salary) throws IOException {
         super(fname, lname, dob);//Calling the constructor of the super classes using the taken in variables
@@ -63,7 +63,7 @@ public class Staff extends Person{
     /**
      * Setter for first name
      * @param fname the value being assigned to first name
-     * @throws IOException
+     * @throws IOException IO Exception
      */
     public void setFname(String fname) throws IOException {
         this.fname = fname;
@@ -79,7 +79,7 @@ public class Staff extends Person{
     /**
      * Setter for last name
      * @param lname the value being assigned to last name
-     * @throws IOException
+     * @throws IOException IO Exception
      */
     public void setLname(String lname) throws IOException {
         this.lname = lname;
@@ -95,7 +95,7 @@ public class Staff extends Person{
     /**
      * Setter for dob
      * @param dob the value being assigned to dob
-     * @throws IOException
+     * @throws IOException IO Exception
      */
     public void setDob(String dob) throws IOException {
         this.dob = dob;
@@ -117,7 +117,7 @@ public class Staff extends Person{
     /**
      * Setter for start year
      * @param startyr the value being assigned to start year
-     * @throws IOException
+     * @throws IOException IO Exception
      */
     public void setStartyr(int startyr) throws IOException {
         this.startyr = startyr;
@@ -133,7 +133,7 @@ public class Staff extends Person{
     /**
      * The setter for salary
      * @param salary the value being assigned to salary
-     * @throws IOException
+     * @throws IOException IO Exception
      */
     public void setSalary(int salary) throws IOException {
         this.salary = salary;
@@ -142,7 +142,7 @@ public class Staff extends Person{
 
     /**
      * Method to update class file be deleting the old one and creating a new one
-     * @throws IOException
+     * @throws IOException IO Exception
      */
     public void updateClassFileStaff() throws IOException {
         String filename = "";
@@ -168,5 +168,4 @@ public class Staff extends Person{
         o.close();
         f.close();
     }
-
 }
