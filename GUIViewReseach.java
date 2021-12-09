@@ -1,3 +1,7 @@
+/**
+ * Class that houses the GUI for viewing research
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class GUIViewReseach implements ActionListener {
+    //Creating the elements that house the research data as well as the buttons to edit them
     private final JFrame IDCardFrame = new JFrame();
     private final Research researchBeingviewed;
     private final String researchCode;
@@ -19,17 +24,30 @@ public class GUIViewReseach implements ActionListener {
     private final JButton allResearchesAddButton = factory.makeFlatButton("Add");
     private final JButton allResearchesDeleteButton = factory.makeFlatButton("Delete");
 
+    //Creating the standard font
     private final Font labelFont = new Font("Georgia", Font.ITALIC,15);
+
+    //Creating the delete button
     private final JButton deletebutton = factory.makeFlatButton("Delete");
 
+    //Creating the elements for the edit pages
     private final JTextField editAndCalcInput = new JTextField();
     private final JButton editResearchTitleEnterbutton = factory.makeFlatButton("Enter");
     private final JButton addAcademicEnterbutton = factory.makeFlatButton("Enter");
     private final JButton removeAcademicEnterbutton = factory.makeFlatButton("Enter");
 
+    /**
+     * Constructor for the class that will be called when wanting to view research
+     * @param researchCode The code for hte research being viewed
+     * @throws IOException IO exception
+     * @throws ClassNotFoundException Class not found exception
+     */
     public GUIViewReseach(String researchCode) throws IOException, ClassNotFoundException {
+        //Setting up some global variables
         this.researchCode = researchCode;
         this.researchBeingviewed = getobject.research(this.researchCode);
+
+        //Setting up the ID card frame
         this.IDCardFrame.setSize(560,560);
         this.IDCardFrame.getContentPane().setBackground(new Color(165,213,220));
         this.IDCardFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE );
@@ -41,9 +59,11 @@ public class GUIViewReseach implements ActionListener {
         this.IDCardFrame.setResizable(false);
         this.IDCardFrame.setVisible(true);
 
+        //Setting up the title label
         titleLabel.setBounds(20,15,225,25);
         titleLabel.setFont(new Font("Georgia", Font.ITALIC,25));
 
+        //Setting up the object information labels
         int xLabel = 20;
         int wLabel = 250;
         int hLabel = 25;
@@ -55,6 +75,7 @@ public class GUIViewReseach implements ActionListener {
         researchTitleLabel.setFont(labelFont);
         researchTitleLabel.setText("Title: " + researchBeingviewed.getResearchTitle());
 
+        //Adding all the content from the all academics array to the label and then setting up that label
         String[] allAcademics = researchBeingviewed.getAcademicsResearching();
         String allAcademicText = "";
         for(int i = 0; i<allAcademics.length;i++){
@@ -62,14 +83,15 @@ public class GUIViewReseach implements ActionListener {
             Academic currentAcdemic = getobject.academic(currentCode);
             allAcademicText = allAcademicText + currentAcdemic.getStaffID() + " - " +  currentAcdemic.getFname() + " " + currentAcdemic.getLname() +"<br>";
         }
-
         allResearchesLabel.setBounds(xLabel, 200, wLabel, 240);
         allResearchesLabel.setFont(labelFont);
         allResearchesLabel.setText("<html>" + "Academics Researching:<br>" + allAcademicText);
 
+        //Setting up the delete button
         deletebutton.setBounds(320, 460 ,200,50);
         deletebutton.addActionListener(this);
 
+        //Setting up all the buttons
         int xButton = 420;
         int wButton = 75;
         int hButton = 18;
@@ -82,13 +104,11 @@ public class GUIViewReseach implements ActionListener {
         allResearchesDeleteButton.setBounds(115,475,85,hButton);
         allResearchesDeleteButton.addActionListener(this);
 
-
+        //Adding all the elements to the frame
         IDCardFrame.add(titleLabel);
-
         IDCardFrame.add(IDLabel);
         IDCardFrame.add(researchTitleLabel);
         IDCardFrame.add(allResearchesLabel);
-
         IDCardFrame.add(deletebutton);
         IDCardFrame.add(researchTitleEditButton);
         IDCardFrame.add(allResearchesAddButton);
@@ -103,7 +123,8 @@ public class GUIViewReseach implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        boolean alreadyOpen = false;
+        boolean alreadyOpen = false; //Boolean that stops the program from displaying multiple error messages/input windows by setting itself to true when an action is performed
+        //Method performed when the delete button is clicked that deletes the academic object and its class file
         if(e.getSource() == deletebutton && !alreadyOpen){
             alreadyOpen = true;
             int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + researchBeingviewed.getResearchCode(), "Confirm delete", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
@@ -115,6 +136,7 @@ public class GUIViewReseach implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Research Deleted", "Deleted!", JOptionPane.INFORMATION_MESSAGE);
             }
         }
+        //Method performed when changing the research title
         if(e.getSource() == editResearchTitleEnterbutton && !alreadyOpen){
             alreadyOpen = true;
             try {
@@ -126,6 +148,7 @@ public class GUIViewReseach implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Error with Research object. Error Code: 4000X60", "Oops", JOptionPane.ERROR_MESSAGE);
             }
         }
+        //Method performed when adding an academic to the array
         if(e.getSource() == addAcademicEnterbutton && !alreadyOpen){
             alreadyOpen = true;
             String inputtedAcademic = editAndCalcInput.getText();
@@ -149,6 +172,7 @@ public class GUIViewReseach implements ActionListener {
                 JOptionPane.showMessageDialog(null, "That is not a valid Academic code, make sure you have created the academic first. Error Code: 50X40", "Oops", JOptionPane.ERROR_MESSAGE);
             }
         }
+        //Method performed when removing an academic form the array
         if(e.getSource() == removeAcademicEnterbutton && !alreadyOpen){
             alreadyOpen = true;
             String inputtedAcademic = editAndCalcInput.getText();
@@ -173,6 +197,7 @@ public class GUIViewReseach implements ActionListener {
             }
         }
         if(!alreadyOpen) {
+            //Setting up the edit frame
             JFrame InputFrame = new JFrame();
             InputFrame.setSize(480, 200);
             InputFrame.getContentPane().setBackground(new Color(216, 198, 236));
@@ -189,6 +214,7 @@ public class GUIViewReseach implements ActionListener {
             editAndCalcInput.setBounds(150, 65, 150, 25);
             InputFrame.add(editAndCalcInput);
             InputFrame.add(title);
+            //Method to ask the user for a new research title
             if(e.getSource() == researchTitleEditButton){
                 InputFrame.setTitle("Edit Research Title");
                 title.setText("Enter new Title");
@@ -198,6 +224,7 @@ public class GUIViewReseach implements ActionListener {
 
                 InputFrame.add(this.editResearchTitleEnterbutton);
             }
+            //Method to ask the user for a new academic to add to the array
             if(e.getSource() == allResearchesAddButton){
                 InputFrame.setTitle("Add Academic");
                 title.setText("Enter Academic code");
@@ -207,6 +234,7 @@ public class GUIViewReseach implements ActionListener {
 
                 InputFrame.add(this.addAcademicEnterbutton);
             }
+            //Method to ask the user for an academic to remove from the array
             if(e.getSource() == allResearchesDeleteButton){
                 InputFrame.setTitle("Remove Academic");
                 title.setText("Enter Academic code");

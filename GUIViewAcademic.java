@@ -12,7 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class GUIViewAcademic implements ActionListener {
-    //Setting up the elements that house the academic data as well as the buttons the edit them
+    //Creating the elements that house the academic data as well as the buttons the edit them
     private final JFrame IDCardFrame = new JFrame();
     private final String staffID;
     private final Academic academicBeingviewed;
@@ -36,13 +36,13 @@ public class GUIViewAcademic implements ActionListener {
     private final JButton currentResearchAddButton = factory.makeFlatButton("Add");
     private final JButton currentResearchDeleteButton = factory.makeFlatButton("Delete");
 
-    //Setting up the standard font
+    //Creating the standard font
     private final Font labelFont = new Font("Georgia", Font.ITALIC, 15);
 
-    //Setting up the object delete button
+    //Creating the object delete button
     private final JButton deletebutton = factory.makeFlatButton("Delete");
 
-    //Setting up the elements for the edit pages
+    //Creating the elements for the edit pages
     private final JTextField editAndCalcInput = new JTextField();
     private final JButton editFnameEnterButton = factory.makeFlatButton("Enter");
     private final JButton editLnameEnterButton = factory.makeFlatButton("Enter");
@@ -54,11 +54,10 @@ public class GUIViewAcademic implements ActionListener {
     private final JButton addResearchEnterButton = factory.makeFlatButton("Enter");
     private final JButton removeResearchEnterButton = factory.makeFlatButton("Enter");
 
-
     /**
      * Constructor for the class that will be called when wanting to view an academic
      * @param staffID The ID of the academic being viewed
-     * @throws IOException Io exception
+     * @throws IOException IO exception
      * @throws ClassNotFoundException Class not found exception
      */
     public GUIViewAcademic(String staffID) throws IOException, ClassNotFoundException {
@@ -66,7 +65,7 @@ public class GUIViewAcademic implements ActionListener {
         this.staffID = staffID;
         this.academicBeingviewed = getobject.academic(this.staffID);
 
-        //Setting up the Id card frame
+        //Setting up the ID card frame
         this.IDCardFrame.setSize(560, 560);
         this.IDCardFrame.getContentPane().setBackground(new Color(165, 213, 220));
         this.IDCardFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -190,7 +189,7 @@ public class GUIViewAcademic implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         boolean alreadyOpen = false; //Boolean that stops the program from displaying multiple error messages/input windows by setting itself to true when an action is performed
-        //Method performed when the delete button is clicked that deletes the academic object
+        //Method performed when the delete button is clicked that deletes the academic object and its class file
         if (e.getSource() == deletebutton && !alreadyOpen) {
             alreadyOpen = true;
             int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + academicBeingviewed.getStaffID(), "Confirm delete", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);

@@ -1,3 +1,7 @@
+/**
+ * Class that houses the GUI for making a Tutor
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class GUIViewTutor implements ActionListener {
+    //Creating the elements that house the tutor data as well as the buttons the edit them
     private final JFrame IDCardFrame = new JFrame();
     private final String staffID;
     private final Tutor tutorBeingviewed;
@@ -34,9 +39,13 @@ public class GUIViewTutor implements ActionListener {
     private final JButton ModulesTeachingAddButton = factory.makeFlatButton("Add");
     private final JButton ModulesTeachingDeleteButton = factory.makeFlatButton("Delete");
 
+    //Creating the standard font
     private final Font labelFont = new Font("Georgia", Font.ITALIC, 15);
+
+    //Creating the delete button
     private final JButton deletebutton = factory.makeFlatButton("Delete");
 
+    //Creating hte elements for the edit pages
     private final JTextField editAndCalcInput = new JTextField();
     private final JButton editFnameEnterButton = factory.makeFlatButton("Enter");
     private final JButton editLnameEnterButton = factory.makeFlatButton("Enter");
@@ -50,11 +59,18 @@ public class GUIViewTutor implements ActionListener {
     private final JButton addTeachingEnterButton = factory.makeFlatButton("Enter");
     private final JButton removeTeachingEnterButton = factory.makeFlatButton("Enter");
 
-
-
+    /**
+     * Constructor that will be called when wanting to view a tutor
+     * @param staffID The code of the tutor being viewed
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public GUIViewTutor(String staffID) throws IOException, ClassNotFoundException {
+        //Setting up some global variables
         this.staffID = staffID;
         this.tutorBeingviewed = getobject.tutor(this.staffID);
+
+        //Setting up the ID card frame
         this.IDCardFrame.setSize(560, 560);
         this.IDCardFrame.getContentPane().setBackground(new Color(165, 213, 220));
         this.IDCardFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -66,9 +82,11 @@ public class GUIViewTutor implements ActionListener {
         this.IDCardFrame.setResizable(false);
         this.IDCardFrame.setVisible(true);
 
+        //Setting up the title label
         titleLabel.setBounds(20, 15, 225, 25);
         titleLabel.setFont(new Font("Georgia", Font.ITALIC, 25));
 
+        //Setting up the object information labels
         int xLabel = 20;
         int wLabel = 250;
         int hLabel = 25;
@@ -104,6 +122,7 @@ public class GUIViewTutor implements ActionListener {
         degreeLabel.setFont(labelFont);
         degreeLabel.setText("Degree: " + tutorBeingviewed.getDegree());
 
+        //Adding the content of the teaching array to the label and then setting up the label
         String[] allTeaching = tutorBeingviewed.getModulesTeaching();
         String allTeachingText = "";
         for (int i = 0; i < allTeaching.length; i++) {
@@ -111,11 +130,11 @@ public class GUIViewTutor implements ActionListener {
             Module currentModule = getobject.module(currentcode);
             allTeachingText = allTeachingText + currentModule.getModCode() +  "<br>";
         }
-
         ModulesTeachingLabel.setBounds(xLabel, 200, wLabel, 240);
         ModulesTeachingLabel.setFont(labelFont);
         ModulesTeachingLabel.setText("<html>" + "Teaching:<br>" + allTeachingText);
 
+        //Adding the content of the moderating aray to the label and then setting up the label
         String[] allModerating = tutorBeingviewed.getModulesModerating();
         String allModeratingText = "";
         for (int i = 0; i < allModerating.length; i++) {
@@ -123,14 +142,15 @@ public class GUIViewTutor implements ActionListener {
             Module currentModule = getobject.module(currentcode);
             allModeratingText = allModeratingText + currentModule.getModCode() + "<br>";
         }
-
         ModulesModeratingLabel.setBounds(255, 200, wLabel, 240);
         ModulesModeratingLabel.setFont(labelFont);
         ModulesModeratingLabel.setText("<html>" + "Moderating:<br>" + allModeratingText);
 
+        //Setting up the delete button
         deletebutton.setBounds(320, 460, 200, 50);
         deletebutton.addActionListener(this);
 
+        //Setting up all the buttons
         int xButton = 420;
         int wButton = 75;
         int hButton = 18;
@@ -161,8 +181,8 @@ public class GUIViewTutor implements ActionListener {
         ModulesModeratingDeleteButton.setBounds(415, 425, 85, hButton);
         ModulesModeratingDeleteButton.addActionListener(this);
 
+        //Adding all the elements to the frame
         IDCardFrame.add(titleLabel);
-
         IDCardFrame.add(IDLabel);
         IDCardFrame.add(fnameLabel);
         IDCardFrame.add(lnameLabel);
@@ -173,9 +193,7 @@ public class GUIViewTutor implements ActionListener {
         IDCardFrame.add(degreeLabel);
         IDCardFrame.add(ModulesModeratingLabel);
         IDCardFrame.add(ModulesTeachingLabel);
-
         IDCardFrame.add(deletebutton);
-
         IDCardFrame.add(fnameEditButton);
         IDCardFrame.add(lnameEditButton);
         IDCardFrame.add(dobEditButton);
@@ -187,7 +205,6 @@ public class GUIViewTutor implements ActionListener {
         IDCardFrame.add(ModulesModeratingDeleteButton);
         IDCardFrame.add(ModulesTeachingAddButton);
         IDCardFrame.add(ModulesTeachingDeleteButton);
-
     }
 
     /**
@@ -197,7 +214,8 @@ public class GUIViewTutor implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        boolean alreadyOpen = false;
+        boolean alreadyOpen = false; //Boolean that stops the program from displaying multiple error messages/input windows by setting itself to true when an action is performed
+        //Method performed when the delete button is clicked that deletes the academic object and its class file
         if (e.getSource() == deletebutton && !alreadyOpen) {
             alreadyOpen = true;
             int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + tutorBeingviewed.getStaffID(), "Confirm delete", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
@@ -209,6 +227,7 @@ public class GUIViewTutor implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Tutor Deleted", "Deleted!", JOptionPane.INFORMATION_MESSAGE);
             }
         }
+        //Method performed when changing the first name
         if (e.getSource() == editFnameEnterButton && !alreadyOpen) {
             alreadyOpen = true;
             try {
@@ -220,6 +239,7 @@ public class GUIViewTutor implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Error with Tutor object. Error Code: 4000X40", "Oops", JOptionPane.ERROR_MESSAGE);
             }
         }
+        //Method performed when changing the last name
         if (e.getSource() == editLnameEnterButton && !alreadyOpen) {
             alreadyOpen = true;
             try {
@@ -231,6 +251,7 @@ public class GUIViewTutor implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Error with Tutor object. Error Code: 4000X40", "Oops", JOptionPane.ERROR_MESSAGE);
             }
         }
+        //Method performed when changing the date of birth
         if (e.getSource() == editDOBEnterButton && !alreadyOpen) {
             alreadyOpen = true;
             boolean isValid = quickMethods.checkDOB(editAndCalcInput.getText());
@@ -248,6 +269,7 @@ public class GUIViewTutor implements ActionListener {
             }
 
         }
+        //Method performed when changing the start year
         if (e.getSource() == editStartYrEnterButton && !alreadyOpen) {
             alreadyOpen = true;
             if (Integer.parseInt(editAndCalcInput.getText()) > 1900) {
@@ -263,6 +285,7 @@ public class GUIViewTutor implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Invalid Input. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
             }
         }
+        //Method performed when changing the salary
         if (e.getSource() == editsalaryEnterButton && !alreadyOpen) {
             alreadyOpen = true;
             try {
@@ -274,6 +297,7 @@ public class GUIViewTutor implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Error with Tutor object. Error Code: 4000X40", "Oops", JOptionPane.ERROR_MESSAGE);
             }
         }
+        //Method performed when changing the office
         if (e.getSource() == editofficeEnterButton && !alreadyOpen) {
             alreadyOpen = true;
             try {
@@ -285,6 +309,7 @@ public class GUIViewTutor implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Error with Tutor object. Error Code: 4000X40", "Oops", JOptionPane.ERROR_MESSAGE);
             }
         }
+        //Method performed when changing the degree
         if (e.getSource() == editdegreeEnterButton && !alreadyOpen) {
             alreadyOpen = true;
             try {
@@ -296,6 +321,7 @@ public class GUIViewTutor implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Error with Tutor object. Error Code: 4000X40", "Oops", JOptionPane.ERROR_MESSAGE);
             }
         }
+        //Method performed when adding a module to the moderating array
         if(e.getSource() == addModeratingEnterButton && !alreadyOpen){
             alreadyOpen = true;
             String inputtedModule = editAndCalcInput.getText();
@@ -319,6 +345,7 @@ public class GUIViewTutor implements ActionListener {
                 JOptionPane.showMessageDialog(null, "That is not a valid module code, make sure you have created the module first. Error Code: 50X10", "Oops", JOptionPane.ERROR_MESSAGE);
             }
         }
+        //Method performed when removing a module from the moderating array
         if(e.getSource() == removeModeratingEnterButton && !alreadyOpen){
             alreadyOpen = true;
             String inputtedModule = editAndCalcInput.getText();
@@ -342,6 +369,7 @@ public class GUIViewTutor implements ActionListener {
                 JOptionPane.showMessageDialog(null, "That is not a valid module code, make sure you have created the module first. Error Code: 50X10", "Oops", JOptionPane.ERROR_MESSAGE);
             }
         }
+        //Method performed when adding a module to the teaching array
         if(e.getSource() == addTeachingEnterButton && !alreadyOpen){
             alreadyOpen = true;
             String inputtedModule = editAndCalcInput.getText();
@@ -365,6 +393,7 @@ public class GUIViewTutor implements ActionListener {
                 JOptionPane.showMessageDialog(null, "That is not a valid module code, make sure you have created the module first. Error Code: 50X10", "Oops", JOptionPane.ERROR_MESSAGE);
             }
         }
+        //Method performed when removing a module from the teaching array
         if(e.getSource() == removeTeachingEnterButton && !alreadyOpen){
             alreadyOpen = true;
             String inputtedModule = editAndCalcInput.getText();
@@ -388,8 +417,8 @@ public class GUIViewTutor implements ActionListener {
                 JOptionPane.showMessageDialog(null, "That is not a valid module code, make sure you have created the module first. Error Code: 50X10", "Oops", JOptionPane.ERROR_MESSAGE);
             }
         }
-
         if (!alreadyOpen) {
+            //Setting up the edit frame
             JFrame InputFrame = new JFrame();
             InputFrame.setSize(480, 200);
             InputFrame.getContentPane().setBackground(new Color(216, 198, 236));
@@ -406,6 +435,7 @@ public class GUIViewTutor implements ActionListener {
             editAndCalcInput.setBounds(150, 65, 150, 25);
             InputFrame.add(editAndCalcInput);
             InputFrame.add(title);
+            //Method to ask the user for a new first name
             if (e.getSource() == fnameEditButton) {
                 InputFrame.setTitle("Edit First Name");
                 title.setText("Enter new First Name");
@@ -415,6 +445,7 @@ public class GUIViewTutor implements ActionListener {
 
                 InputFrame.add(this.editFnameEnterButton);
             }
+            //Method to ask the user for a new last name
             if (e.getSource() == lnameEditButton) {
                 InputFrame.setTitle("Edit Last Name");
                 title.setText("Enter new Last Name");
@@ -424,6 +455,7 @@ public class GUIViewTutor implements ActionListener {
 
                 InputFrame.add(this.editLnameEnterButton);
             }
+            //Method to ask the user for a new date of birth
             if (e.getSource() == dobEditButton) {
                 InputFrame.setTitle("Edit Date of Birth");
                 title.setText("Enter new DOB");
@@ -433,6 +465,7 @@ public class GUIViewTutor implements ActionListener {
 
                 InputFrame.add(editDOBEnterButton);
             }
+            //Method to ask the user for a new start year
             if (e.getSource() == startYrEditButton) {
                 InputFrame.setTitle("Edit Start Year");
                 title.setText("Enter new Start Year");
@@ -442,6 +475,7 @@ public class GUIViewTutor implements ActionListener {
 
                 InputFrame.add(this.editStartYrEnterButton);
             }
+            //Method to ask the user for a new salary
             if (e.getSource() == salaryEditButton) {
                 InputFrame.setTitle("Edit Salary");
                 title.setText("Enter new Salary");
@@ -451,6 +485,7 @@ public class GUIViewTutor implements ActionListener {
 
                 InputFrame.add(this.editsalaryEnterButton);
             }
+            //Method to ask the user for a new office
             if (e.getSource() == officeEditButton) {
                 InputFrame.setTitle("Edit Office");
                 title.setText("Enter new Office");
@@ -460,6 +495,7 @@ public class GUIViewTutor implements ActionListener {
 
                 InputFrame.add(this.editofficeEnterButton);
             }
+            //Method to ask the user for a new degree
             if (e.getSource() == degreeEditButton) {
                 InputFrame.setTitle("Edit Degree");
                 title.setText("Enter new Degree");
@@ -469,6 +505,7 @@ public class GUIViewTutor implements ActionListener {
 
                 InputFrame.add(this.editdegreeEnterButton);
             }
+            //Method to ask the user for a new module to add to the moderating array
             if(e.getSource() == ModulesModeratingAddButton){
                 InputFrame.setTitle("Add To Modules Moderating");
                 title.setText("Enter new Module");
@@ -478,6 +515,7 @@ public class GUIViewTutor implements ActionListener {
 
                 InputFrame.add(this.addModeratingEnterButton);
             }
+            //Method to ask the user for a module to remove from the moderating array
             if(e.getSource() == ModulesModeratingDeleteButton){
                 InputFrame.setTitle("Delete from Modules Moderating");
                 title.setText("Enter Module code");
@@ -487,6 +525,7 @@ public class GUIViewTutor implements ActionListener {
 
                 InputFrame.add(this.removeModeratingEnterButton);
             }
+            //Method to ask the user for a new module to add to the teaching array
             if(e.getSource() == ModulesTeachingAddButton){
                 InputFrame.setTitle("Add to Modules Teaching");
                 title.setText("Enter new Module");
@@ -496,6 +535,7 @@ public class GUIViewTutor implements ActionListener {
 
                 InputFrame.add(this.addTeachingEnterButton);
             }
+            //Method to ask the user for a module to remove from the teaching array
             if(e.getSource() == ModulesTeachingDeleteButton){
                 InputFrame.setTitle("Remove from Modules Teaching");
                 title.setText("Enter Module Code");

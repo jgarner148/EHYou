@@ -1,3 +1,7 @@
+/**
+ * Class that houses the GUI for viewing a Result
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class GUIViewResult implements ActionListener {
+    //Creating the elements that house the result data as well as the buttons the edit them
     private final JFrame IDCardFrame = new JFrame();
     private final Result resultBeingViewed;
     private final String resultCode;
@@ -23,9 +28,14 @@ public class GUIViewResult implements ActionListener {
     private final JButton gradeEditButton = factory.makeFlatButton("Edit");
     private final JLabel feedbackLabel = new JLabel("");
     private final JButton feedbackEditButton = factory.makeFlatButton("Edit");
+
+    //Creating the standard font
     private final Font labelFont = new Font("Georgia", Font.ITALIC,15);
+
+    //Creating the object delete button
     private final JButton deletebutton = factory.makeFlatButton("Delete");
 
+    //Creating the elements for the edit pages
     private final JTextField editAndCalcInput = new JTextField();
     private final JButton editAssStudentEnterButton = factory.makeFlatButton("Enter");
     private final JButton editAssModuleEnterButton = factory.makeFlatButton("Enter");
@@ -33,9 +43,18 @@ public class GUIViewResult implements ActionListener {
     private final JButton editGradeEnterButton = factory.makeFlatButton("Enter");
     private final JButton editFeedbackEnterButton = factory.makeFlatButton("Enter");
 
+    /**
+     * Constructor for the class that will be called when wanting to view an academic
+     * @param resultCode The ID of the result being viewed
+     * @throws IOException IO exception
+     * @throws ClassNotFoundException Class not found exception
+     */
     public GUIViewResult(String resultCode) throws IOException, ClassNotFoundException {
+        //Setting up some global variables
         this.resultCode = resultCode;
         this.resultBeingViewed = getobject.result(this.resultCode);
+
+        //Setting up the ID card frame
         this.IDCardFrame.setSize(560,360);
         this.IDCardFrame.getContentPane().setBackground(new Color(165,213,220));
         this.IDCardFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE );
@@ -47,9 +66,11 @@ public class GUIViewResult implements ActionListener {
         this.IDCardFrame.setResizable(false);
         this.IDCardFrame.setVisible(true);
 
+        //Setting up the title label
         titleLabel.setBounds(20,15,225,25);
         titleLabel.setFont(new Font("Georgia", Font.ITALIC,25));
 
+        //Setting up the object information labels
         int xLabel = 20;
         int wLabel = 250;
         int hLabel = 25;
@@ -79,9 +100,11 @@ public class GUIViewResult implements ActionListener {
         feedbackLabel.setFont(labelFont);
         feedbackLabel.setText("Feedback: " + resultBeingViewed.getFeedback());
 
+        //Setting up the delete button
         deletebutton.setBounds(320, 260 ,200,50);
         deletebutton.addActionListener(this);
 
+        //Setting up all the buttons
         int xButton = 420;
         int wButton = 75;
         int hButton = 18;
@@ -96,9 +119,8 @@ public class GUIViewResult implements ActionListener {
         feedbackEditButton.setBounds(xButton,152,wButton,hButton);
         feedbackEditButton.addActionListener(this);
 
-
+        //Adding all the elements to the frame
         IDCardFrame.add(titleLabel);
-
         IDCardFrame.add(IDLabel);
         IDCardFrame.add(assStudentLabel);
         IDCardFrame.add(assModuleLabel);
@@ -106,7 +128,6 @@ public class GUIViewResult implements ActionListener {
         IDCardFrame.add(gradeLabel);
         IDCardFrame.add(feedbackLabel);
         IDCardFrame.add(deletebutton);
-
         IDCardFrame.add(assStudentEditButton);
         IDCardFrame.add(assModuleEditButton);
         IDCardFrame.add(weekAssEditButton);
@@ -121,7 +142,8 @@ public class GUIViewResult implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        boolean alreadyOpen = false;
+        boolean alreadyOpen = false;//Boolean that stops the program from displaying multiple error messages/input windows by setting itself to true when an action is performed
+        //Method performed when the delete button is clicked that deletes the result object and its class file
         if (e.getSource() == deletebutton) {
             alreadyOpen = true;
             int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + resultBeingViewed.getResultCode(), "Confirm delete", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
@@ -133,6 +155,7 @@ public class GUIViewResult implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Result Deleted", "Deleted!", JOptionPane.INFORMATION_MESSAGE);
             }
         }
+        //Method performed when changing the assigned student
         if(e.getSource() == editAssStudentEnterButton && !alreadyOpen){
             alreadyOpen = true;
             String inputtedStudent = editAndCalcInput.getText();
@@ -157,6 +180,7 @@ public class GUIViewResult implements ActionListener {
                 JOptionPane.showMessageDialog(null, "That is not a valid Student code, make sure you have created the tutor first. Error Code: 50X30", "Oops", JOptionPane.ERROR_MESSAGE);
             }
         }
+        //Method performed when changing the assigned module
         if(e.getSource() == editAssModuleEnterButton && !alreadyOpen){
             alreadyOpen = true;
             String inputtedModule = editAndCalcInput.getText();
@@ -177,6 +201,7 @@ public class GUIViewResult implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Error with result object. Error Code: 4000X30", "Oops", JOptionPane.ERROR_MESSAGE);
             }
         }
+        //Method performed when changing the week assigned
         if(e.getSource() == editWeekAssEnterButton && !alreadyOpen){
             alreadyOpen = true;
             try {
@@ -187,8 +212,8 @@ public class GUIViewResult implements ActionListener {
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, "Error with Result object. Error Code: 4000X30", "Oops", JOptionPane.ERROR_MESSAGE);
             }
-
         }
+        //Method performed when changing the grade
         if(e.getSource() == editGradeEnterButton && !alreadyOpen){
             alreadyOpen = true;
             if(Integer.parseInt((editAndCalcInput.getText()))<101) {
@@ -205,6 +230,7 @@ public class GUIViewResult implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Invalid Input. Error Code: 500", "Oops", JOptionPane.ERROR_MESSAGE);
             }
         }
+        //Method performed when changing the feedback
         if(e.getSource() == editFeedbackEnterButton && !alreadyOpen){
             alreadyOpen = true;
             try {
@@ -217,6 +243,7 @@ public class GUIViewResult implements ActionListener {
             }
         }
         if (!alreadyOpen) {
+            //Setting up the edit frame
             JFrame InputFrame = new JFrame();
             InputFrame.setSize(480, 200);
             InputFrame.getContentPane().setBackground(new Color(216, 198, 236));
@@ -233,6 +260,7 @@ public class GUIViewResult implements ActionListener {
             editAndCalcInput.setBounds(150, 65, 150, 25);
             InputFrame.add(editAndCalcInput);
             InputFrame.add(title);
+            //Method to ask the user for a new assigned student
             if(e.getSource() == assStudentEditButton){
                 InputFrame.setTitle("Edit Assigned Student");
                 title.setText("Enter new Student");
@@ -242,6 +270,7 @@ public class GUIViewResult implements ActionListener {
 
                 InputFrame.add(editAssStudentEnterButton);
             }
+            //Method to ask the user for a new assigned module
             if(e.getSource() == assModuleEditButton){
                 InputFrame.setTitle("Edit Assigned Module");
                 title.setText("Enter new Module");
@@ -251,6 +280,7 @@ public class GUIViewResult implements ActionListener {
 
                 InputFrame.add(editAssModuleEnterButton);
             }
+            //Method to ask the user for a new week assigned
             if(e.getSource() == weekAssEditButton){
                 InputFrame.setTitle("Edit Week Assigned");
                 title.setText("Enter new Week");
@@ -260,6 +290,7 @@ public class GUIViewResult implements ActionListener {
 
                 InputFrame.add(editWeekAssEnterButton);
             }
+            //Method to ask the user for a new grade
             if(e.getSource() == gradeEditButton){
                 InputFrame.setTitle("Edit Grade");
                 title.setText("Enter new Grade");
@@ -269,6 +300,7 @@ public class GUIViewResult implements ActionListener {
 
                 InputFrame.add(editGradeEnterButton);
             }
+            //Method to ask the user for new feedback
             if(e.getSource() == feedbackEditButton){
                 InputFrame.setTitle("Edit feedback");
                 title.setText("Enter new feedback");
