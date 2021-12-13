@@ -168,6 +168,7 @@ public class GUICreateResearch implements ActionListener {
                     GUICreateHome createhomepage = new GUICreateHome(this.mainFrame);
                 } catch (IOException | ClassNotFoundException ioException) {
                     JOptionPane.showMessageDialog(null, "An error occured. Error Code: 4000X60", "Oops", JOptionPane.ERROR_MESSAGE);
+                    ioException.printStackTrace();
                     anyInvalid = true;
                 }
             }

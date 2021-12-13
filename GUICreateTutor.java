@@ -316,6 +316,7 @@ public class GUICreateTutor implements ActionListener {
                 } catch (IOException | ClassNotFoundException ioException) {
                     JOptionPane.showMessageDialog(null, "An error occured. Error Code: 4000X40", "Oops", JOptionPane.ERROR_MESSAGE);
                     anyInvalid = true;
+                    ioException.printStackTrace();
                 }
             }
         }

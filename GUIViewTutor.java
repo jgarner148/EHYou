@@ -219,6 +219,30 @@ public class GUIViewTutor implements ActionListener {
             alreadyOpen = true;
             int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + tutorBeingviewed.getStaffID(), "Confirm delete", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
             if (confirmation == 0) {
+                //Removing the tutor from all the modules in the modules teaching array
+                if(tutorBeingviewed.getModulesTeaching().length>0){
+                    for(int i = 0; i < tutorBeingviewed.getModulesTeaching().length; i++){
+                        try {
+                            Module moduleRemoving = getobject.module(tutorBeingviewed.getModulesTeaching()[i]);
+                            moduleRemoving.removeFromTeachers(tutorBeingviewed.getStaffID());
+                        } catch (IOException | ClassNotFoundException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+
+                //Removing the tutor from all the modules in the modules moderating array
+                if(tutorBeingviewed.getModulesModerating().length>0){
+                    for(int i = 0; i < tutorBeingviewed.getModulesModerating().length; i++){
+                        try {
+                            Module moduleRemoving = getobject.module(tutorBeingviewed.getModulesModerating()[i]);
+                            moduleRemoving.setModerator("");
+                        } catch (IOException | ClassNotFoundException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+
                 String filename = "Tutors/" + tutorBeingviewed.getStaffID() + ".txt";
                 File oldFile = new File(filename);
                 oldFile.delete();

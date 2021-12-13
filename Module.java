@@ -47,6 +47,14 @@ public class Module implements Serializable {
 		this.teachers = teachers;
 		this.moderator = moderator;
 
+		//Creating the class file for the newly created module object
+		String filename = "Modules/" +this.getModCode() + ".txt";
+		FileOutputStream f = new FileOutputStream(filename);
+		ObjectOutputStream o = new ObjectOutputStream(f);
+		o.writeObject(this);
+		o.close();
+		f.close();
+
 		//Adding the module ID to all the tutors in the teachers array
 		boolean isTeachersEmpty = this.teachers.length == 0;
 		if(!isTeachersEmpty) {
@@ -101,14 +109,6 @@ public class Module implements Serializable {
 				addingTo.updateClassFile();
 			}
 		}
-
-		//Creating the class file for the newly created module object
-		String filename = "Modules/" +this.getModCode() + ".txt";
-		FileOutputStream f = new FileOutputStream(filename);
-		ObjectOutputStream o = new ObjectOutputStream(f);
-		o.writeObject(this);
-		o.close();
-		f.close();
 
 		quickMethods.addStringToCSV("codes/modulecodes.csv", modCode);//Adding the module code the overall module codes csv file
 

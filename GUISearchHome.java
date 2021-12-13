@@ -116,6 +116,7 @@ public class GUISearchHome implements ActionListener{
                         searchBox.setText("");
                     } catch (IOException ex) {
                         JOptionPane.showMessageDialog(null, "An error occurred. Error Code: 4000X10", "Oops", JOptionPane.ERROR_MESSAGE);
+                        ex.printStackTrace();
                     } catch (ClassNotFoundException ex) {
                         JOptionPane.showMessageDialog(null, "Invalid Input Error code: 500","Oops", JOptionPane.ERROR_MESSAGE);
                     }
@@ -129,6 +130,7 @@ public class GUISearchHome implements ActionListener{
                     searchBox.setText("");
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(null, "An error occurred. Error Code: 4000X10", "Oops", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
                 } catch (ClassNotFoundException ex) {
                     JOptionPane.showMessageDialog(null, "An error occurred. Error Code: 9999", "Oops", JOptionPane.ERROR_MESSAGE);
                 }
@@ -159,6 +161,7 @@ public class GUISearchHome implements ActionListener{
                     searchBox.setText("");
                 } catch (IOException | ClassNotFoundException ex) {
                     JOptionPane.showMessageDialog(null, "An error occurred. Error Code: 9999", "Oops", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
                 }
             }
             //Opens the view tutor GUI is the user has inputted a tutor code

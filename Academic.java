@@ -41,6 +41,14 @@ public class Academic extends Staff{
         this.degree = degree;
         this.currentResearch = currentResearch;
 
+        //creating the class file for the newly created academic object
+        String filename = "Academics/" +this.getStaffID() + ".txt";
+        FileOutputStream f = new FileOutputStream(filename);
+        ObjectOutputStream o = new ObjectOutputStream(f);
+        o.writeObject(this);
+        o.close();
+        f.close();
+
         boolean isResearchEmpty = this.currentResearch.length == 0; //finding out if the current research array is empty
 
         //adding the academic's staff ID to each the research's academics array
@@ -60,14 +68,6 @@ public class Academic extends Staff{
                 }
             }
         }
-
-        //creating the class file for the newly created academic object
-        String filename = "Academics/" +this.getStaffID() + ".txt";
-        FileOutputStream f = new FileOutputStream(filename);
-        ObjectOutputStream o = new ObjectOutputStream(f);
-        o.writeObject(this);
-        o.close();
-        f.close();
     }
 
     /**

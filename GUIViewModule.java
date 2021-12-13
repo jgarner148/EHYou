@@ -165,6 +165,39 @@ public class GUIViewModule implements ActionListener {
             alreadyOpen = true;
             int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + modulebeingviewed.getModCode(), "Confirm delete", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
             if (confirmation == 0){
+                //Removing the module from the students in the students taking array
+                if(modulebeingviewed.getStudentsTaking().length>0) {
+                    for (int i = 0; i < modulebeingviewed.getStudentsTaking().length; i++) {
+                        Student studentRemoving = null;
+                        try {
+                            studentRemoving = getobject.student(modulebeingviewed.getStudentsTaking()[i]);
+                            studentRemoving.removeFromModules(modulebeingviewed.getModCode());
+                        } catch (IOException | ClassNotFoundException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+                //Removing the module from the teachers in the teaching array
+                if(modulebeingviewed.getTeachers().length>0) {
+                    for (int i = 0; i < modulebeingviewed.getTeachers().length; i++) {
+                        try {
+                            Tutor tutorRemoving = getobject.tutor(modulebeingviewed.getTeachers()[i]);
+                            tutorRemoving.removeFromModulesTeaching(modulebeingviewed.getModCode());
+                        } catch (IOException | ClassNotFoundException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+                //Removing the module from the moderator
+                if(!modulebeingviewed.getModerator().equals("")){
+                    try {
+                        Tutor tutorRemoving = getobject.tutor(modulebeingviewed.getModerator());
+                        tutorRemoving.removeFromModulesModerating(modulebeingviewed.getModCode());
+                    } catch (IOException | ClassNotFoundException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+
                 String filename = "Modules/" +modulebeingviewed.getModCode() + ".txt";
                 File oldFile = new File(filename);
                 oldFile.delete();

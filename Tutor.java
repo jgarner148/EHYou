@@ -46,6 +46,14 @@ public class Tutor extends Staff{
         this.modulesTeaching = modulesTeaching;
         this.modulesModerating = modulesModerating;
 
+        //Creating the class file for the newly created Tutor object
+        String filename = "Tutors/" +this.getStaffID() + ".txt";
+        FileOutputStream f = new FileOutputStream(filename);
+        ObjectOutputStream o = new ObjectOutputStream(f);
+        o.writeObject(this);
+        o.close();
+        f.close();
+
         //adding the tutor's staff ID to each of the modules they are teaching
         boolean isTeachingEmpty = this.modulesTeaching.length == 0;
         if(!isTeachingEmpty) {
@@ -78,15 +86,6 @@ public class Tutor extends Staff{
                 }
             }
         }
-
-        //Creating the class file for the newly created Tutor object
-        String filename = "Tutors/" +this.getStaffID() + ".txt";
-        FileOutputStream f = new FileOutputStream(filename);
-        ObjectOutputStream o = new ObjectOutputStream(f);
-        o.writeObject(this);
-        o.close();
-        f.close();
-
     }
 
     /**

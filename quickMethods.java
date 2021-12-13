@@ -149,8 +149,12 @@ public class quickMethods {
      * @return new array with removed String
      */
     public static String[] removeFromStringArray(String stringRemoving, String[] originalArray) {
-        String[] newArray = new String[originalArray.length - 1];
-        for (int i = 0, j = 0; i < originalArray.length; i++) {
+        int arraySize = originalArray.length - 1;
+        if(arraySize<0){
+            arraySize = 0;
+        }
+        String[] newArray = new String[arraySize];
+        for (int i = 0, j = 0; i < arraySize; i++) {
             if (!originalArray[i].equals(stringRemoving)) {
                 newArray[j++] = originalArray[i];
             }

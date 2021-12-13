@@ -190,6 +190,28 @@ public class GUIViewStudent implements ActionListener {
             alreadyOpen = true;
             int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + studentBeingViewed.getFname() + " " + studentBeingViewed.getLname(), "Confirm delete", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
             if (confirmation == 0){
+                //Removing the student from results in their all results array
+                if(studentBeingViewed.getAllResults().length>0) {
+                    for (int i = 0; i < studentBeingViewed.getAllResults().length; i++) {
+                        try {
+                            Result resultDelete = getobject.result(studentBeingViewed.getAllResults()[i]);
+                            resultDelete.setAssStudent("");
+                        } catch (IOException | ClassNotFoundException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+                //Removing the student from the modules in their modules taking array
+                if(studentBeingViewed.getModulesTaking().length>0) {
+                    for (int i = 0; i < studentBeingViewed.getModulesTaking().length; i++) {
+                        try {
+                            Module moduleRemoving = getobject.module(studentBeingViewed.getModulesTaking()[i]);
+                            moduleRemoving.removeFromStudentsTaking(studentBeingViewed.getStudentNum());
+                        } catch (IOException | ClassNotFoundException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }
                 String filename = "Students/" +studentBeingViewed.getStudentNum() + ".txt";
                 File oldFile = new File(filename);
                 oldFile.delete();
@@ -197,7 +219,7 @@ public class GUIViewStudent implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Student Deleted", "Deleted!", JOptionPane.INFORMATION_MESSAGE);
             }
         }
-        //Method that outputs the student's average mark for a inputted module
+        //Method that outputs the student's average mark for an inputted module
         if (e.getSource() == CalculateEnterButton && !alreadyOpen) {
             alreadyOpen = true;
             String inputtedText = this.editAndCalcInput.getText();

@@ -147,11 +147,18 @@ public class GUIViewResult implements ActionListener {
             alreadyOpen = true;
             int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + resultBeingViewed.getResultCode(), "Confirm delete", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
             if (confirmation == 0) {
+                try {
+                    Student studentResult = getobject.student(resultBeingViewed.getAssStudent());
+                    studentResult.removeFromAllResults(resultBeingViewed.getResultCode());
+                } catch (IOException | ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                }
                 String filename = "Results/" + resultBeingViewed.getResultCode() + ".txt";
                 File oldFile = new File(filename);
                 oldFile.delete();
                 IDCardFrame.dispatchEvent(new WindowEvent(IDCardFrame, WindowEvent.WINDOW_CLOSING));
                 JOptionPane.showMessageDialog(null, "Result Deleted", "Deleted!", JOptionPane.INFORMATION_MESSAGE);
+
             }
         }
         //Method performed when changing the assigned student

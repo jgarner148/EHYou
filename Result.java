@@ -49,7 +49,7 @@ public class Result implements Serializable {
         this.assStudent = assStudent;
 
 
-        //Generating hte result code
+        //Generating the result code
         boolean looping = true;
         String filepath = "codes/resultcodes.csv";
         String genCode = "";
@@ -70,6 +70,14 @@ public class Result implements Serializable {
         }
 
         this.resultCode = genCode; //assigning the generated result code to the result code variable
+
+        //Creating the class file for the newly created result object
+        String filename = "Results/" +this.getResultCode() + ".txt";
+        FileOutputStream f = new FileOutputStream(filename);
+        ObjectOutputStream o = new ObjectOutputStream(f);
+        o.writeObject(this);
+        o.close();
+        f.close();
 
 
        //Adding the result code to the assigned student
@@ -92,14 +100,6 @@ public class Result implements Serializable {
         //Adding the grade to the assigned module
         Module resultModule = getobject.module(this.AssModule);
         resultModule.addToTotalMarks(this.Grade);
-
-        //Creating the class file for the newly created result object
-        String filename = "Results/" +this.getResultCode() + ".txt";
-        FileOutputStream f = new FileOutputStream(filename);
-        ObjectOutputStream o = new ObjectOutputStream(f);
-        o.writeObject(this);
-        o.close();
-        f.close();
 
         quickMethods.addStringToCSV(filepath, genCode); //Adding the generated result code to the overall result code csv file
 
@@ -192,12 +192,14 @@ public class Result implements Serializable {
         this.assStudent = assStudent;
         this.updateClassFile();
 
-        //Updating the assigned students results array
-        Student newResultStudent = getobject.student(assStudent);
-        String[] newResultStudentArray = newResultStudent.getAllResults();
-        boolean exists = quickMethods.checkIfInStringArray(this.getResultCode(), newResultStudentArray);
-        if(!exists){
-            newResultStudent.addToAllResults(this.resultCode);
+        //Updating the assigned students results array as long as the assigned student isn't blank
+        if(!assStudent.equals("")) {
+            Student newResultStudent = getobject.student(assStudent);
+            String[] newResultStudentArray = newResultStudent.getAllResults();
+            boolean exists = quickMethods.checkIfInStringArray(this.getResultCode(), newResultStudentArray);
+            if (!exists) {
+                newResultStudent.addToAllResults(this.resultCode);
+            }
         }
     }
 

@@ -193,6 +193,18 @@ public class GUIViewAcademic implements ActionListener {
             alreadyOpen = true;
             int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + academicBeingviewed.getStaffID(), "Confirm delete", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
             if (confirmation == 0) {
+                if(academicBeingviewed.getCurrentResearch().length>0){
+                    for(int i=0; i<academicBeingviewed.getCurrentResearch().length; i++){
+                        try {
+                            Research researchRemoving = getobject.research(academicBeingviewed.getCurrentResearch()[i]);
+                            researchRemoving.removeFromAcademicResearching(academicBeingviewed.getStaffID());
+                            System.out.println(academicBeingviewed.getStaffID());
+                        } catch (IOException | ClassNotFoundException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+
                 String filename = "Academics/" + academicBeingviewed.getStaffID() + ".txt";
                 File oldFile = new File(filename);
                 oldFile.delete();

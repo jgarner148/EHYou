@@ -55,6 +55,14 @@ public class Research implements Serializable {
 
         this.ResearchCode = genCode;//assigning the generated code to the research code variable
 
+        //Creating the class file for the newly created research object
+        String filename = "Researches/" +this.getResearchCode() + ".txt";
+        FileOutputStream f = new FileOutputStream(filename);
+        ObjectOutputStream o = new ObjectOutputStream(f);
+        o.writeObject(this);
+        o.close();
+        f.close();
+
         //Adding the research ID to the academics in the academics researching array
         boolean isAcademicEmpty = this.AcademicsResearching.length == 0;
         if(!isAcademicEmpty) {
@@ -73,14 +81,6 @@ public class Research implements Serializable {
                 }
             }
         }
-
-        //Creating the class file for the newly created research object
-        String filename = "Researches/" +this.getResearchCode() + ".txt";
-        FileOutputStream f = new FileOutputStream(filename);
-        ObjectOutputStream o = new ObjectOutputStream(f);
-        o.writeObject(this);
-        o.close();
-        f.close();
 
         quickMethods.addStringToCSV(filepath, genCode); //Creating the research code to the overall research code file
     }
@@ -134,6 +134,7 @@ public class Research implements Serializable {
      */
     public void removeFromAcademicResearching(String removingAcademic) throws IOException, ClassNotFoundException {
         this.AcademicsResearching = quickMethods.removeFromStringArray(removingAcademic, this.AcademicsResearching);
+        this.updateClassFile();
 
         //Updating the academics that's just been removed from the academics researching array
         Academic removingFrom = getobject.academic(removingAcademic);

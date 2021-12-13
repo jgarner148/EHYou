@@ -293,6 +293,7 @@ public class GUICreateModule implements ActionListener{
                     GUICreateHome createhomepage = new GUICreateHome(this.mainFrame);
                 } catch (IOException | ClassNotFoundException ioException) {
                     JOptionPane.showMessageDialog(null, "An error occured. Error Code: 4000X20", "Oops", JOptionPane.ERROR_MESSAGE);
+                    ioException.printStackTrace();
                     anyInvalid = true;
                 }
             }
