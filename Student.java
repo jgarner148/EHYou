@@ -1,9 +1,8 @@
+import java.io.*;
+
 /**
  *Class file for the student object
  */
-
-import java.io.*;
-
 public class Student extends Person{
 	/**
 	 * String array of the modules the student is taking
@@ -153,6 +152,7 @@ public class Student extends Person{
 	 * Method to add a module code to the modules taking array
 	 * @param newmodule the module code being added to the array
 	 * @throws IOException IO Exception
+	 * @throws ClassNotFoundException Class not found exception
 	 */
 	public void addToModulesTaking(String newmodule) throws IOException, ClassNotFoundException {
 		this.ModulesTaking = AddToArray.string(this.ModulesTaking, newmodule);
@@ -171,6 +171,7 @@ public class Student extends Person{
 	 * Method to remove module from the modules taking array
 	 * @param removingModule the module code of the item being removed from the array
 	 * @throws IOException IO Exception
+	 * @throws ClassNotFoundException Class not found exception
 	 */
 	public void removeFromModules(String removingModule) throws IOException, ClassNotFoundException {
 		this.ModulesTaking = quickMethods.removeFromStringArray(removingModule, this.ModulesTaking);

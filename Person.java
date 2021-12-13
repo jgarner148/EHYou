@@ -1,9 +1,8 @@
+import java.io.Serializable;
+
 /**
  * Class File for Person Object
  */
-
-import java.io.Serializable;
-
 public class Person implements Serializable {
 	/**
 	 * Persons first name

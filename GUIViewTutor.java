@@ -1,7 +1,3 @@
-/**
- * Class that houses the GUI for making a Tutor
- */
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,6 +7,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * Class that houses the GUI for making a Tutor
+ */
 public class GUIViewTutor implements ActionListener {
     //Creating the elements that house the tutor data as well as the buttons the edit them
     private final JFrame IDCardFrame = new JFrame();
@@ -62,8 +61,8 @@ public class GUIViewTutor implements ActionListener {
     /**
      * Constructor that will be called when wanting to view a tutor
      * @param staffID The code of the tutor being viewed
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException IO exception
+     * @throws ClassNotFoundException Class not found exception
      */
     public GUIViewTutor(String staffID) throws IOException, ClassNotFoundException {
         //Setting up some global variables

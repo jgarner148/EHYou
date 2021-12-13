@@ -1,12 +1,11 @@
-/**
- * The class that houses the GUI for the create home page
- */
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The class that houses the GUI for the create home page
+ */
 public class GUICreateHome implements ActionListener {
     //Setting up the global GUI elements
     private final JFrame mainFrame;

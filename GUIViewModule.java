@@ -1,7 +1,3 @@
-/**
- * CLass that houses the GUi for viewing a module
- */
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,6 +7,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * Class that houses the GUi for viewing a module
+ */
 public class GUIViewModule implements ActionListener {
     //Creating the elements that house the module data as well as the buttons the edit them
     private final JFrame IDCardFrame = new JFrame();

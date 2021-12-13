@@ -1,7 +1,3 @@
-/**
- * Class that houses the GUI for viewing research
- */
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,6 +7,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * Class that houses the GUI for viewing research
+ */
 public class GUIViewReseach implements ActionListener {
     //Creating the elements that house the research data as well as the buttons to edit them
     private final JFrame IDCardFrame = new JFrame();

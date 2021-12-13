@@ -1,7 +1,3 @@
-/**
- * Class that houses the GUI for viewing a student
- */
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,6 +7,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * Class that houses the GUI for viewing a student
+ */
 public class GUIViewStudent implements ActionListener {
     //Creating the elements that house the student data as well as the buttons the edit them
     private final JFrame IDCardFrame = new JFrame();

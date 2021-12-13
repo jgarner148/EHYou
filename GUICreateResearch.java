@@ -1,7 +1,3 @@
-/**
- * Class that houses the GUI for creating a research object
- */
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,6 +5,9 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * Class that houses the GUI for creating a research object
+ */
 public class GUICreateResearch implements ActionListener {
     //Setting up the global GUI elements
     private final JFrame mainFrame;

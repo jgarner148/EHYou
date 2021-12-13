@@ -1,11 +1,10 @@
-/**
- * Class file for the get object methods which create a previously created object type using its ID number
- */
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+/**
+ * Class file for the get object methods which create a previously created object type using its ID number
+ */
 public class getobject {
     /**
      * Method for creating a module object from its ID

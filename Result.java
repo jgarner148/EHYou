@@ -1,10 +1,9 @@
-/**
- * Class file for the Result object
- */
-
 import java.io.*;
 import java.time.YearMonth;
 
+/**
+ * Class file for the Result object
+ */
 public class Result implements Serializable {
     /**
      * Result code

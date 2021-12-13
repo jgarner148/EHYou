@@ -1,7 +1,4 @@
-/**
- * factory class used for making pre styled GUI elements
- * Currently only houses a method for JButtons
- */
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
@@ -9,6 +6,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
+/**
+ * factory class used for making pre styled GUI elements
+ * Currently only houses a method for JButtons
+ */
 public class factory {
     /**
      * Method to make simple flat button supplied from:

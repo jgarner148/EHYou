@@ -1,7 +1,3 @@
-/**
- * Class housing methods aimed to shorten tasks with long and/or complex methods that are usually done multiple times
- */
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -9,6 +5,9 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.Random;
 
+/**
+ * Class housing methods aimed to shorten tasks with long and/or complex methods that are usually done multiple times
+ */
 public class quickMethods {
     /**
      * Method to generate a random number between two values

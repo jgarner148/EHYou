@@ -1,7 +1,3 @@
-/**
- * Class housing the method used to search for an object
- */
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -9,6 +5,9 @@ import java.io.ObjectInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * Class housing the method used to search for an object
+ */
 public class search {
     /**
      * Method to search for an object using the objects unique code

@@ -1,9 +1,8 @@
-/**
- * Class file from the Staff object
- */
-
 import java.io.*;
 
+/**
+ * Class file for the Staff object
+ */
 public class Staff extends Person{
     /**
      * The staff ID

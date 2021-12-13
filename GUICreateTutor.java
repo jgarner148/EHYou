@@ -1,7 +1,3 @@
-/**
- * The class that houses the GUi for creating a Tutor
- */
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,6 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Calendar;
 
+/**
+ * The class that houses the GUi for creating a Tutor
+ */
 public class GUICreateTutor implements ActionListener {
     //Setting up the global GUI elements
     private final JFrame mainFrame;

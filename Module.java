@@ -1,9 +1,8 @@
+import java.io.*;
+
 /**
  * Class file for Module object
  */
-
-import java.io.*;
-
 public class Module implements Serializable {
 	/**
 	 * Module name
@@ -245,6 +244,7 @@ public class Module implements Serializable {
 	 * Setter for moderator
 	 * @param moderator Value being added to moderator
 	 * @throws IOException IO Exception
+	 * @throws ClassNotFoundException Class not found exception
 	 */
 	public void setModerator(String moderator) throws IOException, ClassNotFoundException {
 		this.moderator = moderator;

@@ -1,12 +1,12 @@
-/**
- * Class file for the Academic object
- */
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+
+/**
+ * Class file for the Academic object
+ */
 public class Academic extends Staff{
     /**
      * Academics office location

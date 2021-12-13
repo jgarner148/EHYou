@@ -1,12 +1,11 @@
-/**
- * Class file for Tutor object
- */
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+/**
+ * Class file for Tutor object
+ */
 public class Tutor extends Staff{
     /**
      * Academics office location

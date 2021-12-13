@@ -1,7 +1,3 @@
-/**
- * The class that houses the GUI for creating a student
- */
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,6 +5,9 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * The class that houses the GUI for creating a student
+ */
 public class GUICreateStudent implements ActionListener {
     //Setting up the global GUI elements
     private final JFrame mainFrame;

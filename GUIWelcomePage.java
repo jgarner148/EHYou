@@ -1,12 +1,11 @@
-/**
- * Class that houses the GUI that the user sees when opening the program
- */
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Class that houses the GUI that the user sees when opening the program
+ */
 public class GUIWelcomePage implements ActionListener {
     //Creating the content
     private final JFrame mainFrame;

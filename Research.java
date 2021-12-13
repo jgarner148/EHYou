@@ -1,10 +1,9 @@
-/**
- * Class file for Research object
- */
-
 import java.io.*;
 import java.time.YearMonth;
 
+/**
+ * Class file for Research object
+ */
 public class Research implements Serializable {
     /**
      * Research code
@@ -130,6 +129,8 @@ public class Research implements Serializable {
     /**
      * Method for removing string from academics researching array
      * @param removingAcademic item to be removed from academics researching array
+     * @throws  IOException IO exception
+     * @throws  ClassNotFoundException Class not found exception
      */
     public void removeFromAcademicResearching(String removingAcademic) throws IOException, ClassNotFoundException {
         this.AcademicsResearching = quickMethods.removeFromStringArray(removingAcademic, this.AcademicsResearching);

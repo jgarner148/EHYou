@@ -1,10 +1,9 @@
-/**
- * Programs main method that sets up the GUI's JFrame
- */
-
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Programs main method that sets up the GUI's JFrame
+ */
 public class GUI {
     /**
      * Main method to build the GUI for the program
